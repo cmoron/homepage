@@ -1,68 +1,353 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="author" content="Cyril Moron" />
-        <meta name="description" content="Home page - Cyril Moron" />
-        <meta name="keywords" content="Cyril Moron" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Cyril Moron - Lead Software Engineer</title>
+    <style>
+    :root {
+      /* Charte Naval Group / "Pro" */
+      --naval-blue: #1a3c5e;       /* Bleu sombre dominant */
+      --naval-blue-light: #2c527a; /* Bleu plus clair pour accents */
+      --text-grey: #5a6268;
+      --bg-light: #f8f9fa;
+    }
 
-        <title>Cyril Moron - C.V.</title>
+    body {
+      background-color: var(--bg-light);
+      color: #212529;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
 
-    </head>
-    <body>
-        <h1>Cyril Moron - C.V</h1>
-        <h2>Software engineer at Naval Group</h2>
-        <h3>Address</h3>
-        Cyril Moron<br />
-        86 av. du mont Aigoual, 83140, Six-Fours, France<br />
-        Email : cyril.moron at gmail.com<br />
-        Phone : +33 6 78 81 06 90
-        <h3>Links</h3>
-        <a href="https://www.github.com/cmoron">Github</a>, 
-        <a href="https://fr.linkedin.com/pub/cyril-moron/a/135/a44">LinkedIn</a>, 
-        <a href="index.html">Homepage</a>
+    /* --- TYPOGRAPHIE --- */
+    h1 { font-weight: 700; color: var(--naval-blue); margin-bottom: 0.2rem; }
+    h2 { font-weight: 400; color: var(--text-grey); font-size: 1.3rem; margin-top: 0; }
+    h3 { 
+      color: var(--naval-blue); 
+      font-weight: 600; 
+      font-size: 1.4rem;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
 
-        <h3>Work experience</h3>
-        <h4>12/2017 - now : Software engineer at Naval Group</h4>
-        Software development and integration for submarines combat management systems.
-        <ul>
-            <li>Conception and development of software components.</li>
-            <li>Technical decisions and technological orientations.</li>
-            <li>Software constraints analysis and optimisations : performances, evolutivity and systems security.</li>
-            <li>Software production process and versioning optimisation in a DevOps way.</li>
-            <li>Conduct training to international clients about developing combat management system software components.</li>
-        </ul>
-        Technical environment : Java, GEMO framework, Linux, Bash, Git, Gitlab, Jenkins, Python.
-        <h4>07/2011 - 12/2017 (6 years, 6 months) : Software engineer at Atos</h4>
-        Software development and integration for submarines combat management systems.
-        <ul>
-            <li>Conception and development of software components.</li>
-            <li>Software constraints analysis and optimisations : performances, evolutivity and systems security.</li>
-            <li>Software integration : software components assembly to deliver runnable product. Production cycle optimisation.
-        </ul>
-        Technical environment : Java, GEMO framework, Linux, Bash, IBM Clearcase.
-        <h4>02/2011 - 07/2011 (5 months) : Research trainee at LIRIS</h4>
-        Reasearch internship on multi-agent systems subject.
-        <ul>
-            <li>Creation of a model to represent short (tactical) and long (strategic) timescale decision making mixing reactive and cognitive agents.</li>
-            <li>Development of a software simulator to run the proposed model and monitor experimental results.</li>
-        </ul>
-        Technical environment : Multi-agent systems, Java.
-        <h3>Education</h3>
-        <h4>2010 - 2011 : INSA Lyon</h4>
-        <p>Master's degree in artificial intelligence</p>
-        <h4>2007 - 2010 : EPSI Lyon</h4>
-        <p>Master's degree in computer science and software engineering</p>
-        <h4>2005 - 2007 : Université Claude Bernard Lyon</h4>
-        <p>Two-year degree in computer science</p>
-        <h3>Skills</h3>
-        <h4>Programing</h4>
-        Algorithms, Java (OCA certification), Python, Bash, Typescript/Javascript (ES6).
-        <h4>DevOps tools</h4>
-        Git, Gitlab, Github, Jenkins, Apache.
-        <h4>Other</h4>
-        Linux.
-    </body>
+    /* Ligne sous les titres de section */
+    .section-header {
+      border-bottom: 2px solid var(--naval-blue-light);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    /* --- CARTES & COMPOSANTS --- */
+    .card {
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--naval-blue);
+      background: #fff;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* En-tête de carte personnalisé */
+    .card-header-custom {
+      background-color: #fff;
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(0,0,0,.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* --- BADGES --- */
+    .badge-skill {
+      background-color: var(--naval-blue);
+      font-weight: 500;
+      padding: 0.6em 0.9em;
+      margin-right: 4px;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+    }
+
+    .badge-skill-dark { background-color: #343a40; }
+    .badge-skill-secondary { background-color: #6c757d; }
+
+    /* --- BOUTONS --- */
+    .btn-custom {
+      color: var(--naval-blue);
+      border-color: var(--naval-blue);
+    }
+    .btn-custom:hover {
+      background-color: var(--naval-blue);
+      color: #fff;
+    }
+
+    /* Utilitaires */
+    a { color: var(--naval-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .text-justify { text-align: justify; }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-8">
+          <h1>Cyril Moron</h1>
+          <h2>Lead Software Engineer & Framework Architect</h2>
+          <p class="text-muted mt-2 lead fs-6">
+            Mission-Critical Software Expert | Core Framework Architecture | Advanced Software Engineering
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <div class="mb-1"><a href="mailto:cyril.moron@gmail.com"><i class="fa-solid fa-envelope me-2"></i>cyril.moron@gmail.com</a></div>
+          <div class="mb-1"><i class="fa-solid fa-phone me-2 text-muted"></i>+33 6 78 81 06 90</div>
+          <div class="mb-3"><i class="fa-solid fa-location-dot me-2 text-muted"></i>Six-Fours-les-Plages, France</div>
+          <div>
+            <a href="https://www.github.com/cmoron" class="btn btn-sm btn-dark me-1"><i class="fa-brands fa-github"></i> Github</a>
+            <a href="https://www.linkedin.com/in/cyril-moron" class="btn btn-sm btn-custom me-1"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h3><i class="fa-solid fa-briefcase me-2"></i>Work Experience</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <img src="img/logo_naval_group.png" alt="Naval Group" style="height: 30px; width: auto; object-fit: contain; margin-right: 12px;">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold" style="color: var(--naval-blue);">Lead Software Engineer</h4>
+                  <div class="small text-muted">Naval Group</div>
+                </div>
+              </div>
+              <span class="badge bg-secondary d-none d-md-block">Current</span>
+            </div>
+
+            <div class="card-body bg-light bg-opacity-10">
+              <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                <span class="text-muted small"><i class="far fa-calendar-alt me-1"></i>11/2022 - Present</span>
+                <span class="text-muted small"><i class="fa-solid fa-map-marker-alt me-1"></i>Ollioules, France</span>
+              </div>
+
+              <p class="card-text">
+                Technical Lead for the core internal framework serving as the software foundation for Combat Management Systems (CMS).
+                My role focuses on ensuring the robustness of legacy systems while preparing architectural evolutions.
+              </p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Hard Engineering:</strong> Maintenance of critical distributed mechanisms (Java & C++): Data Distribution Service (DDS/DLRL), Fault Tolerance components, and Distributed JVM tuning.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Python Authority:</strong> Responsible for defining the Group's normative technical reference for Python (coding rules, tooling, industrialization) in a Defense context.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Expert Support:</strong> Acting as the last line of defense for complex technical issues (memory leaks, network latency, system crashes).
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>DevOps & Release Strategy:</strong> Driving the framework's CI/CD pipelines (GitLab), enforcing strict quality gates, and managing the end-to-end versioning, production, and distribution of software releases.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <img src="img/logo_naval_group.png" alt="Naval Group" style="height: 30px; width: auto; object-fit: contain; margin-right: 12px;">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold">Senior Software Integrator</h4>
+                  <div class="small text-muted">Naval Group</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body bg-light bg-opacity-10">
+              <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                <span class="text-muted small"><i class="far fa-calendar-alt me-1"></i>12/2017 - 11/2022</span>
+              </div>
+
+              <p class="card-text">
+                Software integration and system configuration for Submarine Combat Management Systems, focusing primarily on the Scorpène-class (Brazilian PROSUB program).
+              </p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Software Integration:</strong> Full-stack assembly of the CMS, handling OS configuration, network layers, and software startup sequences.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Domain Expertise:</strong> Integration and validation of critical subsystems including Tactical Situation and Weapons.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Performance & Stability:</strong> Analysis and optimization of system constraints (scalability, boot time, operational readiness).
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>International Tech Transfer:</strong> Conducted technical training and support for the Brazilian Navy (Scorpène program), ensuring their autonomy on software assembly.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <img src="img/logo_atos.png" alt="Atos" style="height: 30px; width: auto; object-fit: contain; margin-right: 12px;">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold">Software Engineer</h4>
+                  <div class="small text-muted">Atos (Consultant for Naval Group)</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body bg-light bg-opacity-10">
+              <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                <span class="text-muted small"><i class="far fa-calendar-alt me-1"></i>07/2011 - 12/2017</span>
+              </div>
+              <p class="card-text">Development and integration for Submarine Combat Systems (Barracuda and Scorpène classes), with a strong focus on critical weapon systems and hardware interfacing.</p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Weapon Launch Sequences:</strong> Specialized in designing and implementing robust software state machines for critical weapon launch sequences, including SM39 (Exocet), F21 (Torpedo), and MdCN (Naval Cruise Missile).
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Equipment Interfacing:</strong> Deep analysis of manufacturer Interface Control Documents (ICDs) to develop the software modules responsible for parsing and managing complex network exchange formats with the MdCN.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Subsystems Engineering:</strong> Core backend development for Tactical Situation and External Sensors subsystems.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div> </div> <div class="row mt-4">
+
+        <div class="col-md-6 d-flex flex-column">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-flask me-2"></i>Side Projects</h3>
+          </div>
+          <div class="card h-100 border-start-0 border-top-0 border-end-0 border-bottom-0 shadow-sm" style="border-left: 4px solid #6c757d !important;">
+            <div class="card-body">
+              <p class="small text-muted mb-3 fst-italic">
+                Leveraging personal projects to maintain "full-stack" agility and benchmark modern tools.
+              </p>
+
+              <div class="mb-4">
+                <h6 class="fw-bold"><i class="fa-brands fa-rust me-2 text-dark"></i>System Programming (Rust)</h6>
+                <p class="small mb-0">Development of <code>mush</code>, a custom scaffolding CLI tool in <strong>Rust</strong>. Focus on memory safety and low-level tooling.</p>
+              </div>
+
+              <div>
+                <h6 class="fw-bold"><i class="fa-brands fa-docker me-2 text-primary"></i>Microservices (MyPacer)</h6>
+                <p class="small mb-0">End-to-end architecture: <strong>Python API</strong>, Svelte Frontend, Docker orchestration, and CI/CD pipelines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 d-flex flex-column">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-code me-2"></i>Technical Skills</h3>
+          </div>
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="mb-3">
+                <div class="fw-bold text-muted small text-uppercase mb-2">Core Expertise</div>
+                <div>
+                  <span class="badge badge-skill">Java</span>
+                  <span class="badge badge-skill">Software Integration</span>
+                  <span class="badge badge-skill">Legacy Maintenance</span>
+                  <span class="badge badge-skill">Linux OS (RHEL/Debian/Arch)</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="fw-bold text-muted small text-uppercase mb-2">Systems & Automation</div>
+                <div>
+                  <span class="badge badge-skill badge-skill-dark">C / C++</span>
+                  <span class="badge badge-skill badge-skill-dark">Rust</span>
+                  <span class="badge badge-skill badge-skill-dark">Python</span>
+                  <span class="badge badge-skill badge-skill-dark">Bash / Ansible</span>
+                  <span class="badge badge-skill badge-skill-dark">Docker</span>
+                  <span class="badge badge-skill badge-skill-dark">GitLab CI</span>
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold text-muted small text-uppercase mb-2">Engineering Practices</div>
+                <div>
+                  <span class="badge badge-skill badge-skill-secondary">Software Architecture</span>
+                  <span class="badge badge-skill badge-skill-secondary">DevOps</span>
+                  <span class="badge badge-skill badge-skill-secondary">SonarQube</span>
+                  <span class="badge badge-skill badge-skill-secondary">Agile / Scrum</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div> <div class="row mt-4">
+        <div class="col-12">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-graduation-cap me-2"></i>Education & Certifications</h3>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 d-flex mb-3">
+          <div class="card flex-fill w-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0">INSA Lyon</h6>
+                <span class="badge bg-light text-dark border">2010 - 2011</span>
+              </div>
+              <div class="small fw-bold">Master 2 Recherche</div>
+              <div class="small text-muted">Artificial Intelligence & Decision Making</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 d-flex mb-3">
+          <div class="card flex-fill w-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0">EPSI Lyon</h6>
+                <span class="badge bg-light text-dark border">2007 - 2010</span>
+              </div>
+              <div class="small fw-bold">Master's Degree</div>
+              <div class="small text-muted">Computer Science Engineering</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 d-flex mb-3">
+          <div class="card flex-fill w-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="fw-bold mb-0"><i class="fa-brands fa-java me-2 text-dark"></i>Oracle</h6>
+              </div>
+              <div class="small fw-bold">Oracle Certified Associate (OCA)</div>
+              <div class="small text-muted">Java SE 7 Programmer</div>
+            </div>
+          </div>
+        </div>
+
+      </div> <div class="row mt-3 mb-3 border-top pt-3">
+        <div class="col text-center text-muted small">
+          &copy; 2026 Cyril Moron - Generated for professional use.
+        </div>
+      </div>
+
+    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
-
