@@ -9,8 +9,8 @@
     <style>
     :root {
       /* Charte Naval Group / "Pro" */
-      --naval-blue: #1a3c5e;       /* Bleu sombre dominant */
-      --naval-blue-light: #2c527a; /* Bleu plus clair pour accents */
+      --naval-blue: #1a3c5e;       
+      --naval-blue-light: #2c527a; 
       --text-grey: #5a6268;
       --bg-light: #f8f9fa;
     }
@@ -24,90 +24,86 @@
     /* --- TYPOGRAPHIE --- */
     h1 { font-weight: 700; color: var(--naval-blue); margin-bottom: 0.2rem; }
     h2 { font-weight: 400; color: var(--text-grey); font-size: 1.3rem; margin-top: 0; }
-    h3 { 
-      color: var(--naval-blue); 
-      font-weight: 600; 
-      font-size: 1.4rem;
-      margin-bottom: 0;
-      display: flex;
-      align-items: center;
-    }
+    h3 { color: var(--naval-blue); font-weight: 600; font-size: 1.4rem; margin-bottom: 0; display: flex; align-items: center; }
 
     /* Ligne sous les titres de section */
-    .section-header {
-      border-bottom: 2px solid var(--naval-blue-light);
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.5rem;
-      margin-top: 2rem;
-    }
+    .section-header { border-bottom: 2px solid var(--naval-blue-light); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; }
 
     /* --- CARTES & COMPOSANTS --- */
-    .card {
-      border: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--naval-blue);
-      background: #fff;
-      transition: transform 0.2s ease-in-out;
-    }
-
-    /* En-tête de carte personnalisé */
-    .card-header-custom {
-      background-color: #fff;
-      padding: 1.25rem;
-      border-bottom: 1px solid rgba(0,0,0,.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .card { border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; border-left: 4px solid var(--naval-blue); background: #fff; }
+    .card-header-custom { background-color: #fff; padding: 1.25rem; border-bottom: 1px solid rgba(0,0,0,.05); display: flex; justify-content: space-between; align-items: center; }
 
     /* --- BADGES --- */
-    .badge-skill {
-      background-color: var(--naval-blue);
-      font-weight: 500;
-      padding: 0.6em 0.9em;
-      margin-right: 4px;
-      margin-bottom: 6px;
-      font-size: 0.85rem;
-    }
-
+    .badge-skill { background-color: var(--naval-blue); font-weight: 500; padding: 0.6em 0.9em; margin-right: 4px; margin-bottom: 6px; font-size: 0.85rem; }
     .badge-skill-dark { background-color: #343a40; }
     .badge-skill-secondary { background-color: #6c757d; }
 
     /* --- BOUTONS --- */
-    .btn-custom {
-      color: var(--naval-blue);
-      border-color: var(--naval-blue);
-    }
-    .btn-custom:hover {
-      background-color: var(--naval-blue);
-      color: #fff;
-    }
-
-    /* Utilitaires */
+    .btn-custom { color: var(--naval-blue); border-color: var(--naval-blue); }
+    .btn-custom:hover { background-color: var(--naval-blue); color: #fff; }
     a { color: var(--naval-blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .text-justify { text-align: justify; }
+
+    /* =========================================
+       HACK CSS POUR L'IMPRESSION PDF 1-PAGE
+       ========================================= */
+    @media print {
+      /* Définit les marges matérielles de la feuille A4 */
+      @page { margin: 0.8cm 1cm; }
+
+      body { background-color: #fff !important; font-size: 11px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      /* Annulation des marges Bootstrap conçues pour les grands écrans */
+      .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      .py-5 { padding-top: 0 !important; padding-bottom: 0 !important; }
+      .mb-5 { margin-bottom: 1rem !important; }
+      .mt-4 { margin-top: 0.5rem !important; }
+      .mb-4 { margin-bottom: 0.5rem !important; }
+      .mb-3 { margin-bottom: 0.5rem !important; }
+
+      /* Réduction des Polices pour que tout tienne */
+      h1 { font-size: 2rem !important; }
+      h2 { font-size: 1.15rem !important; }
+      h3 { font-size: 1.25rem !important; }
+      .lead { font-size: 11.5px !important; font-weight: 500 !important; margin-bottom: 0 !important; }
+      .h5 { font-size: 1.15rem !important; }
+      p, .list-group-item, .small { font-size: 10.5px !important; line-height: 1.4 !important; }
+      
+      /* Compression des espaces dans les cartes */
+      .section-header { margin-top: 1rem !important; margin-bottom: 0.5rem !important; padding-bottom: 0.2rem !important; }
+      .card { margin-bottom: 0.6rem !important; box-shadow: none !important; border: 1px solid #e9ecef !important; border-left: 4px solid var(--naval-blue) !important; break-inside: avoid; page-break-inside: avoid; }
+      .card-header-custom { padding: 0.5rem 1rem !important; }
+      .card-body { padding: 0.5rem 1rem !important; }
+      .list-group-item { padding: 0.15rem 0 !important; }
+      .badge-skill { padding: 0.4em 0.6em !important; font-size: 8.5px !important; margin-bottom: 3px !important; }
+
+      /* On cache le bouton Github/LinkedIn et le footer qui ne servent à rien sur papier */
+      .btn { display: none !important; }
+      .border-top { display: none !important; }
+      /* Force les hauteurs égales pour les colonnes Side Projects / Skills */
+      .row { display: flex !important; flex-wrap: wrap !important; }
+      .col-6 { display: flex !important; flex-direction: column !important; }
+      .card.h-100 { height: 100% !important; flex-grow: 1 !important; }
+    }
     </style>
   </head>
   <body>
     <div class="container py-5">
 
       <div class="row align-items-center mb-5">
-        <div class="col-lg-8">
+        <div class="col-8">
           <h1>Cyril Moron</h1>
           <h2>Lead Software Engineer & Framework Architect</h2>
           <p class="text-muted mt-2 lead fs-6">
             Mission-Critical Software Expert | Core Framework Architecture | Advanced Software Engineering
           </p>
         </div>
-        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+        <div class="col-4 text-end">
           <div class="mb-1"><a href="mailto:cyril.moron@gmail.com"><i class="fa-solid fa-envelope me-2"></i>cyril.moron@gmail.com</a></div>
           <div class="mb-1"><i class="fa-solid fa-phone me-2 text-muted"></i>+33 6 78 81 06 90</div>
           <div class="mb-3"><i class="fa-solid fa-location-dot me-2 text-muted"></i>Six-Fours-les-Plages, France</div>
           <div>
             <a href="https://www.github.com/cmoron" class="btn btn-sm btn-dark me-1"><i class="fa-brands fa-github"></i> Github</a>
-            <a href="https://www.linkedin.com/in/cyril-moron" class="btn btn-sm btn-custom me-1"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            <a href="https://www.linkedin.com/in/cyril-moron" class="btn btn-sm btn-custom"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
           </div>
         </div>
       </div>
@@ -233,9 +229,12 @@
             </div>
           </div>
 
-        </div> </div> <div class="row mt-4">
+        </div>
+      </div>
 
-        <div class="col-md-6 d-flex flex-column">
+      <div class="row mt-4">
+        
+        <div class="col-6 d-flex flex-column">
           <div class="section-header">
             <h3><i class="fa-solid fa-flask me-2"></i>Side Projects</h3>
           </div>
@@ -258,7 +257,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 d-flex flex-column">
+        <div class="col-6 d-flex flex-column">
           <div class="section-header">
             <h3><i class="fa-solid fa-code me-2"></i>Technical Skills</h3>
           </div>
@@ -297,14 +296,16 @@
           </div>
         </div>
 
-      </div> <div class="row mt-4">
+      </div>
+
+      <div class="row mt-4">
         <div class="col-12">
           <div class="section-header">
             <h3><i class="fa-solid fa-graduation-cap me-2"></i>Education & Certifications</h3>
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 d-flex mb-3">
+        <div class="col-4 d-flex mb-3">
           <div class="card flex-fill w-100">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -317,7 +318,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 d-flex mb-3">
+        <div class="col-4 d-flex mb-3">
           <div class="card flex-fill w-100">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -330,7 +331,7 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-12 d-flex mb-3">
+        <div class="col-4 d-flex mb-3">
           <div class="card flex-fill w-100">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -342,12 +343,16 @@
           </div>
         </div>
 
-      </div> <div class="row mt-3 mb-3 border-top pt-3">
+      </div>
+
+      <div class="row mt-3 mb-3 border-top pt-3">
         <div class="col text-center text-muted small">
           &copy; 2026 Cyril Moron - Generated for professional use.
         </div>
       </div>
 
-    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
