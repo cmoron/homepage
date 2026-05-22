@@ -86,22 +86,20 @@
       }
 
       .identity {
-        display: flex;
-        align-items: center;
-        gap: 1.25rem;
-        margin-bottom: 1.75rem;
+        font-family:
+          ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.92rem;
+        line-height: 1.55;
+        margin: 0 0 3rem;
+        color: var(--fg);
       }
-      .identity img {
-        width: 84px;
-        height: 84px;
-        border-radius: 50%;
-        object-fit: cover;
-        background: var(--paper);
-        border: 1px solid var(--rule);
-        flex-shrink: 0;
+      .identity .prompt {
+        color: var(--accent);
+        user-select: none;
+        margin-right: 0.5ch;
       }
-      .identity .who {
-        min-width: 0;
+      .identity .cmd {
+        color: var(--muted);
       }
       h1 {
         font-family:
@@ -110,7 +108,7 @@
         font-weight: 600;
         letter-spacing: 0;
         line-height: 1.2;
-        margin: 0 0 0.25rem;
+        margin: 0.4rem 0 0.15rem;
       }
       .role {
         font-family:
@@ -118,23 +116,30 @@
         color: var(--muted);
         font-size: 0.82rem;
         letter-spacing: 0;
-        margin: 0;
+        margin: 0 0 0.6rem;
       }
       .role .sep {
         color: var(--faint);
         padding: 0 0.5em;
       }
-
-      .intro {
-        margin: 0 0 3rem;
-        font-size: 1.05rem;
-        line-height: 1.7;
+      .cursor {
+        display: inline-block;
+        width: 0.55em;
+        height: 1em;
+        vertical-align: -0.15em;
+        background: var(--fg);
+        margin-left: 0.15ch;
+        animation: blink 1.05s steps(1) infinite;
       }
-      .intro p {
-        margin: 0 0 0.9rem;
+      @keyframes blink {
+        50% {
+          background: transparent;
+        }
       }
-      .intro p:last-child {
-        margin-bottom: 0;
+      @media (prefers-reduced-motion: reduce) {
+        .cursor {
+          animation: none;
+        }
       }
 
       a {
@@ -298,13 +303,6 @@
         main {
           padding: 2.5rem 1.2rem 3.5rem;
         }
-        .identity {
-          gap: 1rem;
-        }
-        .identity img {
-          width: 64px;
-          height: 64px;
-        }
         h1 {
           font-size: 1.4rem;
         }
@@ -324,28 +322,15 @@
   <body>
     <main>
       <div class="identity">
-        <img src="img/cyril-moron.png" alt="Portrait de Cyril Moron" />
-        <div class="who">
-          <h1>Cyril Moron</h1>
-          <p class="role">
-            ingénieur logiciel<span class="sep">·</span>naval group
-          </p>
+        <div><span class="prompt">$</span><span class="cmd">whoami</span></div>
+        <h1>Cyril Moron</h1>
+        <p class="role">
+          ingénieur logiciel<span class="sep">·</span>naval group
+        </p>
+        <div>
+          <span class="prompt">$</span
+          ><span class="cursor" aria-hidden="true"></span>
         </div>
-      </div>
-
-      <div class="intro">
-        <p>
-          J'écris du logiciel depuis assez longtemps pour préférer ce qui tient
-          dans la tête à ce qui impressionne en démo. Je travaille aujourd'hui
-          chez Naval Group, entre systèmes au long cours, outillage interne et
-          agents autonomes.
-        </p>
-        <p>
-          Je m'intéresse aux architectures qu'on peut relire dans deux ans sans
-          grimacer, aux CLIs qu'on répare à la main, et à l'orchestration
-          d'agents IA pensée comme une chaîne Unix : petits outils composables,
-          frontières nettes, comportement prévisible.
-        </p>
       </div>
 
       <section aria-label="Écrits">
@@ -384,8 +369,8 @@
         </ul>
       </section>
 
-      <section aria-label="Ailleurs">
-        <h2>ailleurs</h2>
+      <section aria-label="Links">
+        <h2>links</h2>
         <dl class="kv">
           <dt>github</dt>
           <dd>
