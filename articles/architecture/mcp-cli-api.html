@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP, CLI, API — décrypter le débat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Newsreader:opsz,wght@6..72,300..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f0eadc;
+  --cream-soft: #e8e0cf;
+  --cream-deep: #d9cfb8;
+  --ink: #1a1714;
+  --ink-soft: #3a342c;
+  --muted: #6b6357;
+  --muted-light: #9a907f;
+  --rust: #b54321;
+  --rust-deep: #8a2f15;
+  --teal: #2a4a4a;
+  --paper-line: rgba(26,23,20,0.12);
+  --code-bg: #1a1714;
+  --code-text: #e8e0cf;
+  --code-accent: #d8a560;
+  --code-comment: #7a7264;
+  --code-string: #b8d4a8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.65;
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(at 20% 10%, rgba(181,67,33,0.04) 0%, transparent 50%),
+    radial-gradient(at 85% 80%, rgba(42,74,74,0.05) 0%, transparent 50%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* paper grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 32px 120px;
+}
+
+/* HEADER */
+header {
+  margin-bottom: 80px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+.meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 32px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.meta .dot {
+  width: 4px; height: 4px;
+  background: var(--rust);
+  border-radius: 50%;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 350;
+  font-size: clamp(40px, 7vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+}
+
+h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--rust);
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+}
+
+.lede {
+  font-family: 'Newsreader', serif;
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-weight: 300;
+  font-style: italic;
+  max-width: 620px;
+  font-variation-settings: "opsz" 24;
+}
+
+/* SECTIONS */
+section { margin-bottom: 88px; }
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 32px;
+  font-variation-settings: "opsz" 72;
+  position: relative;
+  padding-left: 0;
+}
+
+h2::before {
+  content: counter(section, decimal-leading-zero);
+  counter-increment: section;
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--rust);
+  font-weight: 500;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+body { counter-reset: section; }
+
+h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.3;
+  margin-top: 40px;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+p { margin-bottom: 20px; }
+
+p strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+a {
+  color: var(--rust);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(181,67,33,0.35);
+  transition: text-decoration-color 0.2s;
+}
+a:hover { text-decoration-color: var(--rust); }
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82em;
+  background: var(--cream-deep);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+/* STACK DIAGRAM */
+.stack {
+  margin: 40px 0;
+  border: 1px solid var(--paper-line);
+  background: var(--cream-soft);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stack-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  border-bottom: 1px solid var(--paper-line);
+  position: relative;
+  transition: background 0.2s;
+}
+.stack-row:last-child { border-bottom: none; }
+.stack-row:hover { background: var(--cream-deep); }
+
+.stack-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted-light);
+  background: var(--cream-deep);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 18px;
+  letter-spacing: 0.1em;
+  border-right: 1px solid var(--paper-line);
+}
+
+.stack-content {
+  padding: 18px 22px;
+}
+
+.stack-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.stack-name .badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  margin-left: 8px;
+  vertical-align: 2px;
+}
+.badge.low { background: rgba(42,74,74,0.12); color: var(--teal); }
+.badge.mid { background: rgba(181,67,33,0.12); color: var(--rust); }
+.badge.high { background: rgba(26,23,20,0.85); color: var(--cream); }
+
+.stack-desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* CODE BLOCKS */
+.code-compare {
+  margin: 32px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--paper-line);
+}
+
+.code-block {
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 0;
+}
+
+.code-block + .code-block {
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.code-label {
+  background: rgba(255,255,255,0.05);
+  padding: 10px 18px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: var(--code-accent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.code-tokens {
+  color: var(--muted-light);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+.code-body {
+  padding: 18px 22px;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.code-body .c { color: var(--code-comment); font-style: italic; }
+.code-body .s { color: var(--code-string); }
+.code-body .k { color: var(--code-accent); }
+.code-body .m { color: #d97070; }
+
+/* STATS */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0;
+  margin: 40px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+
+.stat {
+  padding: 24px 20px;
+  border-right: 1px solid var(--paper-line);
+}
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--rust);
+  margin-bottom: 6px;
+  font-variation-settings: "opsz" 144;
+}
+
+.stat-num .unit {
+  font-size: 24px;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* PULL QUOTE */
+.pullquote {
+  margin: 48px 0;
+  padding: 0 0 0 32px;
+  border-left: 3px solid var(--rust);
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-soft);
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 72, "SOFT" 100;
+}
+
+/* CARDS — où MCP gagne */
+.win-grid {
+  display: grid;
+  gap: 0;
+  margin: 32px 0;
+  border-top: 1px solid var(--paper-line);
+}
+
+.win {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--paper-line);
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+}
+
+.win-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--rust);
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+}
+
+.win-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 19px;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.win-body {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.win-body .ex {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--cream-soft);
+  border-radius: 3px;
+  font-size: 14px;
+  color: var(--muted);
+  border-left: 2px solid var(--cream-deep);
+}
+.win-body .ex strong {
+  color: var(--ink-soft);
+  font-style: normal;
+}
+
+/* DECISION */
+.decision {
+  margin: 40px 0;
+  padding: 36px 32px;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 4px;
+  position: relative;
+}
+
+.decision::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: -4px; right: 12px; bottom: 12px;
+  border: 1px solid var(--cream-deep);
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.decision h3 {
+  color: var(--cream);
+  margin-top: 0;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.decision p {
+  color: var(--cream-deep);
+  font-size: 17px;
+}
+
+.decision .rule {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--cream);
+  margin: 20px 0;
+  font-weight: 350;
+}
+
+.decision .rule .key {
+  color: var(--code-accent);
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* TLDR */
+.tldr {
+  margin-top: 60px;
+  padding: 32px 0;
+  border-top: 2px solid var(--ink);
+}
+
+.tldr-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.tldr p {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 350;
+  letter-spacing: -0.005em;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--paper-line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted-light);
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .container { padding: 48px 20px 80px; }
+  .lede { font-size: 18px; }
+  .stack-row { grid-template-columns: 48px 1fr; }
+  .stack-content { padding: 14px 16px; }
+  .code-body { font-size: 11px; padding: 14px 16px; }
+  .pullquote { font-size: 20px; padding-left: 20px; }
+  .stat-num { font-size: 38px; }
+  .stat-num .unit { font-size: 18px; }
+  .decision { padding: 24px 20px; }
+  .decision .rule { font-size: 18px; }
+  .tldr p { font-size: 17px; }
+}
+
+/* subtle animation on load */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+header, section { animation: fadeIn 0.6s ease-out both; }
+section:nth-of-type(1) { animation-delay: 0.1s; }
+section:nth-of-type(2) { animation-delay: 0.15s; }
+section:nth-of-type(3) { animation-delay: 0.2s; }
+section:nth-of-type(4) { animation-delay: 0.25s; }
+section:nth-of-type(5) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="meta">
+    <span>Note technique</span>
+    <span class="dot"></span>
+    <span>Mai 2026</span>
+    <span class="dot"></span>
+    <span>Lecture · 8 min</span>
+  </div>
+  <h1>MCP, CLI, API directe&nbsp;— <em>comment choisir</em></h1>
+  <p class="lede">Trois façons pour un agent d'accéder au monde extérieur — et un débat mal posé presque partout. Une grille de lecture honnête, exemples à l'appui.</p>
+</header>
+
+<!-- 1 -->
+<section>
+<h2>D'abord, désempiler les niveaux</h2>
+
+<p>On oppose souvent MCP et CLI comme s'ils étaient deux options interchangeables. Ce sont en fait <strong>quatre niveaux d'abstraction</strong> au-dessus du même substrat : HTTP.</p>
+
+<div class="stack">
+  <div class="stack-row">
+    <div class="stack-num">01</div>
+    <div class="stack-content">
+      <div class="stack-name">API REST brute <span class="badge low">bas niveau</span></div>
+      <div class="stack-desc">L'agent fait <code>curl</code> ou écrit un script Python avec <code>httpx</code>. Le LLM lit la doc OpenAPI et tape l'endpoint directement.</div>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-num">02</div>
+    <div class="stack-content">
+      <div class="stack-name">CLI auto-générée <span class="badge low">bas niveau</span></div>
+      <div class="stack-desc">Outils type Kiota ou openapi-generator. Mapping 1:1 avec l'API. Gain syntaxique seulement, rarement utile pour un agent.</div>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-num">03</div>
+    <div class="stack-content">
+      <div class="stack-name">CLI hand-crafted <span class="badge mid">moyen niveau</span></div>
+      <div class="stack-desc"><code>gh</code>, <code>glab</code>, <code>kubectl</code>, <code>aws</code>. Pagination résolue, auth cachée, endpoints composites, output ergonomique. C'est là que la vraie valeur s'ajoute.</div>
+    </div>
+  </div>
+  <div class="stack-row">
+    <div class="stack-num">04</div>
+    <div class="stack-content">
+      <div class="stack-name">MCP <span class="badge high">haut niveau</span></div>
+      <div class="stack-desc">Protocole JSON-RPC standardisé, schémas typés, OAuth 2.1, discovery, primitives Resources et Prompts en plus des Tools.</div>
+    </div>
+  </div>
+</div>
+
+<p>Ces quatre niveaux tapent le même backend HTTP. La question n'est pas <em>« lequel est le bon »</em>, mais <em>« où la complexité est déjà absorbée ? »</em>.</p>
+</section>
+
+<!-- 2 -->
+<section>
+<h2>Le même geste, trois façons</h2>
+
+<p>Tâche concrète&nbsp;: lister les issues GitHub ouvertes assignées à l'utilisateur. Voilà ce que ça donne, du plus brut au plus structuré.</p>
+
+<div class="code-compare">
+  <div class="code-block">
+    <div class="code-label">
+      <span>API brute · curl</span>
+      <span class="code-tokens">≈ 180 tokens</span>
+    </div>
+    <div class="code-body"><span class="c"># L'agent gère l'auth, l'URL, le parsing, la pagination</span>
+curl -H <span class="s">"Authorization: Bearer $TOKEN"</span> \
+     <span class="s">"https://api.github.com/issues?state=open&assignee=me"</span> \
+  | jq <span class="s">'.[] | {number, title, repo: .repository.name}'</span></div>
+  </div>
+  <div class="code-block">
+    <div class="code-label">
+      <span>CLI hand-crafted · gh</span>
+      <span class="code-tokens">≈ 60 tokens</span>
+    </div>
+    <div class="code-body"><span class="c"># Auth déjà résolue, pagination automatique, output ergonomique</span>
+gh issue list --assignee @me --state open \
+  --json number,title,repository</div>
+  </div>
+  <div class="code-block">
+    <div class="code-label">
+      <span>MCP · tool call</span>
+      <span class="code-tokens">≈ 350 tokens (schéma inclus)</span>
+    </div>
+    <div class="code-body"><span class="c">// Le schéma du tool est chargé en contexte avant l'appel</span>
+{
+  <span class="k">"method"</span>: <span class="s">"tools/call"</span>,
+  <span class="k">"params"</span>: {
+    <span class="k">"name"</span>: <span class="s">"list_issues"</span>,
+    <span class="k">"arguments"</span>: { <span class="k">"state"</span>: <span class="s">"open"</span>, <span class="k">"assignee"</span>: <span class="s">"@me"</span> }
+  }
+}</div>
+  </div>
+</div>
+
+<p>Le verdict est net&nbsp;: la CLI hand-crafted l'emporte largement sur ce geste, parce que <code>gh</code> a déjà absorbé l'auth, la pagination et le formatage. Au passage, c'est aussi ce que le LLM connaît le mieux — il a vu <code>gh</code> des millions de fois dans son entraînement.</p>
+</section>
+
+<!-- 3 -->
+<section>
+<h2>Les chiffres qui ont relancé le débat</h2>
+
+<p>Plusieurs benchmarks publiés début 2026 ont quantifié l'écart de manière brutale&nbsp;:</p>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">4–32<span class="unit">×</span></div>
+    <div class="stat-label">Tokens consommés par MCP vs CLI<br>(Scalekit, 75 runs)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">35<span class="unit">×</span></div>
+    <div class="stat-label">Overhead observé sur tâches complexes<br>(MindStudio)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">72<span class="unit">%</span></div>
+    <div class="stat-label">Fiabilité MCP vs 100% CLI<br>quand la complexité augmente</div>
+  </div>
+</div>
+
+<p>L'explication est mécanique&nbsp;: chaque tool MCP charge son schéma JSON dans le contexte du modèle, plus sa description, plus celle de ses arguments. Avec une dizaine de tools, on a déjà mangé plusieurs milliers de tokens <em>avant même d'avoir commencé à travailler</em>. Et chaque schéma supplémentaire élargit la surface de décision&nbsp;: le modèle hésite entre plus d'options, donc raisonne moins bien.</p>
+
+<div class="pullquote">
+  « Adding too many MCP tools can cause the agent to work worse by increasing decision complexity. »
+</div>
+
+<p>À l'inverse, une CLI mobilise des patterns que le modèle a vus des millions de fois pendant son entraînement (Stack Overflow, GitHub, docs). Le coût cognitif est quasi nul.</p>
+</section>
+
+<!-- 4 -->
+<section>
+<h2>Là où MCP gagne <em>vraiment</em></h2>
+
+<p>L'erreur du débat actuel, c'est de comparer MCP et CLI sur le terrain où CLI est de toute façon supérieure&nbsp;: dev local, mono-utilisateur, shell disponible. Mais MCP n'est pas un format alternatif à CLI&nbsp;— c'est un protocole pour des situations où CLI ne peut <em>pas</em> aller. Quatre cas structurels&nbsp;:</p>
+
+<div class="win-grid">
+  <div class="win">
+    <div class="win-num">01</div>
+    <div>
+      <div class="win-title">Transport remote, cross-client</div>
+      <div class="win-body">
+        Une CLI, c'est <code>fork/exec</code> local. Il faut un shell, un binaire installé, le bon OS. Dès que l'agent tourne dans un sandbox web, une app mobile, ou un service SaaS distant — la CLI n'existe plus.
+        <span class="ex"><strong>Exemple&nbsp;:</strong> Claude Desktop, Cursor, Zed, Continue peuvent tous consommer le <em>même</em> serveur MCP sans installation locale. Avec CLI, chaque utilisateur de chaque éditeur doit installer chaque outil.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="win">
+    <div class="win-num">02</div>
+    <div>
+      <div class="win-title">OAuth multi-tenant déléguée</div>
+      <div class="win-body">
+        <code>gh auth login</code> résout l'auth <em>du user de la machine</em>. Pour un produit qui fait agir un agent on-behalf-of N utilisateurs distincts, chacun avec ses permissions, la CLI ne tient plus la route.
+        <span class="ex"><strong>Exemple&nbsp;:</strong> un SaaS qui automatise des workflows GitHub pour 5000 clients. MCP standardise OAuth 2.1 + Dynamic Client Registration depuis 2025. Avec CLI, il faudrait provisionner 5000 contextes d'auth — non scalable.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="win">
+    <div class="win-num">03</div>
+    <div>
+      <div class="win-title">Bi-directionnalité &amp; notifications</div>
+      <div class="win-body">
+        Une CLI, c'est strictement requête → réponse, cycle court. MCP supporte le <em>sampling</em> (le serveur demande au LLM de générer pendant l'exécution), les <em>notifications</em> (progress async, invalidation), l'<em>elicitation</em> (le serveur questionne l'utilisateur en cours de route).
+        <span class="ex"><strong>Exemple&nbsp;:</strong> un agent de migration de base de données qui pousse un progress update toutes les 30 secondes, ou qui demande au LLM de juger un diff en plein milieu de l'opération.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="win">
+    <div class="win-num">04</div>
+    <div>
+      <div class="win-title">Primitives Resources &amp; Prompts</div>
+      <div class="win-body">
+        CLI n'a qu'une primitive&nbsp;: la commande qui s'exécute. MCP en a trois. <strong>Resources</strong> = contenu exposé comme contexte (pas comme retour d'appel). <strong>Prompts</strong> = templates paramétrés exposés à l'utilisateur dans le client.
+        <span class="ex"><strong>Exemple&nbsp;:</strong> un serveur MCP de documentation peut exposer chaque page comme une <em>resource</em> attachable au contexte. Avec CLI tu peux faire <code>cat</code>, mais tu perds la sémantique « ceci est du contexte de référence, pas un résultat d'action ».</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>À noter&nbsp;: aucun de ces quatre points ne se règle en « standardisant » la CLI. C'est le modèle d'exécution qui diverge. Le seul moyen de faire une CLI remote, multi-tenant, bi-directionnelle, avec des Resources… c'est de réinventer MCP.</p>
+</section>
+
+<!-- 5 -->
+<section>
+<h2>Le vrai critère de décision</h2>
+
+<p>Une seule question tranche presque tout, formulée par Scalekit dans leur benchmark&nbsp;:</p>
+
+<div class="decision">
+  <h3>L'agent agit pour qui&nbsp;?</h3>
+  <p class="rule">Le point d'inflexion, c'est quand l'agent arrête d'agir <span class="key">pour son utilisateur</span> et commence à agir <span class="key">au nom d'autres personnes</span>.</p>
+  <p>Automatiser son propre workflow → CLI. Un produit qui automatise des workflows pour des clients distincts, dans leurs organisations, avec leurs droits → MCP. Le surcoût en tokens est le prix d'admission de la gouvernance.</p>
+</div>
+
+<p>Le piège dans l'autre sens existe aussi&nbsp;: coller du MCP partout « parce que c'est le standard », y compris sur du dev local mono-utilisateur, c'est payer le surcoût sans bénéficier de la gouvernance. C'est ce qui produit la fatigue MCP qu'on lit en ce moment.</p>
+
+<h3>L'architecture qui gagne&nbsp;: hybride</h3>
+<p>Les équipes les plus matures en 2026 ne choisissent plus un camp. Elles utilisent&nbsp;:</p>
+<ul style="margin: 16px 0 24px 24px; padding: 0;">
+  <li style="margin-bottom: 8px; padding-left: 8px;">CLI pour 80% des tâches&nbsp;: tools que le modèle connaît déjà (<code>git</code>, <code>kubectl</code>, <code>jq</code>, <code>curl</code>, <code>ffmpeg</code>…).</li>
+  <li style="margin-bottom: 8px; padding-left: 8px;">API directe pour les services sans CLI mais avec un bon OpenAPI — l'agent écrit son script de quelques lignes.</li>
+  <li style="margin-bottom: 8px; padding-left: 8px;">MCP pour les 20% qui demandent vraiment auth déléguée, audit, ou bi-directionnalité.</li>
+</ul>
+
+<p>Le fait que Google ait shippé en parallèle <code>gws</code> CLI <em>et</em> des serveurs MCP Workspace est le signal le plus clair&nbsp;: ce n'est pas une bataille, ce sont deux outils complémentaires pour deux périmètres différents.</p>
+</section>
+
+<!-- TLDR -->
+<div class="tldr">
+  <div class="tldr-label">En une phrase</div>
+  <p>CLI quand l'agent agit <em>pour son utilisateur</em>, MCP quand il agit <em>pour quelqu'un d'autre</em>, API directe quand il n'y a ni l'un ni l'autre — et un agent moderne sait jongler entre les trois.</p>
+</div>
+
+<footer>
+  <span>↳ Architecture · Agents IA</span>
+  <span>Sources&nbsp;: Scalekit, MindStudio, Nordic APIs, Firecrawl</span>
+</footer>
+
+</div>
+
+</body>
+</html>
