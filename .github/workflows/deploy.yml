@@ -1,4 +1,13 @@
-name: Deploy to GitHub Pages
+# Deploys moron.at production (nginx on the dedicated server).
+#
+# This does NOT publish GitHub Pages. The server at moron.at serves
+# /home/cyril/src/homepage via nginx. We connect over SSH and let the
+# server pull master itself — a forced-command key in cyril@moron.at's
+# authorized_keys restricts the session to:
+#   cd /home/cyril/src/homepage && git fetch origin master \
+#     && git checkout master && git pull --ff-only origin master
+# So we don't checkout the repo here; we just open the SSH session.
+name: Deploy to moron.at
 
 on:
   push:
@@ -7,31 +16,33 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: deploy-moron-at
   cancel-in-progress: false
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Configure SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.HOMEPAGE_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOMEPAGE_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Trigger server-side pull
+        run: |
+          # The remote forced command ignores any argument we pass and
+          # runs the pinned git pull script. We just need to open the
+          # session and surface its exit status.
+          ssh -i ~/.ssh/id_deploy \
+              -o IdentitiesOnly=yes \
+              -o UserKnownHostsFile=~/.ssh/known_hosts \
+              cyril@moron.at
