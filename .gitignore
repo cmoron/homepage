@@ -1,0 +1,6 @@
+.playwright-mcp/
+.ruff_cache/
+*.png
+!img/*.png
+!favicon.png
+!apple-touch-icon.png

@@ -6,6 +6,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <title>Cyril Moron - Lead Software Engineer</title>
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <style>
     :root {
       /* Charte Naval Group / "Pro" */
@@ -238,70 +241,195 @@
         </div>
       </div>
 
-      <div class="row mt-4">
+      <div class="section-header">
+        <h3><i class="fa-solid fa-flask me-2"></i>Side Projects</h3>
+      </div>
 
-        <div class="col-6 d-flex flex-column">
-          <div class="section-header">
-            <h3><i class="fa-solid fa-flask me-2"></i>Side Projects</h3>
-          </div>
-          <div class="card h-100 border-start-0 border-top-0 border-end-0 border-bottom-0 shadow-sm" style="border-left: 4px solid #6c757d !important;">
-            <div class="card-body">
-              <p class="small text-muted mb-3 fst-italic">
-                Leveraging personal projects to maintain "full-stack" agility and benchmark modern tools.
+      <div class="row">
+        <div class="col-12">
+          <p class="small text-muted mb-3 fst-italic">
+            Products and tools developed and kept operational on my own. A playground for AI agents, modern full-stack and CLIs.
+          </p>
+
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold" style="color: var(--naval-blue);">MyPacer — running platform &amp; B2B tool for FFA clubs</h4>
+                  <div class="small text-muted">SaaS in production · commercial pipeline operated by <strong>Hermes agent</strong> (Nous Research)</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body bg-light bg-opacity-10">
+              <p class="card-text small">
+                Consumer web platform combining a <strong>configurable pace calculator</strong> and a <strong>search engine over the French Athletics Federation database</strong> (940,000 athletes, official records, weekly scraper). Paired with <strong>MyPacer Club</strong>, a B2B module for athletics club managers and volunteers that turns the collection of weekend race results into automated communication.
               </p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Full-stack architecture:</strong> Python API (FastAPI, uv), SvelteKit web, FFA scraper, MyPacer Club dashboard. Independent sub-packages, containerized, deployed to staging and production via Docker Compose and GitHub Actions.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Agent-native pivot:</strong> the DecaSaaS commercial pipeline (FFA club prospecting, follow-ups, season renewals) is operated by Hermes agent (Nous Research) through a dedicated CLI. Python/Typer designed as an execution surface for an LLM: structured JSON output, remote/local modes, scoped tokens, lazily-loaded Markdown operator skills.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Stack:</strong> Python (FastAPI, uv), SvelteKit, PostgreSQL, Docker, GitHub Actions, Hermes agent.
+                </li>
+              </ul>
+            </div>
+          </div>
 
-              <div class="mb-4">
-                <h6 class="fw-bold"><i class="fa-brands fa-rust me-2 text-dark"></i>System Programming (Rust)</h6>
-                <p class="small mb-0">Development of <code>mush</code>, a custom scaffolding CLI tool in <strong>Rust</strong>. Focus on memory safety and low-level tooling.</p>
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold" style="color: var(--naval-blue);">Nestor — self-hosted personal AI assistant</h4>
+                  <div class="small text-muted"><strong>OpenClaw</strong> instance · isolated and secured virtualized infrastructure</div>
+                </div>
               </div>
+            </div>
+            <div class="card-body bg-light bg-opacity-10">
+              <p class="card-text small">
+                Instances of personal AI agents powered by <strong>OpenClaw</strong>, deployed and secured on an isolated virtualized Linux infrastructure.
+              </p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Custom domain skills:</strong> technology watch, application development, sport &amp; health monitoring, multi-agent team for brainstorming technical topics.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Multi-model layering:</strong> frontier model as the main orchestrator for its strong agentic capabilities and autonomy, delegating specialized tasks to lighter LLMs (typically DeepSeek). Capability / latency / cost arbitration.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong>Security &amp; industrialization:</strong> isolation in a dedicated KVM VM, secrets managed outside the workspace, Telegram access restricted to paired contacts, idempotent Ansible deployment, systemd user services.
+                </li>
+              </ul>
+            </div>
+          </div>
 
-              <div>
-                <h6 class="fw-bold"><i class="fa-brands fa-docker me-2 text-primary"></i>Microservices (MyPacer)</h6>
-                <p class="small mb-0">End-to-end architecture: <strong>Python API</strong>, Svelte Frontend, Docker orchestration, and CI/CD pipelines.</p>
+          <div class="card">
+            <div class="card-header-custom">
+              <div class="d-flex align-items-center">
+                <div>
+                  <h4 class="card-title mb-0 h5 fw-bold" style="color: var(--naval-blue);">Health &amp; Sport CLIs — personal tooling</h4>
+                  <div class="small text-muted">Python CLI suite over official and private APIs · dual human + agent consumption</div>
+                </div>
               </div>
+            </div>
+            <div class="card-body bg-light bg-opacity-10">
+              <p class="card-text small">
+                Coherent family of Python CLIs over daily self-tracking tools: <strong>official APIs</strong> (Strava, Withings) or <strong>reverse-engineered private mobile APIs</strong> (Coros, Yazio). Dual output: <code>rich</code> tables for human use, structured JSON for AI agent consumption.
+              </p>
+              <ul class="list-group list-group-flush bg-transparent">
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong><code>strava-cli</code>:</strong> running activities, segments and statistics via the official Strava API.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong><code>withings-cli</code>:</strong> body composition (scale) and ECG recordings (BPM Core) via the official Withings API.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong><code>coros-cli</code>:</strong> sleep metrics extracted from the Coros app.
+                </li>
+                <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                  <i class="fa-solid fa-angle-right me-2 text-secondary"></i>
+                  <strong><code>yazio-cli</code>:</strong> nutrition tracking over the private Yazio API.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-6 d-flex flex-column">
-          <div class="section-header">
-            <h3><i class="fa-solid fa-code me-2"></i>Technical Skills</h3>
-          </div>
-          <div class="card h-100">
+      <div class="section-header">
+        <h3><i class="fa-solid fa-code me-2"></i>Technical Skills</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
             <div class="card-body">
-              <div class="mb-3">
-                <div class="fw-bold text-muted small text-uppercase mb-2">Core Expertise</div>
-                <div>
-                  <span class="badge badge-skill">Java</span>
-                  <span class="badge badge-skill">Software Integration</span>
-                  <span class="badge badge-skill">Legacy Maintenance</span>
-                  <span class="badge badge-skill">Linux OS (RHEL/Debian/Arch)</span>
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <div class="fw-bold text-muted small text-uppercase mb-2">Languages</div>
+                  <div>
+                    <ul class="list-group list-group-flush bg-transparent">
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill">Java</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill">Python</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill">Rust</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill">C / C++</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3">
-                <div class="fw-bold text-muted small text-uppercase mb-2">Systems & Automation</div>
-                <div>
-                  <span class="badge badge-skill badge-skill-dark">C / C++</span>
-                  <span class="badge badge-skill badge-skill-dark">Rust</span>
-                  <span class="badge badge-skill badge-skill-dark">Python</span>
-                  <span class="badge badge-skill badge-skill-dark">Bash / Ansible</span>
-                  <span class="badge badge-skill badge-skill-dark">Docker</span>
-                  <span class="badge badge-skill badge-skill-dark">GitLab CI</span>
+                <div class="col-md-3 mb-3">
+                  <div class="fw-bold text-muted small text-uppercase mb-2">AI Agents &amp; LLM</div>
+                  <div>
+                    <ul class="list-group list-group-flush bg-transparent">
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill" style="background-color: #6f42c1;">OpenClaw</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill" style="background-color: #6f42c1;">Hermes agent</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill" style="background-color: #6f42c1;">Claude Code</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill" style="background-color: #6f42c1;">Agent-ready CLI &amp; MCP</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div class="fw-bold text-muted small text-uppercase mb-2">Engineering Practices</div>
-                <div>
-                  <span class="badge badge-skill badge-skill-secondary">Software Architecture</span>
-                  <span class="badge badge-skill badge-skill-secondary">DevOps</span>
-                  <span class="badge badge-skill badge-skill-secondary">SonarQube</span>
-                  <span class="badge badge-skill badge-skill-secondary">Agile / Scrum</span>
+                <div class="col-md-3 mb-3">
+                  <div class="fw-bold text-muted small text-uppercase mb-2">Infra &amp; DevOps</div>
+                  <div>
+                    <ul class="list-group list-group-flush bg-transparent">
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-dark">Linux (RHEL/Debian/Arch)</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-dark">Docker</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-dark">GitHub Actions / GitLab CI</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <div class="fw-bold text-muted small text-uppercase mb-2">Domain &amp; Practices</div>
+                  <div>
+                    <ul class="list-group list-group-flush bg-transparent">
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-secondary">Software Architecture &amp; Integration</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-secondary">Legacy Maintenance</span>
+                      </li>
+                      <li class="list-group-item bg-transparent border-0 px-0 py-1">
+                        <span class="badge badge-skill badge-skill-secondary">Agile / Scrum</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="row mt-4">

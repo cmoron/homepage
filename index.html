@@ -7,7 +7,7 @@
     <title>Cyril Moron — ingénieur logiciel</title>
     <meta
       name="description"
-      content="Cyril Moron, ingénieur logiciel chez Naval Group. Notes et publications sur l'architecture logicielle, les agents IA, l'outillage et la qualité du code."
+      content="Cyril Moron, ingénieur logiciel chez Naval Group. Systèmes critiques distribués, saas, cli, agents autonomes self-hosted."
     />
     <meta name="author" content="Cyril Moron" />
     <link rel="canonical" href="https://moron.at/" />
@@ -16,7 +16,7 @@
     <meta property="og:title" content="Cyril Moron — ingénieur logiciel" />
     <meta
       property="og:description"
-      content="Ingénieur logiciel. Notes et publications sur l'architecture, les agents IA et l'outillage."
+      content="Systèmes critiques distribués, saas, cli, agents autonomes."
     />
     <meta property="og:url" content="https://moron.at/" />
     <meta property="og:locale" content="fr_FR" />
@@ -26,7 +26,7 @@
     <meta name="twitter:title" content="Cyril Moron — ingénieur logiciel" />
     <meta
       name="twitter:description"
-      content="Ingénieur logiciel. Notes sur l'architecture, les agents IA et l'outillage."
+      content="Systèmes critiques distribués, saas, cli, agents autonomes."
     />
     <meta name="twitter:image" content="https://moron.at/img/cyril-moron.png" />
 
@@ -247,6 +247,63 @@
         border-radius: 2px;
       }
 
+      .tagline {
+        margin: 0 0 0.4rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-style: italic;
+        line-height: 1.5;
+      }
+
+      .works {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .works li + li {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--rule);
+      }
+      .work-head {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        margin-bottom: 0.2rem;
+        flex-wrap: wrap;
+      }
+      .work-name {
+        font-family:
+          ui-serif, Charter, "Iowan Old Style", Cambria, Georgia, serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 0;
+      }
+      .work-kind {
+        font-family:
+          ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+      }
+      .work-kind .dot {
+        color: var(--accent);
+        margin-right: 0.35ch;
+      }
+      .work-desc {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      .work-desc a {
+        color: var(--muted);
+      }
+      .work-desc a:hover {
+        color: var(--accent);
+      }
+
       .kv {
         margin: 0;
         display: grid;
@@ -327,7 +384,10 @@
         <div><span class="prompt">$</span><span class="cmd">whoami</span></div>
         <h1>Cyril Moron</h1>
         <p class="role">
-          ingénieur logiciel<span class="sep">·</span>naval group
+          Ingénieur logiciel<span class="sep">·</span>Naval Group
+        </p>
+        <p class="tagline">
+          Systèmes critiques distribués, saas et agents autonomes.
         </p>
         <div>
           <span class="prompt">$</span
@@ -335,38 +395,17 @@
         </div>
       </div>
 
-      <section aria-label="Écrits">
-        <h2>écrits</h2>
-        <ul class="feed">
-          <li>
-            <p class="entry-meta">
-              <span class="cat">architecture</span>
-              <span class="sep">·</span>
-              <time datetime="2026-05">mai 2026</time>
-            </p>
-            <h3 class="entry-title">
-              <a href="articles/architecture/mcp-cli-api.html"
-                >MCP, CLI, API directe — comment choisir</a
-              >
-            </h3>
-            <p class="entry-desc">
-              Trois manières de brancher un agent sur un système, leurs angles
-              morts, et les critères concrets pour trancher sans céder à la
-              mode.
-            </p>
-          </li>
-        </ul>
-      </section>
-
       <section aria-label="Thèmes">
         <h2>thèmes</h2>
         <ul class="topics">
-          <li>architecture logicielle</li>
-          <li>agents ia</li>
-          <li>outillage cli</li>
+          <li>systèmes distribués</li>
+          <li>logiciel critique</li>
+          <li>saas</li>
+          <li>cli</li>
           <li>automatisation</li>
+          <li>agents autonomes</li>
+          <li>self-hosted</li>
           <li>linux</li>
-          <li>qualité de code</li>
           <li>software minimalism</li>
         </ul>
       </section>
@@ -389,6 +428,10 @@
             <a href="resume.html">english</a> ·
             <a href="resume_fr.html">français</a>
           </dd>
+          <dt>écrits</dt>
+          <dd>
+            <a href="articles/">notes &amp; articles</a>
+          </dd>
         </dl>
       </section>
 
@@ -404,7 +447,6 @@
 
       <footer>
         <p>© cyril moron</p>
-        <p class="stack">html statique · sans js · sans dépendances</p>
       </footer>
     </main>
   </body>

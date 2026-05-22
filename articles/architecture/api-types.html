@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Les 7 familles d'API, sans l'amalgame</title>
+    <meta
+      name="description"
+      content="REST, SOAP, gRPC, GraphQL, Webhooks, WebSockets, WebRTC. Sept protocoles, sept réponses à des problèmes distincts."
+    />
+    <link rel="canonical" href="https://moron.at/articles/architecture/api-types.html" />
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+    <link rel="stylesheet" href="../../css/article.css" />
+  </head>
+  <body>
+    <main>
+      <a href="../" class="back"><span class="arrow">←</span>écrits</a>
+
+      <div class="meta">
+        <span class="cat">Architecture</span><span class="sep">·</span>
+        <span>Mai 2026</span><span class="sep">·</span>
+        <span>Lecture · 10 min</span>
+      </div>
+      <h1>Les 7 familles d'<em>API</em>, sans l'amalgame</h1>
+      <p class="lede">
+        REST, SOAP, gRPC, GraphQL, Webhooks, WebSockets, WebRTC. Sept manières de faire communiquer deux machines. Aucune n'est meilleure que les autres : chacune répond à un problème précis. Voici la grille de lecture.
+      </p>
+
+      <section>
+        <div class="section-label">Préambule</div>
+        <h2>D'abord, c'est quoi une API ?</h2>
+        <p>
+          <strong>API</strong> — <em>Application Programming Interface</em>. Un contrat technique qui permet à un programme d'en utiliser un autre, sans connaître ses détails internes. La nature du contrat varie : une bibliothèque appelée en mémoire, un service local exposé sur une socket, ou — le cas qui nous intéresse ici — un système distant accessible via le réseau.
+        </p>
+        <p>
+          Tout ce qui suit concerne donc les <strong>API réseau</strong> : deux machines distinctes qui s'échangent des données ou déclenchent des opérations à distance, à travers un protocole défini. Et c'est justement le choix de ce protocole qui ouvre les sept familles ci-dessous.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">Mise en perspective</div>
+        <h2>Trois axes pour s'orienter</h2>
+        <p>
+          L'erreur la plus fréquente, c'est de comparer ces protocoles sur leur popularité ou leur âge. Une API n'est pas un produit : c'est une réponse à un problème de communication. Avant de regarder les sept familles, il faut poser les axes qui les séparent vraiment.
+        </p>
+
+        <div class="axes">
+          <div class="axes-title">Les trois questions qui rangent tout</div>
+          <div class="axes-grid">
+            <div class="axis">
+              <div class="axis-name">Qui initie ?</div>
+              <div class="axis-poles">
+                <strong>Client</strong> demande<br />
+                <strong>Serveur</strong> pousse<br />
+                <strong>Les deux</strong> en duplex
+              </div>
+            </div>
+            <div class="axis">
+              <div class="axis-name">Combien de temps ?</div>
+              <div class="axis-poles">
+                <strong>One-shot</strong> (requête / réponse)<br />
+                <strong>Persistant</strong> (connexion ouverte)<br />
+                <strong>Streaming</strong> (flux continu)
+              </div>
+            </div>
+            <div class="axis">
+              <div class="axis-name">Quel format ?</div>
+              <div class="axis-poles">
+                <strong>Texte</strong> (JSON, XML)<br />
+                <strong>Binaire</strong> (Protobuf)<br />
+                <strong>Media</strong> (audio/vidéo)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Avec ces trois axes en tête, on cesse de voir « sept protocoles concurrents » pour voir « sept points dans un espace ». GraphQL et REST sont proches voisins. WebRTC vit dans une autre galaxie. C'est pour ça qu'on ne les remplace pas l'un par l'autre.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">01 · REST · depuis 2000</div>
+        <h2>REST, le standard <em>de facto</em></h2>
+        <p>
+          REST n'est pas un protocole, c'est un style architectural posé par Roy Fielding dans sa thèse. L'idée centrale : tout est une <em>ressource</em> identifiée par une URL, manipulée via les verbes HTTP standards (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>). Chaque requête est <strong>stateless</strong> : le serveur ne garde aucun contexte entre deux appels.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">HTTP/1.1 ou HTTP/2</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">JSON (souvent), texte</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Requête → réponse</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Récupérer un utilisateur</span></div>
+          <div class="code-body"><span class="k">GET</span> /api/users/42
+<span class="c">→ 200 OK</span>
+{
+  <span class="t">"id"</span>: <span class="arr">42</span>,
+  <span class="t">"name"</span>: <span class="s">"Alice"</span>,
+  <span class="t">"email"</span>: <span class="s">"alice@example.com"</span>
+}</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Universellement supporté, cacheable nativement</li>
+              <li>Conventions claires, courbe d'apprentissage douce</li>
+              <li>Outillage abondant (curl, Postman, navigateurs)</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Over-fetching et under-fetching fréquents</li>
+              <li>Pas de streaming natif, pas de push serveur</li>
+              <li>Versioning des contrats parfois douloureux</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          API publiques web, CRUD applicatif, intégrations tierces, mobile classique. Quand on hésite, c'est le défaut raisonnable.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">02 · SOAP · depuis 1998</div>
+        <h2>SOAP, le vétéran de l'entreprise</h2>
+        <p>
+          SOAP (Simple Object Access Protocol) est un protocole strict basé sur XML, doté d'un contrat formel (le WSDL) qui décrit chaque opération et chaque type de données. C'est l'ancêtre des API modernes — souvent moqué pour sa verbosité, mais toujours en place dans la banque, l'assurance, la défense, et tout ce qui demande des transactions ACID inter-systèmes.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">HTTP, SMTP, TCP, JMS…</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">XML strict + WSDL</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Requête → réponse</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Enveloppe SOAP minimale</span></div>
+          <div class="code-body"><span class="k">POST</span> /UserService
+<span class="t">Content-Type</span>: text/xml
+
+<span class="t">&lt;soap:Envelope</span> xmlns:soap=<span class="s">"..."</span><span class="t">&gt;</span>
+  <span class="t">&lt;soap:Body&gt;</span>
+    <span class="t">&lt;GetUser&gt;</span>
+      <span class="t">&lt;UserId&gt;</span>42<span class="t">&lt;/UserId&gt;</span>
+    <span class="t">&lt;/GetUser&gt;</span>
+  <span class="t">&lt;/soap:Body&gt;</span>
+<span class="t">&lt;/soap:Envelope&gt;</span></div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Contrats stricts via WSDL, génération de clients</li>
+              <li>Sécurité robuste (WS-Security, signatures XML)</li>
+              <li>Support natif des transactions distribuées</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Verbosité XML énorme (overhead réseau et CPU)</li>
+              <li>Outillage moderne plus rare, courbe raide</li>
+              <li>Mal adapté au web mobile et aux navigateurs</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Systèmes legacy d'entreprise, intégrations bancaires, paiements interbancaires, secteurs réglementés. Rarement un choix de greenfield aujourd'hui.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">03 · gRPC · depuis 2016</div>
+        <h2>gRPC, la performance pour le back-to-back</h2>
+        <p>
+          gRPC est le framework RPC moderne issu de Google. Il combine trois choix techniques : <strong>Protocol Buffers</strong> comme format binaire compact, <strong>HTTP/2</strong> comme transport (multiplexage, push, compression d'en-têtes), et la <strong>génération de code</strong> à partir d'un fichier <code>.proto</code> dans la plupart des langages. Résultat : des appels typés, rapides, qui supportent le streaming dans les deux sens.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">HTTP/2 (requis)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">Protocol Buffers (binaire)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Unary + 3 modes streaming</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Contrat .proto</span></div>
+          <div class="code-body"><span class="k">syntax</span> = <span class="s">"proto3"</span>;
+
+<span class="k">service</span> UserService {
+  <span class="k">rpc</span> GetUser(UserId) <span class="k">returns</span> (User);
+  <span class="k">rpc</span> StreamUsers(Filter) <span class="k">returns</span> (<span class="k">stream</span> User);
+}
+
+<span class="k">message</span> User {
+  <span class="k">int32</span> id = <span class="arr">1</span>;
+  <span class="k">string</span> name = <span class="arr">2</span>;
+}</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Payload 5 à 10× plus compact que JSON</li>
+              <li>Streaming bidirectionnel natif</li>
+              <li>Génération de clients typés multi-langages</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Support navigateur partiel (passe par gRPC-Web)</li>
+              <li>Debug binaire moins direct que JSON</li>
+              <li>Exige HTTP/2 de bout en bout</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Microservices internes haute performance, communication inter-datacenters, environnements polyglottes avec contrats stricts. Le défaut chez Google, Netflix, Square.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">04 · GraphQL · depuis 2015</div>
+        <h2>GraphQL, le client décide ce qu'il veut</h2>
+        <p>
+          GraphQL (Facebook, 2015) inverse le contrôle de la donnée. Plutôt qu'une liste figée d'endpoints, le serveur publie un <strong>schéma typé</strong>, et le client interroge ce schéma en décrivant exactement les champs dont il a besoin, le tout en une seule requête. Fini les <code>GET /user</code>, puis <code>GET /user/posts</code>, puis <code>GET /user/posts/comments</code> : tout tient en une expression déclarative.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">HTTP (souvent POST)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">Query language + JSON</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Requête déclarative</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Requête GraphQL</span></div>
+          <div class="code-body"><span class="k">query</span> {
+  user(id: <span class="arr">42</span>) {
+    name
+    posts(last: <span class="arr">3</span>) {
+      title
+      comments { author }
+    }
+  }
+}</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Plus d'over-fetching, une seule requête réseau</li>
+              <li>Schéma typé, introspection, outillage riche</li>
+              <li>Évolution sans versioning de l'API</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Caching HTTP standard inopérant</li>
+              <li>Problème du N+1 côté résolveurs</li>
+              <li>Complexité backend, risque de requêtes coûteuses</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Frontends complexes avec besoins de données variables (apps mobile + web partageant un backend), agrégation de plusieurs services, BFF (Backend For Frontend).
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">05 · Webhooks · depuis 2007</div>
+        <h2>Webhooks, l'API inversée</h2>
+        <p>
+          Un webhook n'est pas une API qu'on appelle, c'est une API <em>qui appelle</em>. Le principe : fournir une URL à un service tiers ; quand un événement survient chez lui (un paiement réussi, un commit poussé, un message reçu), il envoie une requête HTTP <strong>vers cette URL</strong>. C'est l'antidote au polling : plutôt que de demander toutes les cinq secondes « du nouveau ? », le système est notifié au moment où l'événement se produit.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">HTTP (POST entrant)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">JSON (souvent signé HMAC)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Serveur → client (push)</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Webhook Stripe entrant</span></div>
+          <div class="code-body"><span class="k">POST</span> https://mon-app.com/webhooks/stripe
+<span class="t">Stripe-Signature</span>: t=1715..., v1=a4f7b2...
+
+{
+  <span class="t">"type"</span>: <span class="s">"payment_intent.succeeded"</span>,
+  <span class="t">"data"</span>: {
+    <span class="t">"amount"</span>: <span class="arr">4200</span>,
+    <span class="t">"customer"</span>: <span class="s">"cus_xyz"</span>
+  }
+}</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Quasi temps réel sans polling</li>
+              <li>Découplage propre entre producteur et consommateur</li>
+              <li>Économise une énorme charge serveur</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Endpoint public requis (NAT, firewall, tunnel)</li>
+              <li>Signature obligatoire (HMAC) sinon falsifiable</li>
+              <li>Retries et idempotence à la charge du consommateur</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Événements paiement (Stripe), CI/CD (GitHub Actions, GitLab), notifications de messageries, intégrations Zapier-like. Toute architecture event-driven inter-systèmes.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">06 · WebSockets · depuis 2011</div>
+        <h2>WebSockets, le tunnel bidirectionnel</h2>
+        <p>
+          WebSocket ouvre une connexion TCP <strong>persistante et bidirectionnelle</strong> entre client et serveur, après un handshake HTTP initial qui « upgrade » la connexion. Une fois établie, les deux côtés peuvent émettre des messages à tout moment, sans nouveau cycle requête-réponse. C'est ce qui permet le chat temps réel, les flux de marché, l'édition collaborative.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">TCP (via upgrade HTTP)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">Libre (texte ou binaire)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Full-duplex persistant</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Handshake puis dialogue</span></div>
+          <div class="code-body"><span class="c">// 1. Upgrade HTTP → WebSocket</span>
+<span class="k">GET</span> /chat HTTP/1.1
+<span class="t">Upgrade</span>: websocket
+<span class="t">Connection</span>: Upgrade
+
+<span class="c">// 2. Dialogue libre dans les deux sens</span>
+client → {<span class="t">"msg"</span>: <span class="s">"Salut tout le monde"</span>}
+server → {<span class="t">"users_online"</span>: <span class="arr">42</span>}
+server → {<span class="t">"msg"</span>: <span class="s">"Bob a rejoint"</span>}
+client → {<span class="t">"typing"</span>: <span class="arr">true</span>}</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Latence très faible, pas de re-handshake</li>
+              <li>Le serveur peut pousser à tout moment</li>
+              <li>Support navigateur natif depuis longtemps</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Connexions stateful : scaling horizontal complexe</li>
+              <li>Reconnexion à gérer côté client</li>
+              <li>Proxies et load balancers parfois récalcitrants</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Chat temps réel, notifications push, jeux multijoueurs, tableaux de bord live, édition collaborative (Google Docs, Figma), flux financiers.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">07 · WebRTC · depuis 2011</div>
+        <h2>WebRTC, le pair-à-pair temps réel</h2>
+        <p>
+          WebRTC permet à deux navigateurs (ou applications) d'établir une connexion <strong>directe de pair à pair</strong>, sans relais serveur pour les données utiles. Le serveur n'intervient que pour la phase de <em>signaling</em> : échanger les descriptions de session (SDP) et traverser les NAT (STUN/TURN). Une fois la connexion établie, la voix, la vidéo et les <code>DataChannels</code> binaires circulent directement entre les pairs.
+        </p>
+
+        <div class="props">
+          <div class="prop">
+            <div class="prop-label">Transport</div>
+            <div class="prop-value">UDP (SRTP, SCTP, DTLS)</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Format</div>
+            <div class="prop-value">Media + binaire arbitraire</div>
+          </div>
+          <div class="prop">
+            <div class="prop-label">Pattern</div>
+            <div class="prop-value">Pair-à-pair temps réel</div>
+          </div>
+        </div>
+
+        <div class="code">
+          <div class="code-label"><span>Établissement d'une session</span></div>
+          <div class="code-body"><span class="c">// 1. Signaling (via serveur tiers)</span>
+<span class="k">const</span> pc = <span class="k">new</span> RTCPeerConnection();
+<span class="k">const</span> offer = <span class="k">await</span> pc.createOffer();
+signalingServer.send(offer); <span class="c">// → pair distant</span>
+
+<span class="c">// 2. Pair distant répond avec sa SDP</span>
+pc.setRemoteDescription(answer);
+
+<span class="c">// 3. Le flux media va directement P2P</span>
+pc.ontrack = (event) =&gt; videoEl.srcObject = event.streams[<span class="arr">0</span>];</div>
+        </div>
+
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-title">Forces</div>
+            <ul>
+              <li>Latence ultra-faible (~100ms perçue)</li>
+              <li>P2P : économise une énorme bande passante serveur</li>
+              <li>Chiffrement end-to-end imposé par la spec</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="cons-title">Limites</div>
+            <ul>
+              <li>Complexité du signaling, STUN, TURN à opérer</li>
+              <li>P2P pur ne scale pas au-delà de quelques pairs (SFU)</li>
+              <li>Debug et observabilité difficiles</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="usecase">
+          <strong>À utiliser pour</strong>
+          Visioconférence (Meet, Zoom), appels audio in-app, streaming live faible latence, transferts P2P de fichiers, jeux en cloud.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">Synthèse</div>
+        <h2>La matrice de décision</h2>
+        <p>Tout ramener à une question pratique : <em>qu'est-ce que je veux faire ?</em></p>
+
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Si l'objectif est…</th>
+              <th>Le bon choix</th>
+              <th>Pourquoi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Exposer une API publique</td>
+              <td>REST</td>
+              <td>Universel, cacheable, attendu par les intégrateurs</td>
+            </tr>
+            <tr>
+              <td>Communiquer entre microservices internes</td>
+              <td>gRPC</td>
+              <td>Compact, typé, streaming, multi-langages</td>
+            </tr>
+            <tr>
+              <td>Servir un frontend mobile + web complexe</td>
+              <td>GraphQL</td>
+              <td>Évite l'over-fetching, une requête par écran</td>
+            </tr>
+            <tr>
+              <td>Réagir à des événements externes</td>
+              <td>Webhooks</td>
+              <td>Pas de polling, découplage propre</td>
+            </tr>
+            <tr>
+              <td>Chat, notifications, dashboards live</td>
+              <td>WebSockets</td>
+              <td>Bidirectionnel persistant, faible latence</td>
+            </tr>
+            <tr>
+              <td>Audio / vidéo / data en temps réel</td>
+              <td>WebRTC</td>
+              <td>Pair-à-pair, latence minimale, media-natif</td>
+            </tr>
+            <tr>
+              <td>S'intégrer à un système bancaire legacy</td>
+              <td>SOAP</td>
+              <td>Contrats stricts, sécurité éprouvée, déjà en place</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pullquote">
+          GraphQL et REST sont proches voisins. WebRTC vit dans une autre galaxie. C'est pour ça qu'on ne les remplace pas l'un par l'autre.
+        </div>
+      </section>
+
+      <div class="tldr">
+        <div class="tldr-label">En une phrase</div>
+        <p>
+          REST pour le web ouvert, gRPC pour le back-to-back interne, GraphQL pour les frontends gourmands, Webhooks pour réagir, WebSockets pour dialoguer, WebRTC pour le temps réel media, SOAP pour le legacy d'entreprise. Aucune n'est obsolète : chacune répond à un problème spécifique.
+        </p>
+      </div>
+
+      <footer>
+        <p>↳ Architecture · Protocoles réseau</p>
+        <p>Inspiré de la vidéo « Every Type of API Simply Explained » (Codist)</p>
+      </footer>
+    </main>
+  </body>
+</html>
