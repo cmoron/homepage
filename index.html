@@ -1,32 +1,235 @@
-<!DOCTYPE HTML>
-<html lang="en">
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="author" content="Cyril Moron" />
-        <meta name="description" content="Home page - Cyril Moron" />
-        <meta name="keywords" content="Cyril Moron" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>Cyril Moron - home page.</title>
+    <title>Cyril Moron — software engineer</title>
+    <meta
+      name="description"
+      content="Cyril Moron, ingénieur logiciel. Notes et publications sur l'architecture, les agents IA, l'outillage et la qualité du code."
+    />
+    <meta name="author" content="Cyril Moron" />
+    <link rel="canonical" href="https://moron.at/" />
 
-    </head>
-    <body>
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Cyril Moron — software engineer" />
+    <meta
+      property="og:description"
+      content="Ingénieur logiciel. Notes et publications sur l'architecture, les agents IA et l'outillage."
+    />
+    <meta property="og:url" content="https://moron.at/" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cyril Moron — software engineer" />
+    <meta
+      name="twitter:description"
+      content="Ingénieur logiciel. Notes sur l'architecture, les agents IA et l'outillage."
+    />
+
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fbfaf7;
+        --fg: #1a1a1a;
+        --muted: #6b6b6b;
+        --rule: #e6e2d8;
+        --accent: #b54321;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121212;
+          --fg: #e8e6e1;
+          --muted: #9a948a;
+          --rule: #2a2825;
+          --accent: #e08060;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      main {
+        max-width: 38rem;
+        margin: 0 auto;
+        padding: 4rem 1.5rem 6rem;
+      }
+
+      header {
+        margin-bottom: 2.5rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        margin: 0 0 0.15rem;
+      }
+
+      .role {
+        color: var(--muted);
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      section {
+        margin-top: 2.25rem;
+      }
+
+      h2 {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 0.9rem;
+      }
+
+      p {
+        margin: 0 0 0.9rem;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      a {
+        color: var(--fg);
+        text-decoration: underline;
+        text-decoration-color: var(--rule);
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+        transition:
+          text-decoration-color 0.15s ease,
+          color 0.15s ease;
+      }
+      a:hover {
+        color: var(--accent);
+        text-decoration-color: var(--accent);
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        margin: 0 0 0.55rem;
+      }
+      li:last-child {
+        margin-bottom: 0;
+      }
+
+      .pub-date {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        font-size: 0.92rem;
+        margin-left: 0.4rem;
+      }
+
+      .kv {
+        color: var(--muted);
+      }
+      .kv code {
+        color: var(--fg);
+        font-family:
+          ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid var(--rule);
+        margin: 3rem 0 0;
+      }
+
+      footer {
+        margin-top: 2rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
         <h1>Cyril Moron</h1>
-        <h2>Software engineer at Naval Group</h2>
-        <h3>Interests (software)</h3>
-        Programming, algorithms, open source, code quality, java, bash, javascript/typescript, devops, automatized process, toolchains, git, linux, arch linux, software minimalism.
+        <p class="role">Ingénieur logiciel — Naval Group</p>
+      </header>
 
-        <h3>Links</h3>
-        <a href="https://www.github.com/cmoron">Github</a> <br />
-        <a href="https://fr.linkedin.com/pub/cyril-moron/a/135/a44">LinkedIn</a><br />
-        <a href="resume.html">C.V.</a>
+      <section aria-label="Intro">
+        <p>
+          Je conçois et maintiens des logiciels au long cours, entre systèmes
+          embarqués, outillage interne et agents autonomes. J'écris du code que
+          je peux relire dans deux ans sans grimacer.
+        </p>
+      </section>
 
-        <h3>Publications</h3>
-        Architecture · Agents IA<br />
-        <a href="articles/architecture/mcp-cli-api.html">MCP, CLI, API directe — comment choisir</a>
+      <section aria-label="Centres d'intérêt">
+        <h2>Domaines</h2>
+        <p>
+          Architecture logicielle, agents IA et orchestration, qualité de code,
+          automatisation, observabilité, outillage CLI, Linux, software
+          minimalism.
+        </p>
+      </section>
 
-        <h3>Contact</h3>
-        tel. +33 6 78 81 06 90 <br />
-        mail. cyril.moron at gmail.com
-    </body>
+      <section aria-label="Publications">
+        <h2>Publications</h2>
+        <ul>
+          <li>
+            <a href="articles/architecture/mcp-cli-api.html"
+              >MCP, CLI, API directe — comment choisir</a
+            >
+            <span class="pub-date">2026</span>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-label="Liens">
+        <h2>Ailleurs</h2>
+        <ul>
+          <li><a href="https://github.com/cmoron" rel="me">GitHub</a></li>
+          <li>
+            <a href="https://fr.linkedin.com/pub/cyril-moron/a/135/a44" rel="me"
+              >LinkedIn</a
+            >
+          </li>
+          <li>
+            <a href="resume.html">CV (en)</a> ·
+            <a href="resume_fr.html">CV (fr)</a>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-label="Contact">
+        <h2>Contact</h2>
+        <p class="kv"><code>cyril.moron</code> [at] <code>gmail.com</code></p>
+        <p class="kv">+33 6 78 81 06 90</p>
+      </section>
+
+      <hr />
+      <footer>
+        <p>&copy; Cyril Moron</p>
+      </footer>
+    </main>
+  </body>
 </html>
