@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hermes Agent vs OpenClaw : deux paris architecturaux</title>
+    <meta
+      name="description"
+      content="Même problème — un agent IA personnel persistant — deux philosophies opposées. Mémoire, skills, sécurité, automation : ce qui sépare réellement les deux projets."
+    />
+    <link rel="canonical" href="https://moron.at/articles/architecture/hermes-vs-openclaw.html" />
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+    <link rel="stylesheet" href="../../css/article.css" />
+    <link rel="stylesheet" href="../../css/diagrams.css" />
+  </head>
+  <body>
+    <main>
+      <a href="../" class="back"><span class="arrow">←</span>écrits</a>
+
+      <div class="meta">
+        <span class="cat">Architecture</span><span class="sep">·</span>
+        <span>Mai 2026</span><span class="sep">·</span>
+        <span>Lecture · 10 min</span>
+      </div>
+      <h1>Hermes Agent <em>vs</em> OpenClaw : deux paris architecturaux</h1>
+      <p class="lede">
+        Même problème — un agent IA personnel persistant — deux philosophies opposées. OpenClaw mise sur le control plane, Hermes sur la boucle d'auto-amélioration. Et la mémoire, le vrai sujet, n'est pas traitée du tout de la même manière.
+      </p>
+
+      <section>
+        <div class="section-label">01 · Le point de départ</div>
+        <h2>Deux projets, <em>même niche</em></h2>
+        <p>
+          Les deux occupent la même niche : un agent persistant, self-hosted, model-agnostic, branché sur les applications de messagerie courantes (Telegram, Discord, Slack, WhatsApp, etc.), capable d'exécuter des outils sur la machine hôte et de conserver un état d'une session à l'autre. Tous deux sous licence MIT, tous deux populaires, tous deux en évolution quasi-quotidienne. Hermes propose d'ailleurs une migration automatique depuis un setup OpenClaw existant — la concurrence est explicite.
+        </p>
+        <p>Quelques repères au moment de la rédaction :</p>
+
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>OpenClaw</th>
+              <th>Hermes Agent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Auteur</td>
+              <td>Peter Steinberger (ex-PSPDFKit)</td>
+              <td>Nous Research</td>
+            </tr>
+            <tr>
+              <td>Première release</td>
+              <td>nov. 2025 (sous le nom Clawdbot)</td>
+              <td>fév. 2026</td>
+            </tr>
+            <tr>
+              <td>Version courante</td>
+              <td>2026.4.26</td>
+              <td>v0.13.0 (mai 2026)</td>
+            </tr>
+            <tr>
+              <td>Étoiles GitHub</td>
+              <td>~310 000</td>
+              <td>plusieurs dizaines de milliers, en forte croissance</td>
+            </tr>
+            <tr>
+              <td>Gouvernance</td>
+              <td>Fondation non-profit (OpenAI sponsor, fév. 2026)</td>
+              <td>Nous Research</td>
+            </tr>
+            <tr>
+              <td>Langage</td>
+              <td>TypeScript + Swift</td>
+              <td>Python</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Au-delà des chiffres, ce qui sépare réellement les deux projets, c'est leur <strong>centre de gravité</strong>. Le reste — mémoire, skills, sécurité, identité — découle de ce choix initial.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">02 · Le centre de gravité</div>
+        <h2>Un control plane, ou une <em>boucle d'agent</em></h2>
+        <p>
+          Les deux projets ne sont pas des variations sur le même thème : ce sont deux architectures aux priorités opposées, et c'est le point à intérioriser avant de regarder le reste.
+        </p>
+
+        <p>
+          <strong>OpenClaw est un Gateway qui héberge un agent.</strong> Un daemon Node.js long-running concentre l'ensemble des responsabilités : bridges vers les messageries (Baileys pour WhatsApp, grammY pour Telegram, etc.), command queue, session manager, exécution des outils, authentification, sandboxing, hooks, scheduler cron. Le runtime d'agent embarqué est un module parmi d'autres dans cette machinerie, exposé par WebSocket. Tout transite donc par le Gateway, qui fonctionne en <em>single-writer par session</em>. Cette architecture offre un contrôle fin sur le routage et l'isolation, au prix d'une complexité concentrée dans le control plane.
+        </p>
+
+        <p>
+          <strong>Hermes est un agent qui expose des interfaces.</strong> La classe <code>AIAgent</code> constitue le moteur d'orchestration synchrone, et les autres composants gravitent autour : le gateway de messagerie n'est qu'un adaptateur, le cron n'est qu'un déclencheur, l'ACP (Agent Communication Protocol pour les éditeurs) n'est qu'une surface. Le même <code>AIAgent</code> alimente CLI, gateway, cron et batch. La complexité réside dans la boucle d'agent elle-même — son cycle « do, learn, improve » est le sujet du projet, pas une fonctionnalité parmi d'autres.
+        </p>
+
+        <svg viewBox="0 0 480 180" class="diagram diagram-archi" aria-hidden="true">
+          <line class="divider" x1="240" y1="20" x2="240" y2="160" />
+
+          <!-- LEFT · OpenClaw : flux entrants -->
+          <text class="col-title" x="110" y="14">OpenClaw</text>
+          <g class="node"><rect x="8"   y="28"  width="60" height="22" rx="3" /><text x="38"  y="39"  dominant-baseline="central">whatsapp</text></g>
+          <g class="node"><rect x="152" y="28"  width="60" height="22" rx="3" /><text x="182" y="39"  dominant-baseline="central">telegram</text></g>
+          <g class="node"><rect x="8"   y="130" width="60" height="22" rx="3" /><text x="38"  y="141" dominant-baseline="central">cron</text></g>
+          <g class="node"><rect x="152" y="130" width="60" height="22" rx="3" /><text x="182" y="141" dominant-baseline="central">agent</text></g>
+          <line class="link" x1="68"  y1="39"  x2="85"  y2="78" />
+          <line class="link" x1="152" y1="39"  x2="135" y2="78" />
+          <line class="link" x1="68"  y1="141" x2="85"  y2="102" />
+          <line class="link" x1="152" y1="141" x2="135" y2="102" />
+          <g class="node node-hub"><rect x="85" y="78" width="50" height="24" rx="3" /><text x="110" y="90" dominant-baseline="central">gateway</text></g>
+          <circle class="dot in-a" r="3" cx="68"  cy="39" />
+          <circle class="dot in-b" r="3" cx="152" cy="39" />
+          <circle class="dot in-c" r="3" cx="68"  cy="141" />
+          <circle class="dot in-d" r="3" cx="152" cy="141" />
+          <text class="col-sub" x="110" y="172">le gateway concentre les flux</text>
+
+          <!-- RIGHT · Hermes : flux sortants -->
+          <text class="col-title" x="370" y="14">Hermes</text>
+          <g class="node"><rect x="268" y="28"  width="60" height="22" rx="3" /><text x="298" y="39"  dominant-baseline="central">cli</text></g>
+          <g class="node"><rect x="412" y="28"  width="60" height="22" rx="3" /><text x="442" y="39"  dominant-baseline="central">gateway</text></g>
+          <g class="node"><rect x="268" y="130" width="60" height="22" rx="3" /><text x="298" y="141" dominant-baseline="central">cron</text></g>
+          <g class="node"><rect x="412" y="130" width="60" height="22" rx="3" /><text x="442" y="141" dominant-baseline="central">acp</text></g>
+          <line class="link" x1="345" y1="78"  x2="328" y2="39" />
+          <line class="link" x1="395" y1="78"  x2="412" y2="39" />
+          <line class="link" x1="345" y1="102" x2="328" y2="141" />
+          <line class="link" x1="395" y1="102" x2="412" y2="141" />
+          <g class="node node-hub"><rect x="345" y="78" width="50" height="24" rx="3" /><text x="370" y="90" dominant-baseline="central">AIAgent</text></g>
+          <circle class="dot out-a" r="3" cx="345" cy="78" />
+          <circle class="dot out-b" r="3" cx="395" cy="78" />
+          <circle class="dot out-c" r="3" cx="345" cy="102" />
+          <circle class="dot out-d" r="3" cx="395" cy="102" />
+          <text class="col-sub" x="370" y="172">l'agent expose ses surfaces</text>
+        </svg>
+        <p class="diagram-caption">gateway qui héberge un agent · agent qui expose ses interfaces</p>
+
+        <p>
+          Le reste se déduit de là. OpenClaw est plus riche en profondeur de surface : système de Nodes pour piloter caméras, écrans et GPS de devices physiques (sans équivalent côté Hermes), Heartbeat actif dans la session principale, sandboxing Docker granulaire. Hermes est plus riche en mécanismes d'apprentissage : self-evaluation checkpoints, auto-création de skills, projet d'évolution offline. Côté nombre de plateformes de messagerie couvertes, Hermes communique sur 20+ surfaces, OpenClaw sur une demi-douzaine de canaux principaux. Aucune des deux n'est intrinsèquement supérieure — elles résolvent des problèmes différents avec les mêmes briques.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">03 · La mémoire — le vrai sujet</div>
+        <h2>Deux philosophies <em>orthogonales</em></h2>
+        <p>
+          C'est là que les choix divergent le plus, et c'est ce qui détermine concrètement le comportement de l'agent session après session. Les deux empilent des couches, mais avec des priorités d'optimisation opposées.
+        </p>
+
+        <h3>OpenClaw — le workspace markdown comme source de vérité</h3>
+        <p>
+          L'agent OpenClaw vit dans un workspace : un répertoire markdown versionnable (git-backable), avec un ensemble de fichiers attendus à des emplacements précis.
+        </p>
+
+        <div class="code">
+          <div class="code-label"><span>Workspace OpenClaw · ~/.openclaw/workspace/</span></div>
+          <div class="code-body">AGENTS.md         <span class="c">← instructions opérationnelles</span>
+SOUL.md           <span class="c">← persona, ton, limites</span>
+USER.md           <span class="c">← profil utilisateur</span>
+IDENTITY.md       <span class="c">← nom de l'agent, vibe</span>
+TOOLS.md          <span class="c">← notes sur les outils locaux</span>
+HEARTBEAT.md      <span class="c">← checklist du heartbeat</span>
+MEMORY.md         <span class="c">← mémoire long terme curée</span>
+memory/           <span class="c">← logs quotidiens append-only</span>
+├─ 2026-05-22.md
+└─ 2026-05-23.md
+skills/           <span class="c">← skills workspace</span></div>
+        </div>
+
+        <p>
+          L'ensemble de ces fichiers est relu au démarrage de chaque session, tronqué à <code>bootstrapMaxChars</code> (20 000 par défaut) pour préserver le budget de prompt. Le <code>MEMORY.md</code> n'est chargé qu'en session privée principale — jamais en contexte de groupe, par choix de cloisonnement. Les logs <code>memory/YYYY-MM-DD.md</code> du jour courant et de la veille sont également injectés.
+        </p>
+        <p>
+          Par-dessus, un slot mémoire pluggable héberge <em>un seul</em> provider à la fois. L'issue #60572 du repo propose de le rendre multi-slot, débat en cours dans la communauté. Les providers disponibles :
+        </p>
+
+        <div class="stack">
+          <div class="stack-row">
+            <div class="stack-num">01</div>
+            <div class="stack-content">
+              <div class="stack-name">Builtin <span class="badge">sqlite par défaut</span></div>
+              <div class="stack-desc">
+                Indexation des markdowns, recherche hybride vector + BM25 (70/30 par défaut), auto-détection du provider d'embeddings (OpenAI, Gemini, Voyage, Mistral, ou GGUF local).
+              </div>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">02</div>
+            <div class="stack-content">
+              <div class="stack-name">QMD <span class="badge">sidecar local-first</span></div>
+              <div class="stack-desc">
+                Reranking, query expansion, indexation de répertoires hors workspace (typiquement, un vault Obsidian).
+              </div>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">03</div>
+            <div class="stack-content">
+              <div class="stack-name">Honcho <span class="badge mid">cross-session ai-native</span></div>
+              <div class="stack-desc">
+                Modélisation utilisateur dialectique (Plastic Labs). Persiste chaque tour, construit un modèle de l'utilisateur et de l'agent.
+              </div>
+            </div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">04</div>
+            <div class="stack-content">
+              <div class="stack-name">LanceDB / Wiki <span class="badge">backends spécialisés</span></div>
+              <div class="stack-desc">
+                Backend LanceDB pour la similarité vectorielle pure, ou primitives wiki-natives pour un vault de connaissance compilé.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Le pattern le plus intéressant : le <strong>pre-compaction memory flush</strong>. Quand la session approche de la limite de contexte, un <em>silent agentic turn</em> se déclenche, qui rappelle au modèle d'écrire les notes durables dans <code>memory/YYYY-MM-DD.md</code> avant que l'auto-compaction ne réécrive l'historique. Le modèle répond <code>NO_REPLY</code> (sentinelle filtrée du payload sortant), et cette turn n'est jamais visible côté utilisateur.
+        </p>
+
+        <h3>Hermes — la mémoire à trois niveaux (plus une quatrième cachée)</h3>
+        <p>
+          Hermes décrit officiellement sa mémoire comme trois couches, mais il s'agit en réalité de trois mécanismes orthogonaux avec des fréquences de mise à jour différentes — la simplification pédagogique en cache le vrai dimensionnement.
+        </p>
+
+        <p>
+          <strong>Tier 1 — la mémoire gelée</strong> (<code>~/.hermes/MEMORY.md</code> + <code>USER.md</code>). Deux petits fichiers markdown, plafonnés respectivement à environ 2 200 et 1 375 caractères (chiffres communiqués par Akshay Pachaar à partir de l'observation du code). <code>MEMORY.md</code> stocke les faits, <code>USER.md</code> le modèle de l'utilisateur. Les deux sont curés par l'agent lui-même.
+        </p>
+
+        <div class="pullquote">
+          Point crucial : ces fichiers sont lus une seule fois au démarrage de la session et embarqués de façon immuable dans le system prompt. L'agent peut écrire dessus pendant la session, mais le prompt n'est rechargé qu'à la session suivante.
+        </div>
+
+        <p>
+          C'est le <em>frozen-snapshot pattern</em>. Conséquence opérationnelle : une modification de la mémoire en cours de session ne prend effet qu'au prochain démarrage — il ne s'agit pas d'un bug mais d'un choix délibéré, pour préserver le <strong>prompt caching</strong>. Sans cette stabilité, le cache est invalidé à chaque turn et le coût d'inférence augmente d'un ordre de grandeur (≈90% des tokens en cache hit représentent autant d'économies).
+        </p>
+
+        <p>
+          <strong>Tier 2 — la SessionDB</strong> (<code>~/.hermes/state.db</code>). Une base SQLite en mode WAL avec index plein-texte FTS5. Chaque tour de conversation passé y est stocké. L'agent l'interroge à la demande via l'outil <code>session_search</code>, et un résumeur LLM condense les résultats avant réinjection dans la boucle de raisonnement. C'est la mémoire épisodique : « qu'a-t-on fait la dernière fois ».
+        </p>
+
+        <p>
+          <strong>Tier 3 — provider de mémoire enfichable.</strong> Il s'agit d'un <em>swap-in</em>, pas d'une couche supplémentaire : un seul provider est actif à la fois, via une interface <code>MemoryProvider</code>. Les options sont Honcho (modélisation utilisateur profonde), mem0 ou supermemory (rappel vectoriel). Ou rien si fichiers + FTS5 suffisent.
+        </p>
+
+        <p>
+          <strong>Tier 4 — les skills comme mémoire procédurale.</strong> Couche que Hermes ne nomme pas comme telle, mais qui en est mécaniquement une : <code>~/.hermes/skills/</code> stocke des <code>SKILL.md</code> qui encodent des procédures, pas des faits. C'est la grande spécificité du projet, détaillée en section suivante.
+        </p>
+
+        <svg viewBox="0 0 480 220" class="diagram diagram-memory" aria-hidden="true">
+          <line class="divider" x1="240" y1="20" x2="240" y2="200" />
+
+          <!-- LEFT · OpenClaw : workspace rechargé à chaque session -->
+          <text class="col-title" x="110" y="14">OpenClaw · reload</text>
+          <g class="node mem-source">
+            <rect x="40" y="32" width="140" height="22" rx="3" />
+            <text x="110" y="43" dominant-baseline="central">workspace/</text>
+          </g>
+          <g class="node"><rect x="40" y="76"  width="140" height="20" rx="3" /><text x="110" y="86"  dominant-baseline="central">session 1</text></g>
+          <g class="node"><rect x="40" y="116" width="140" height="20" rx="3" /><text x="110" y="126" dominant-baseline="central">session 2</text></g>
+          <g class="node"><rect x="40" y="156" width="140" height="20" rx="3" /><text x="110" y="166" dominant-baseline="central">session 3</text></g>
+          <line class="link" x1="110" y1="54" x2="110" y2="76" />
+          <line class="link" x1="110" y1="54" x2="110" y2="116" />
+          <line class="link" x1="110" y1="54" x2="110" y2="156" />
+          <circle class="reload r1" cx="110" cy="54" r="3" />
+          <circle class="reload r2" cx="110" cy="54" r="3" />
+          <circle class="reload r3" cx="110" cy="54" r="3" />
+          <text class="col-sub" x="110" y="200">prompt rechargé à chaque session</text>
+
+          <!-- RIGHT · Hermes : un load initial, fan-out simultané, dots gelés dans chaque session -->
+          <text class="col-title" x="370" y="14">Hermes · frozen</text>
+          <g class="node mem-frozen">
+            <rect x="300" y="32" width="140" height="22" rx="3" />
+            <text x="370" y="43" dominant-baseline="central">snapshot</text>
+          </g>
+          <g class="node"><rect x="300" y="76"  width="140" height="20" rx="3" /><text x="370" y="86"  dominant-baseline="central">session 1</text></g>
+          <g class="node"><rect x="300" y="116" width="140" height="20" rx="3" /><text x="370" y="126" dominant-baseline="central">session 2</text></g>
+          <g class="node"><rect x="300" y="156" width="140" height="20" rx="3" /><text x="370" y="166" dominant-baseline="central">session 3</text></g>
+          <line class="link" x1="370" y1="54" x2="370" y2="76" />
+          <line class="link" x1="370" y1="54" x2="370" y2="116" />
+          <line class="link" x1="370" y1="54" x2="370" y2="156" />
+          <circle class="frozen-load fl1" cx="370" cy="54" r="3" />
+          <circle class="frozen-load fl2" cx="370" cy="54" r="3" />
+          <circle class="frozen-load fl3" cx="370" cy="54" r="3" />
+          <text class="col-sub" x="370" y="200">lu une fois, embarqué dans chaque session</text>
+        </svg>
+        <p class="diagram-caption">deux régimes d'inférence : invalidation cache vs cache hit</p>
+
+        <h3>Ce que cela change concrètement</h3>
+
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>OpenClaw</th>
+              <th>Hermes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Source de vérité</td>
+              <td>Workspace markdown (git-backable)</td>
+              <td>MEMORY.md + SQLite</td>
+            </tr>
+            <tr>
+              <td>Mise à jour du prompt</td>
+              <td>Rechargée à chaque session</td>
+              <td>Cache-stable, gelée par session</td>
+            </tr>
+            <tr>
+              <td>Plafond mémoire active</td>
+              <td>bootstrapMaxChars (20k par défaut)</td>
+              <td>~3 500 chars (MEMORY+USER)</td>
+            </tr>
+            <tr>
+              <td>Recherche cross-session</td>
+              <td>Hybride vector+BM25 sur fichiers</td>
+              <td>FTS5 sur SessionDB + résumé LLM</td>
+            </tr>
+            <tr>
+              <td>Provider pluggable</td>
+              <td>Slot unique (issue #60572 en débat)</td>
+              <td>Slot unique (MemoryProvider)</td>
+            </tr>
+            <tr>
+              <td>Modélisation utilisateur</td>
+              <td>Via plugin Honcho</td>
+              <td>Via provider Honcho</td>
+            </tr>
+            <tr>
+              <td>Pre-compaction flush</td>
+              <td>Silent agentic turn</td>
+              <td>« Memory flush » step</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          L'asymétrie d'optimisation est nette. OpenClaw optimise pour la <strong>lisibilité humaine et l'auditabilité</strong> : workspace en clair, git diff sur la mémoire, possibilité d'édition manuelle. Hermes optimise pour le <strong>coût et la prévisibilité d'inférence</strong> : prompt cache-stable, mémoire active minimale, retrieval on-demand pour le reste.
+        </p>
+        <p>
+          Ni l'un ni l'autre n'est strictement supérieur. C'est un compromis : ce que Hermes gagne en cache hit ratio, OpenClaw le gagne en transparence et en capacité d'intervention manuelle.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">04 · Les skills</div>
+        <h2>Runbooks humains, ou <em>procédures auto-générées</em></h2>
+        <p>
+          Les deux projets respectent le format ouvert <code>agentskills.io</code> (<code>SKILL.md</code> avec frontmatter YAML), donc côté schéma l'interopérabilité est possible. C'est dans la <em>provenance</em> des skills que tout se joue.
+        </p>
+
+        <p>
+          <strong>OpenClaw : les skills sont des runbooks rédigés à la main.</strong> La résolution suit une priorité workspace → managed → bundled. Le chargement est lazy : seule une métadonnée compacte (nom, description, chemin) est injectée dans le prompt — environ 97 caractères additionnés à la longueur des champs par skill. Le modèle est instruit à <code>read</code> la <code>SKILL.md</code> seulement quand la tâche correspond. L'écosystème communautaire est massif : plus de 44 000 skills selon le recensement de Data Science Collective (avril 2026), dont environ 5 400 vérifiées dans <code>awesome-openclaw-skills</code>. Il s'agit d'une documentation paginée à la demande.
+        </p>
+
+        <p>
+          <strong>Hermes : les skills peuvent être auto-générées par l'agent lui-même</strong>, en plus d'être rédigées manuellement ou installées depuis le Skills Hub. C'est le mode auto-génératif qui constitue la véritable spécificité du projet :
+        </p>
+
+        <div class="win-grid">
+          <div class="win">
+            <div class="win-num">01</div>
+            <div>
+              <div class="win-title">Self-eval checkpoint tous les 15 tool calls</div>
+              <div class="win-body">
+                L'agent marque une pause et procède à une auto-évaluation : qu'a-t-il fait, qu'est-ce qui a fonctionné, l'expérience mérite-t-elle d'être capturée ?
+              </div>
+            </div>
+          </div>
+          <div class="win">
+            <div class="win-num">02</div>
+            <div>
+              <div class="win-title">Auto-création si verdict positif</div>
+              <div class="win-body">
+                L'agent écrit ou patche une <code>SKILL.md</code> dans <code>~/.hermes/skills/</code>, comportant la procédure, les pitfalls, les étapes de vérification. Typiquement déclenché par les tâches comportant 5+ tool calls.
+              </div>
+            </div>
+          </div>
+          <div class="win">
+            <div class="win-num">03</div>
+            <div>
+              <div class="win-title">Auto-amélioration à l'usage</div>
+              <div class="win-body">
+                Quand la skill est rappelée lors d'une session ultérieure, l'agent peut la raffiner en intégrant de nouveaux cas limites ou de meilleures étapes de vérification découvertes en exécution.
+              </div>
+            </div>
+          </div>
+          <div class="win">
+            <div class="win-num">04</div>
+            <div>
+              <div class="win-title">Periodic nudge toutes les ~15 tâches</div>
+              <div class="win-body">
+                L'agent évalue sa performance globale, archive les skills peu utilisées, propose des consolidations.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Cette boucle justifie la formule marketing « <em>the agent that grows with you</em> ». Et l'effet est tangible — après quelques semaines d'usage, le répertoire <code>skills/</code> accumule effectivement des procédures qu'aucun humain n'a rédigées.
+        </p>
+
+        <div class="pullquote">
+          Cette boucle a néanmoins un failure mode documenté, à prendre en compte avant tout déploiement de production.
+        </div>
+
+        <p>
+          L'agent tend à l'<strong>auto-congratulation</strong>. Le même système qui auto-génère des skills peut également écraser des customisations manuelles par des versions de moindre qualité, le modèle jugeant presque systématiquement avoir bien performé — y compris quand ce n'est pas le cas. Le retour communautaire est unanime sur ce point.
+        </p>
+        <p>
+          La parade officielle est <code>hermes-agent-self-evolution</code>, un repo companion qui implémente une pipeline DSPy + GEPA (Genetic-Pareto Prompt Evolution, dont le papier de référence est ICLR 2026 Oral) en offline. Au lieu de demander à l'agent une auto-évaluation, GEPA lit les <em>execution traces</em> pour identifier les causes d'échec, et propose des améliorations ciblées par recherche évolutionnaire. L'outil est efficace, mais constitue une couche supplémentaire à opérer.
+        </p>
+        <p>
+          Côté gestion : <code>hermes curator pin &lt;skill&gt;</code> protège une skill de l'archivage et de la suppression, tout en autorisant les patches. Recommandé sur les workflows critiques.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">05 · Identité, sécurité, automation</div>
+        <h2>Les trois <em>axes secondaires</em></h2>
+        <p>
+          Trois axes moins centraux que la mémoire et les skills, mais qui pèsent réellement dans le choix.
+        </p>
+
+        <h3>Identité</h3>
+        <p>
+          <strong>OpenClaw place <code>SOUL.md</code> dans le workspace.</strong> La personnalité de l'agent est attachée au projet qu'il habite. Le même OpenClaw lancé sur deux workspaces différents produit deux agents avec deux identités. C'est le modèle « agent comme habitant d'un répertoire ».
+        </p>
+        <p>
+          <strong>Hermes place <code>SOUL.md</code> dans <code>HERMES_HOME</code></strong> (global à l'instance). La personnalité est une propriété de l'agent lui-même, pas du projet. C'est le modèle « un agent unique qui voyage avec son utilisateur ».
+        </p>
+        <p>
+          Ni l'un ni l'autre n'est intrinsèquement supérieur. Pour une logique de projets séparés, OpenClaw correspond mieux. Pour une logique d'assistant unique, Hermes correspond mieux.
+        </p>
+
+        <h3>Sécurité</h3>
+        <p>
+          <strong>OpenClaw — 7 couches, philosophie <em>operator-driven</em>.</strong> Auth Gateway → device pairing &amp; trust → channel allowlists → tool policy (allow/deny global et par-agent) → exec approvals → sandbox Docker (off/non-main/all, workspace ro/rw/none) → send policy. Le system prompt inclut des guardrails advisory, mais l'enforcement réel passe par les couches techniques. La documentation est explicite : l'opérateur est attendu à durcir l'installation.
+        </p>
+        <p>
+          <strong>Hermes — 5 couches, philosophie <em>safer-by-default</em>.</strong> User authorization → dangerous-command approval → container isolation → MCP credential filtering → context-file scanning. Extensions associées : protections SSRF, blocklists de sites, filtrage des variables d'environnement, pairing user/messagerie, pre-execution scanning des commandes risquées. La posture par défaut est plus contrainte.
+        </p>
+        <p>
+          Le débat est philosophique. OpenClaw fait l'hypothèse d'un opérateur compétent et lui laisse le contrôle. Hermes fait l'hypothèse inverse : brider par défaut, laisser l'utilisateur desserrer ce qui le gêne. Pour un déploiement sur serveur exposé, Hermes part avec une longueur d'avance. Pour un assistant personnel sur localhost, OpenClaw offre plus de souplesse.
+        </p>
+
+        <h3>Automation</h3>
+        <p>
+          <strong>OpenClaw distingue Heartbeat et Cron.</strong> Le Heartbeat est une turn périodique dans la session principale (30 min par défaut), avec un contrat de réponse explicite : <code>HEARTBEAT_OK</code> = rien à signaler (supprimé), tout autre texte = alerte délivrée. Adapté à un usage du type « passe en revue mon contexte et alerte uniquement si quelque chose mérite mon attention ». Le Cron est isolé (session fraîche par run, sans héritage de contexte), adapté à des jobs exacts (push GitHub à 23h, rapport quotidien à 8h).
+        </p>
+        <p>
+          <strong>Hermes dispose d'un Cron unique</strong>, mais avec entrée en langage naturel. L'utilisateur formule « tous les soirs à minuit, pousse les changements sur ce repo », et l'agent crée à la fois la skill et le cron job — pas de crontab à éditer. Les sessions cron sont self-contained (incapables de créer d'autres crons, garde-fou anti-runaway). Plus propre côté UX, plus pauvre côté primitives.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">06 · La bonne question</div>
+        <h2>Que veut-on <em>faire grandir</em> ?</h2>
+        <p>
+          Le débat « lequel est meilleur » est aussi mal posé que MCP vs CLI. Les deux projets résolvent des problèmes différents avec les mêmes briques, et c'est l'objet de croissance qui doit guider le choix : on accumule de l'infrastructure, ou on accumule des capacités.
+        </p>
+
+        <h3>Infrastructure d'agent, ou capacités de l'agent ?</h3>
+
+        <div class="win-grid">
+          <div class="win">
+            <div class="win-num">→</div>
+            <div>
+              <div class="win-title">Infrastructure → OpenClaw</div>
+              <div class="win-body">
+                Workspace comme référentiel, skills écrites à la main, channels et nodes intégrés, durcissement manuel. Croissance verticale et auditable, sous le contrôle d'un opérateur attendu compétent.
+              </div>
+            </div>
+          </div>
+          <div class="win">
+            <div class="win-num">→</div>
+            <div>
+              <div class="win-title">Capacités → Hermes</div>
+              <div class="win-body">
+                L'agent garde la main sur ses procédures, supervision via GEPA, mémoire gelée par session pour préserver le cache. Croissance horizontale et émergente, sous une posture safer-by-default.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pullquote">
+          L'erreur, dans les deux sens, consiste à prendre l'un de ces outils pour un substitut de l'autre.
+        </div>
+
+        <p>
+          Déployer OpenClaw là où les workflows sont assez répétitifs pour gagner à être observés et durcis automatiquement revient à rédiger à la main ce que Hermes auto-générerait. À l'inverse, déployer Hermes là où la transparence de la mémoire, son édition manuelle et la traçabilité git priment revient à subir le <em>frozen-snapshot</em> et à perdre la lisibilité du workspace markdown.
+        </p>
+        <p>
+          Quelques signaux orientent sans ambiguïté. Exposition serveur multi-utilisateurs, surface d'attaque large, besoin de prévisibilité tour-à-tour → la posture safer-by-default et le cache-stability de Hermes paient. Mémoire auditée, intégration à des devices physiques (caméras, écrans, GPS) via le Node system, présence proactive dans un thread principal via Heartbeat, édition manuelle des procédures → la profondeur de surface d'OpenClaw n'a pas d'équivalent. Quand la décision reste indécise, le critère qui tranche est presque toujours le même : préfère-t-on que ce soit <em>l'opérateur qui durcit</em>, ou <em>l'agent qui s'auto-corrige</em> ?
+        </p>
+      </section>
+
+      <div class="tldr">
+        <div class="tldr-label">En une phrase</div>
+        <p>
+          OpenClaw, c'est un <em>gateway qui héberge un agent</em>. Hermes, c'est un <em>agent qui se construit son propre référentiel</em>. Le choix se fait sur ce qu'on veut faire grandir : l'infrastructure, ou l'agent.
+        </p>
+      </div>
+
+      <footer>
+        <p>↳ Architecture · Agents IA</p>
+        <p>Sources : hermes-agent docs, openclaw docs, Turing Post, MindStudio, VelvetShark, Akshay Pachaar, royosherove deep-dive, issue openclaw#60572</p>
+      </footer>
+    </main>
+  </body>
+</html>

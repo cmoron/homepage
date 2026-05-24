@@ -13,6 +13,7 @@
     <link rel="icon" href="../../favicon.png" type="image/png" sizes="64x64" />
     <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
     <link rel="stylesheet" href="../../css/article.css" />
+    <link rel="stylesheet" href="../../css/diagrams.css" />
   </head>
   <body>
     <main>
@@ -88,6 +89,27 @@
           REST n'est pas un protocole, c'est un style architectural posé par Roy Fielding dans sa thèse. L'idée centrale : tout est une <em>ressource</em> identifiée par une URL, manipulée via les verbes HTTP standards (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>). Chaque requête est <strong>stateless</strong> : le serveur ne garde aucun contexte entre deux appels.
         </p>
 
+        <svg viewBox="0 0 480 90" class="diagram diagram-rest" aria-hidden="true">
+          <line class="link" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">client</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">serveur</text>
+          </g>
+          <g class="packet packet-req">
+            <rect x="0" y="38" width="42" height="14" />
+            <text x="21" y="45" dominant-baseline="central">GET</text>
+          </g>
+          <g class="packet packet-res">
+            <rect x="0" y="38" width="42" height="14" />
+            <text x="21" y="45" dominant-baseline="central">200</text>
+          </g>
+        </svg>
+        <p class="diagram-caption">requête → réponse, sans état partagé</p>
+
         <div class="props">
           <div class="prop">
             <div class="prop-label">Transport</div>
@@ -145,6 +167,27 @@
         <p>
           SOAP (Simple Object Access Protocol) est un protocole strict basé sur XML, doté d'un contrat formel (le WSDL) qui décrit chaque opération et chaque type de données. C'est l'ancêtre des API modernes — souvent moqué pour sa verbosité, mais toujours en place dans la banque, l'assurance, la défense, et tout ce qui demande des transactions ACID inter-systèmes.
         </p>
+
+        <svg viewBox="0 0 480 90" class="diagram diagram-soap" aria-hidden="true">
+          <line class="link" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">client</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">serveur</text>
+          </g>
+          <g class="packet packet-out">
+            <rect x="0" y="34" width="64" height="22" />
+            <text x="32" y="45" dominant-baseline="central">&lt;envelope&gt;</text>
+          </g>
+          <g class="packet packet-in">
+            <rect x="0" y="34" width="64" height="22" />
+            <text x="32" y="45" dominant-baseline="central">&lt;response&gt;</text>
+          </g>
+        </svg>
+        <p class="diagram-caption">enveloppe XML lourde, contrat WSDL strict</p>
 
         <div class="props">
           <div class="prop">
@@ -206,6 +249,25 @@
         <p>
           gRPC est le framework RPC moderne issu de Google. Il combine trois choix techniques : <strong>Protocol Buffers</strong> comme format binaire compact, <strong>HTTP/2</strong> comme transport (multiplexage, push, compression d'en-têtes), et la <strong>génération de code</strong> à partir d'un fichier <code>.proto</code> dans la plupart des langages. Résultat : des appels typés, rapides, qui supportent le streaming dans les deux sens.
         </p>
+
+        <svg viewBox="0 0 480 90" class="diagram diagram-grpc" aria-hidden="true">
+          <line class="link link-strong" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">client</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">serveur</text>
+          </g>
+          <g class="packet frame fwd d1"><rect x="0" y="36" width="14" height="6" /></g>
+          <g class="packet frame fwd d2"><rect x="0" y="36" width="14" height="6" /></g>
+          <g class="packet frame fwd d3"><rect x="0" y="36" width="14" height="6" /></g>
+          <g class="packet frame bk  d1"><rect x="0" y="48" width="14" height="6" /></g>
+          <g class="packet frame bk  d2"><rect x="0" y="48" width="14" height="6" /></g>
+          <g class="packet frame bk  d4"><rect x="0" y="48" width="14" height="6" /></g>
+        </svg>
+        <p class="diagram-caption">frames binaires multiplexés sur HTTP/2, streaming bidirectionnel</p>
 
         <div class="props">
           <div class="prop">
@@ -269,6 +331,27 @@
           GraphQL (Facebook, 2015) inverse le contrôle de la donnée. Plutôt qu'une liste figée d'endpoints, le serveur publie un <strong>schéma typé</strong>, et le client interroge ce schéma en décrivant exactement les champs dont il a besoin, le tout en une seule requête. Fini les <code>GET /user</code>, puis <code>GET /user/posts</code>, puis <code>GET /user/posts/comments</code> : tout tient en une expression déclarative.
         </p>
 
+        <svg viewBox="0 0 480 90" class="diagram diagram-graphql" aria-hidden="true">
+          <line class="link" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">client</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">schéma</text>
+          </g>
+          <g class="packet packet-query">
+            <rect x="0" y="32" width="80" height="26" />
+            <text x="40" y="45" dominant-baseline="central">{ user.posts }</text>
+          </g>
+          <g class="packet packet-result">
+            <rect x="0" y="32" width="80" height="26" />
+            <text x="40" y="45" dominant-baseline="central">{ … data … }</text>
+          </g>
+        </svg>
+        <p class="diagram-caption">une requête déclarative, une réponse de forme identique</p>
+
         <div class="props">
           <div class="prop">
             <div class="prop-label">Transport</div>
@@ -328,6 +411,24 @@
         <p>
           Un webhook n'est pas une API qu'on appelle, c'est une API <em>qui appelle</em>. Le principe : fournir une URL à un service tiers ; quand un événement survient chez lui (un paiement réussi, un commit poussé, un message reçu), il envoie une requête HTTP <strong>vers cette URL</strong>. C'est l'antidote au polling : plutôt que de demander toutes les cinq secondes « du nouveau ? », le système est notifié au moment où l'événement se produit.
         </p>
+
+        <svg viewBox="0 0 480 90" class="diagram diagram-webhook" aria-hidden="true">
+          <line class="link" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">votre app</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">stripe</text>
+          </g>
+          <circle class="event-pulse" cx="428" cy="20" r="4" />
+          <g class="packet packet-push">
+            <rect x="0" y="38" width="42" height="14" />
+            <text x="21" y="45" dominant-baseline="central">POST</text>
+          </g>
+        </svg>
+        <p class="diagram-caption">le serveur déclenche, votre endpoint reçoit</p>
 
         <div class="props">
           <div class="prop">
@@ -390,6 +491,23 @@
           WebSocket ouvre une connexion TCP <strong>persistante et bidirectionnelle</strong> entre client et serveur, après un handshake HTTP initial qui « upgrade » la connexion. Une fois établie, les deux côtés peuvent émettre des messages à tout moment, sans nouveau cycle requête-réponse. C'est ce qui permet le chat temps réel, les flux de marché, l'édition collaborative.
         </p>
 
+        <svg viewBox="0 0 480 90" class="diagram diagram-ws" aria-hidden="true">
+          <line class="link link-strong" x1="92" y1="45" x2="388" y2="45" />
+          <g class="node">
+            <rect x="12" y="30" width="80" height="30" rx="3" />
+            <text x="52" y="45" dominant-baseline="central">client</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="30" width="80" height="30" rx="3" />
+            <text x="428" y="45" dominant-baseline="central">serveur</text>
+          </g>
+          <g class="packet packet-up w1"><rect x="0" y="22" width="42" height="14" /><text x="21" y="29" dominant-baseline="central">msg</text></g>
+          <g class="packet packet-up w2"><rect x="0" y="22" width="42" height="14" /><text x="21" y="29" dominant-baseline="central">msg</text></g>
+          <g class="packet packet-down w4"><rect x="0" y="54" width="42" height="14" /><text x="21" y="61" dominant-baseline="central">msg</text></g>
+          <g class="packet packet-down w5"><rect x="0" y="54" width="42" height="14" /><text x="21" y="61" dominant-baseline="central">msg</text></g>
+        </svg>
+        <p class="diagram-caption">une connexion ouverte, du trafic libre dans les deux sens</p>
+
         <div class="props">
           <div class="prop">
             <div class="prop-label">Transport</div>
@@ -450,6 +568,32 @@ client → {<span class="t">"typing"</span>: <span class="arr">true</span>}</div
         <p>
           WebRTC permet à deux navigateurs (ou applications) d'établir une connexion <strong>directe de pair à pair</strong>, sans relais serveur pour les données utiles. Le serveur n'intervient que pour la phase de <em>signaling</em> : échanger les descriptions de session (SDP) et traverser les NAT (STUN/TURN). Une fois la connexion établie, la voix, la vidéo et les <code>DataChannels</code> binaires circulent directement entre les pairs.
         </p>
+
+        <svg viewBox="0 0 480 140" class="diagram diagram-webrtc" aria-hidden="true">
+          <line class="link-signal" x1="92" y1="115" x2="220" y2="22" />
+          <line class="link-signal" x1="388" y1="115" x2="260" y2="22" />
+          <line class="link-p2p" x1="92" y1="115" x2="388" y2="115" />
+          <g class="node">
+            <rect x="196" y="6" width="88" height="26" rx="3" />
+            <text x="240" y="19" dominant-baseline="central">signaling</text>
+          </g>
+          <g class="node">
+            <rect x="12" y="100" width="80" height="30" rx="3" />
+            <text x="52" y="115" dominant-baseline="central">pair A</text>
+          </g>
+          <g class="node">
+            <rect x="388" y="100" width="80" height="30" rx="3" />
+            <text x="428" y="115" dominant-baseline="central">pair B</text>
+          </g>
+          <text class="label-sdp" x="156" y="70">SDP</text>
+          <text class="label-sdp" x="324" y="70">SDP</text>
+          <text class="label-media" x="240" y="105">media · P2P</text>
+          <g class="packet packet-media">
+            <rect x="0" y="108" width="50" height="14" />
+            <text x="25" y="115" dominant-baseline="central">▶ media</text>
+          </g>
+        </svg>
+        <p class="diagram-caption">phase 1 — signaling SDP, phase 2 — flux direct entre pairs</p>
 
         <div class="props">
           <div class="prop">

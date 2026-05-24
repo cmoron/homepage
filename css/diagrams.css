@@ -1,0 +1,584 @@
+/* shared diagram primitives — relies on palette tokens from article.css */
+
+.diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 30rem;
+  margin: 1.8rem auto 0.4rem;
+  font-family:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+.diagram-caption {
+  font-family:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin: 0 0 1.6rem;
+  letter-spacing: 0.04em;
+}
+
+.diagram text {
+  font-family:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  user-select: none;
+}
+
+.diagram .node rect {
+  fill: var(--paper);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.diagram .node text {
+  fill: var(--muted);
+  font-size: 10px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.diagram .link {
+  stroke: var(--rule);
+  stroke-width: 1;
+  fill: none;
+}
+.diagram .link-strong {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+}
+
+.diagram .packet rect {
+  fill: var(--tag-bg);
+  stroke: var(--accent);
+  stroke-width: 1;
+  rx: 2;
+}
+.diagram .packet text {
+  fill: var(--accent);
+  font-size: 8.5px;
+  text-anchor: middle;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram *,
+  .diagram *::before,
+  .diagram *::after {
+    animation: none !important;
+  }
+}
+
+/* ---------- 01 · REST · one-shot request / response ---------- */
+
+.diagram-rest .packet-req {
+  transform: translateX(80px);
+  opacity: 0;
+  animation: rest-req 4s ease-in-out infinite;
+}
+.diagram-rest .packet-res {
+  transform: translateX(346px);
+  opacity: 0;
+  animation: rest-res 4s ease-in-out infinite;
+}
+@keyframes rest-req {
+  0%   { transform: translateX(80px);  opacity: 0; }
+  8%   { opacity: 1; }
+  44%  { transform: translateX(346px); opacity: 1; }
+  50%, 100% { transform: translateX(346px); opacity: 0; }
+}
+@keyframes rest-res {
+  0%, 50% { transform: translateX(346px); opacity: 0; }
+  58%  { opacity: 1; }
+  92%  { transform: translateX(80px);  opacity: 1; }
+  100% { transform: translateX(80px);  opacity: 0; }
+}
+
+/* ---------- 02 · SOAP · same shape, heavier envelope, slower ---------- */
+
+.diagram-soap .packet-out {
+  transform: translateX(80px);
+  opacity: 0;
+  animation: soap-out 6s ease-in-out infinite;
+}
+.diagram-soap .packet-in {
+  transform: translateX(324px);
+  opacity: 0;
+  animation: soap-in 6s ease-in-out infinite;
+}
+@keyframes soap-out {
+  0%   { transform: translateX(80px);  opacity: 0; }
+  10%  { opacity: 1; }
+  45%  { transform: translateX(324px); opacity: 1; }
+  50%, 100% { transform: translateX(324px); opacity: 0; }
+}
+@keyframes soap-in {
+  0%, 50% { transform: translateX(324px); opacity: 0; }
+  60%  { opacity: 1; }
+  95%  { transform: translateX(80px);  opacity: 1; }
+  100% { transform: translateX(80px);  opacity: 0; }
+}
+
+/* ---------- 03 · gRPC · multiplexed binary frames, continuous ---------- */
+
+.diagram-grpc .frame rect {
+  fill: var(--accent);
+  stroke: none;
+}
+.diagram-grpc .frame {
+  opacity: 0.9;
+}
+.diagram-grpc .fwd { animation: grpc-fwd 2.6s linear infinite; }
+.diagram-grpc .bk  { animation: grpc-bk  2.6s linear infinite; }
+.diagram-grpc .d1 { animation-delay: 0s; }
+.diagram-grpc .d2 { animation-delay: -0.65s; }
+.diagram-grpc .d3 { animation-delay: -1.3s; }
+.diagram-grpc .d4 { animation-delay: -1.95s; }
+@keyframes grpc-fwd {
+  0%   { transform: translateX(80px); }
+  100% { transform: translateX(386px); }
+}
+@keyframes grpc-bk {
+  0%   { transform: translateX(386px); }
+  100% { transform: translateX(80px); }
+}
+
+/* ---------- 04 · GraphQL · single shaped query, matching response ---------- */
+
+.diagram-graphql .packet-query {
+  transform: translateX(80px);
+  opacity: 0;
+  animation: gql-query 5s ease-in-out infinite;
+}
+.diagram-graphql .packet-result {
+  transform: translateX(308px);
+  opacity: 0;
+  animation: gql-result 5s ease-in-out infinite;
+}
+@keyframes gql-query {
+  0%   { transform: translateX(80px);  opacity: 0; }
+  10%  { opacity: 1; }
+  45%  { transform: translateX(308px); opacity: 1; }
+  50%, 100% { transform: translateX(308px); opacity: 0; }
+}
+@keyframes gql-result {
+  0%, 50% { transform: translateX(308px); opacity: 0; }
+  60%  { opacity: 1; }
+  95%  { transform: translateX(80px);  opacity: 1; }
+  100% { transform: translateX(80px);  opacity: 0; }
+}
+
+/* ---------- 05 · Webhooks · server-initiated push ---------- */
+
+.diagram-webhook .event-pulse {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: webhook-pulse 3.4s ease-out infinite;
+}
+.diagram-webhook .packet-push {
+  transform: translateX(346px);
+  opacity: 0;
+  animation: webhook-push 3.4s ease-in-out infinite;
+}
+@keyframes webhook-pulse {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  12%      { opacity: 1; transform: scale(1); }
+  32%      { opacity: 0; transform: scale(2.2); }
+}
+@keyframes webhook-push {
+  0%, 22% { transform: translateX(346px); opacity: 0; }
+  30%     { opacity: 1; }
+  85%     { transform: translateX(80px);  opacity: 1; }
+  100%    { transform: translateX(80px);  opacity: 0; }
+}
+
+/* ---------- 06 · WebSockets · persistent full-duplex ---------- */
+
+.diagram-ws .packet-up   { animation: ws-up 4s linear infinite; }
+.diagram-ws .packet-down { animation: ws-down 4s linear infinite; }
+.diagram-ws .w1 { animation-delay: 0s; }
+.diagram-ws .w2 { animation-delay: -1.3s; }
+.diagram-ws .w3 { animation-delay: -2.6s; }
+.diagram-ws .w4 { animation-delay: -0.7s; }
+.diagram-ws .w5 { animation-delay: -2.0s; }
+@keyframes ws-up {
+  0%   { transform: translateX(80px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(346px); opacity: 0; }
+}
+@keyframes ws-down {
+  0%   { transform: translateX(346px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(80px); opacity: 0; }
+}
+
+/* ---------- 07 · WebRTC · signaling then peer-to-peer ---------- */
+
+.diagram-webrtc .link-signal {
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 5 3;
+  fill: none;
+  animation: webrtc-signal 6.5s linear infinite;
+}
+.diagram-webrtc .link-p2p {
+  stroke: var(--rule);
+  stroke-width: 1;
+  fill: none;
+  animation: webrtc-p2p 6.5s ease-in-out infinite;
+}
+.diagram-webrtc .label-sdp {
+  fill: var(--accent);
+  font-size: 8px;
+  font-weight: 600;
+  text-anchor: middle;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: webrtc-label-sdp 6.5s ease-in-out infinite;
+}
+.diagram-webrtc .label-media {
+  fill: var(--accent);
+  font-size: 8.5px;
+  font-weight: 600;
+  text-anchor: middle;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: webrtc-label-media 6.5s ease-in-out infinite;
+}
+.diagram-webrtc .packet-media {
+  transform: translateX(80px);
+  opacity: 0;
+  animation: webrtc-media 6.5s ease-in-out infinite;
+}
+@keyframes webrtc-signal {
+  0%   { opacity: 1; stroke-dashoffset: 16; }
+  35%  { opacity: 1; stroke-dashoffset: 0; }
+  45%, 100% { opacity: 0.25; stroke-dashoffset: 0; }
+}
+@keyframes webrtc-p2p {
+  0%, 42%   { stroke: var(--rule);   stroke-width: 1; }
+  52%, 100% { stroke: var(--accent); stroke-width: 2; }
+}
+@keyframes webrtc-label-sdp {
+  0%       { opacity: 0; }
+  10%, 38% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+@keyframes webrtc-label-media {
+  0%, 52%  { opacity: 0; }
+  62%, 95% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+@keyframes webrtc-media {
+  0%, 52%  { transform: translateX(80px);  opacity: 0; }
+  58%      { opacity: 1; transform: translateX(80px); }
+  92%      { opacity: 1; transform: translateX(338px); }
+  100%     { opacity: 0; transform: translateX(338px); }
+}
+
+/* ===================================================================
+ * mcp-cli-api diagrams
+ * =================================================================== */
+
+/* ---------- token-cost bars (same fill rate → bigger bars take longer) ---------- */
+
+.diagram-tokens .track {
+  fill: var(--tag-bg);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.diagram-tokens .bar-fill {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.diagram-tokens .bar-label {
+  fill: var(--muted);
+  font-size: 10px;
+  text-anchor: end;
+  letter-spacing: 0.03em;
+}
+.diagram-tokens .bar-val {
+  fill: var(--muted);
+  font-size: 9px;
+  text-anchor: start;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.diagram-tokens .bar-val.heavy {
+  fill: var(--accent);
+  font-weight: 600;
+}
+.diagram-tokens .bar-cli  { animation: tokens-cli  7s linear infinite; }
+.diagram-tokens .bar-curl { animation: tokens-curl 7s linear infinite; }
+.diagram-tokens .bar-mcp  { animation: tokens-mcp  7s linear infinite; }
+
+@keyframes tokens-cli {
+  0%        { transform: scaleX(0); }
+  17%       { transform: scaleX(1); }
+  90%       { transform: scaleX(1); }
+  97%, 100% { transform: scaleX(0); }
+}
+@keyframes tokens-curl {
+  0%        { transform: scaleX(0); }
+  51%       { transform: scaleX(1); }
+  90%       { transform: scaleX(1); }
+  97%, 100% { transform: scaleX(0); }
+}
+@keyframes tokens-mcp {
+  0%        { transform: scaleX(0); }
+  90%       { transform: scaleX(1); }
+  97%, 100% { transform: scaleX(0); }
+}
+
+/* ---------- MCP fanout · N clients → 1 server → backend ---------- */
+
+.diagram-fanout .node-hub rect {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+.diagram-fanout .node-hub text {
+  fill: var(--bg);
+  font-weight: 600;
+}
+.diagram-fanout .dot {
+  fill: var(--accent);
+  opacity: 0;
+}
+.diagram-fanout .c1  { animation: fanout-c1  2.6s linear infinite; }
+.diagram-fanout .c2  { animation: fanout-c2  2.6s linear infinite -0.8s; }
+.diagram-fanout .c3  { animation: fanout-c3  2.6s linear infinite -1.6s; }
+.diagram-fanout .out { animation: fanout-out 2.6s linear infinite -1.2s; }
+
+@keyframes fanout-c1 {
+  0%   { cx: 112px; cy: 27px;  opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { cx: 200px; cy: 76px;  opacity: 0; }
+}
+@keyframes fanout-c2 {
+  0%   { cx: 112px; cy: 81px;  opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { cx: 200px; cy: 81px;  opacity: 0; }
+}
+@keyframes fanout-c3 {
+  0%   { cx: 112px; cy: 135px; opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { cx: 200px; cy: 86px;  opacity: 0; }
+}
+@keyframes fanout-out {
+  0%   { cx: 280px; cy: 81px;  opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { cx: 368px; cy: 81px;  opacity: 0; }
+}
+
+/* ===================================================================
+ * hermes-vs-openclaw diagrams
+ * =================================================================== */
+
+/* ---------- architecture · Gateway hub (inward) vs Agent radial (outward) ---------- */
+
+.diagram-archi .col-title {
+  fill: var(--accent);
+  font-size: 10px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.diagram-archi .col-sub {
+  fill: var(--muted);
+  font-size: 8px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.diagram-archi .divider {
+  stroke: var(--rule);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.diagram-archi .node-hub rect {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+.diagram-archi .node-hub text {
+  fill: var(--bg);
+  font-weight: 600;
+}
+.diagram-archi .dot {
+  fill: var(--accent);
+  opacity: 0;
+}
+
+/* OpenClaw inflow */
+.diagram-archi .in-a { animation: archi-in-a 3s linear infinite; }
+.diagram-archi .in-b { animation: archi-in-b 3s linear infinite -0.75s; }
+.diagram-archi .in-c { animation: archi-in-c 3s linear infinite -1.5s; }
+.diagram-archi .in-d { animation: archi-in-d 3s linear infinite -2.25s; }
+@keyframes archi-in-a {
+  0%   { cx: 68px;  cy: 39px;  opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 85px;  cy: 78px;  opacity: 0; }
+}
+@keyframes archi-in-b {
+  0%   { cx: 152px; cy: 39px;  opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 135px; cy: 78px;  opacity: 0; }
+}
+@keyframes archi-in-c {
+  0%   { cx: 68px;  cy: 141px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 85px;  cy: 102px; opacity: 0; }
+}
+@keyframes archi-in-d {
+  0%   { cx: 152px; cy: 141px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 135px; cy: 102px; opacity: 0; }
+}
+
+/* Hermes outflow */
+.diagram-archi .out-a { animation: archi-out-a 3s linear infinite; }
+.diagram-archi .out-b { animation: archi-out-b 3s linear infinite -0.75s; }
+.diagram-archi .out-c { animation: archi-out-c 3s linear infinite -1.5s; }
+.diagram-archi .out-d { animation: archi-out-d 3s linear infinite -2.25s; }
+@keyframes archi-out-a {
+  0%   { cx: 345px; cy: 78px;  opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 328px; cy: 39px;  opacity: 0; }
+}
+@keyframes archi-out-b {
+  0%   { cx: 395px; cy: 78px;  opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 412px; cy: 39px;  opacity: 0; }
+}
+@keyframes archi-out-c {
+  0%   { cx: 345px; cy: 102px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 328px; cy: 141px; opacity: 0; }
+}
+@keyframes archi-out-d {
+  0%   { cx: 395px; cy: 102px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { cx: 412px; cy: 141px; opacity: 0; }
+}
+
+/* ---------- memory · workspace reload vs frozen snapshot ---------- */
+
+.diagram-memory .col-title {
+  fill: var(--accent);
+  font-size: 10px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.diagram-memory .col-sub {
+  fill: var(--muted);
+  font-size: 8px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.diagram-memory .divider {
+  stroke: var(--rule);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.diagram-memory .mem-source rect {
+  fill: var(--paper);
+  stroke: var(--accent);
+  stroke-dasharray: 3 2;
+}
+.diagram-memory .mem-source text {
+  fill: var(--accent);
+  font-weight: 600;
+}
+.diagram-memory .mem-frozen rect {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+.diagram-memory .mem-frozen text {
+  fill: var(--bg);
+  font-weight: 600;
+}
+.diagram-memory .link-frozen {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+}
+.diagram-memory .reload {
+  fill: var(--accent);
+  opacity: 0;
+}
+.diagram-memory .r1 { animation: mem-reload-1 6s linear infinite; }
+.diagram-memory .r2 { animation: mem-reload-2 6s linear infinite; }
+.diagram-memory .r3 { animation: mem-reload-3 6s linear infinite; }
+
+@keyframes mem-reload-1 {
+  0%        { cy: 54px;  opacity: 0; }
+  4%        { opacity: 1; }
+  18%       { cy: 86px;  opacity: 1; }
+  23%, 100% { opacity: 0; cy: 86px; }
+}
+@keyframes mem-reload-2 {
+  0%, 33%   { cy: 54px;  opacity: 0; }
+  37%       { opacity: 1; }
+  51%       { cy: 126px; opacity: 1; }
+  56%, 100% { opacity: 0; cy: 126px; }
+}
+@keyframes mem-reload-3 {
+  0%, 66%   { cy: 54px;  opacity: 0; }
+  70%       { opacity: 1; }
+  84%       { cy: 166px; opacity: 1; }
+  89%, 100% { opacity: 0; cy: 166px; }
+}
+
+/* Hermes side · single simultaneous fan-out, dots hold in place ("frozen") */
+.diagram-memory .frozen-load {
+  fill: var(--accent);
+  opacity: 0;
+}
+.diagram-memory .fl1 { animation: mem-frozen-1 6s linear infinite; }
+.diagram-memory .fl2 { animation: mem-frozen-2 6s linear infinite; }
+.diagram-memory .fl3 { animation: mem-frozen-3 6s linear infinite; }
+@keyframes mem-frozen-1 {
+  0%         { cy: 54px;  opacity: 0; }
+  4%         { opacity: 1; }
+  15%        { cy: 86px;  opacity: 1; }
+  92%        { cy: 86px;  opacity: 1; }
+  98%, 100%  { cy: 86px;  opacity: 0; }
+}
+@keyframes mem-frozen-2 {
+  0%         { cy: 54px;  opacity: 0; }
+  4%         { opacity: 1; }
+  15%        { cy: 126px; opacity: 1; }
+  92%        { cy: 126px; opacity: 1; }
+  98%, 100%  { cy: 126px; opacity: 0; }
+}
+@keyframes mem-frozen-3 {
+  0%         { cy: 54px;  opacity: 0; }
+  4%         { opacity: 1; }
+  15%        { cy: 166px; opacity: 1; }
+  92%        { cy: 166px; opacity: 1; }
+  98%, 100%  { cy: 166px; opacity: 0; }
+}

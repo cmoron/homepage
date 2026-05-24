@@ -13,6 +13,7 @@
     <link rel="icon" href="../../favicon.png" type="image/png" sizes="64x64" />
     <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
     <link rel="stylesheet" href="../../css/article.css" />
+    <link rel="stylesheet" href="../../css/diagrams.css" />
   </head>
   <body>
     <main>
@@ -122,6 +123,24 @@ gh issue list --assignee @me --state open \
           </div>
         </div>
 
+        <svg viewBox="0 0 480 130" class="diagram diagram-tokens" aria-hidden="true">
+          <text class="bar-label" x="124" y="21" dominant-baseline="central">CLI · gh</text>
+          <rect class="track" x="130" y="14" width="51" height="14" rx="2" />
+          <rect class="bar-fill bar-cli" x="130" y="14" width="51" height="14" rx="2" />
+          <text class="bar-val" x="185" y="21" dominant-baseline="central">60 t</text>
+
+          <text class="bar-label" x="124" y="61" dominant-baseline="central">curl + jq</text>
+          <rect class="track" x="130" y="54" width="153" height="14" rx="2" />
+          <rect class="bar-fill bar-curl" x="130" y="54" width="153" height="14" rx="2" />
+          <text class="bar-val" x="288" y="61" dominant-baseline="central">180 t</text>
+
+          <text class="bar-label" x="124" y="101" dominant-baseline="central">MCP tool</text>
+          <rect class="track" x="130" y="94" width="297" height="14" rx="2" />
+          <rect class="bar-fill bar-mcp" x="130" y="94" width="297" height="14" rx="2" />
+          <text class="bar-val heavy" x="432" y="101" dominant-baseline="central">350 t</text>
+        </svg>
+        <p class="diagram-caption">même geste, coût en tokens à débit constant — 6× plus long pour MCP</p>
+
         <p>
           Le verdict est net : la CLI hand-crafted l'emporte largement sur ce geste, parce que <code>gh</code> a déjà absorbé l'auth, la pagination et le formatage. Au passage, c'est aussi ce que le LLM connaît le mieux — il a vu <code>gh</code> des millions de fois dans son entraînement.
         </p>
@@ -166,6 +185,27 @@ gh issue list --assignee @me --state open \
         <p>
           L'erreur du débat actuel, c'est de comparer MCP et CLI sur le terrain où CLI est de toute façon supérieure : dev local, mono-utilisateur, shell disponible. Mais MCP n'est pas un format alternatif à CLI, c'est un protocole pour des situations où CLI ne peut <em>pas</em> aller. Quatre cas structurels :
         </p>
+
+        <svg viewBox="0 0 480 160" class="diagram diagram-fanout" aria-hidden="true">
+          <line class="link" x1="112" y1="27" x2="200" y2="76" />
+          <line class="link" x1="112" y1="81" x2="200" y2="81" />
+          <line class="link" x1="112" y1="135" x2="200" y2="86" />
+          <line class="link" x1="280" y1="81" x2="368" y2="81" />
+
+          <g class="node"><rect x="12" y="14" width="100" height="26" rx="3" /><text x="62" y="27" dominant-baseline="central">claude</text></g>
+          <g class="node"><rect x="12" y="68" width="100" height="26" rx="3" /><text x="62" y="81" dominant-baseline="central">cursor</text></g>
+          <g class="node"><rect x="12" y="122" width="100" height="26" rx="3" /><text x="62" y="135" dominant-baseline="central">zed · etc.</text></g>
+
+          <g class="node node-hub"><rect x="200" y="68" width="80" height="26" rx="3" /><text x="240" y="81" dominant-baseline="central">MCP</text></g>
+
+          <g class="node"><rect x="368" y="68" width="100" height="26" rx="3" /><text x="418" y="81" dominant-baseline="central">backend</text></g>
+
+          <circle class="dot c1" r="3" cx="112" cy="27" />
+          <circle class="dot c2" r="3" cx="112" cy="81" />
+          <circle class="dot c3" r="3" cx="112" cy="135" />
+          <circle class="dot out" r="3" cx="280" cy="81" />
+        </svg>
+        <p class="diagram-caption">un seul serveur MCP, N clients hétérogènes — la CLI exigerait N installations</p>
 
         <div class="win-grid">
           <div class="win">
