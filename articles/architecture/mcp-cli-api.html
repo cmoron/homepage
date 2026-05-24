@@ -139,10 +139,10 @@ gh issue list --assignee @me --state open \
           <rect class="bar-fill bar-mcp" x="130" y="94" width="297" height="14" rx="2" />
           <text class="bar-val heavy" x="432" y="101" dominant-baseline="central">350 t</text>
         </svg>
-        <p class="diagram-caption">même geste, coût en tokens à débit constant — 6× plus long pour MCP</p>
+        <p class="diagram-caption">même geste, coût en tokens à débit constant — environ 6× plus long pour MCP sur ce cas précis (mesure indicative, varie selon le client et le schéma)</p>
 
         <p>
-          Le verdict est net : la CLI hand-crafted l'emporte largement sur ce geste, parce que <code>gh</code> a déjà absorbé l'auth, la pagination et le formatage. Au passage, c'est aussi ce que le LLM connaît le mieux — il a vu <code>gh</code> des millions de fois dans son entraînement.
+          Sur ce geste précis, la CLI hand-crafted l'emporte largement, parce que <code>gh</code> a déjà absorbé l'auth, la pagination et le formatage. Au passage, c'est aussi ce que le LLM connaît le mieux — il a vu <code>gh</code> des millions de fois dans son entraînement.
         </p>
       </section>
 
@@ -167,7 +167,7 @@ gh issue list --assignee @me --state open \
         </div>
 
         <p>
-          L'explication est mécanique : chaque tool MCP charge son schéma JSON dans le contexte du modèle, plus sa description, plus celle de ses arguments. Avec une dizaine de tools, on a déjà mangé plusieurs milliers de tokens <em>avant même d'avoir commencé à travailler</em>. Et chaque schéma supplémentaire élargit la surface de décision : le modèle hésite entre plus d'options, donc raisonne moins bien.
+          L'explication est plutôt mécanique, dans la majorité des implémentations actuelles : chaque tool MCP charge son schéma JSON dans le contexte du modèle, plus sa description, plus celle de ses arguments. Avec une dizaine de tools, on a déjà mangé plusieurs milliers de tokens <em>avant même d'avoir commencé à travailler</em>. À nuancer : le coût réel dépend fortement du client (Claude Desktop, Cursor, Continue…), du chargement <em>lazy</em> ou non des tools, de la taille des schémas et de la stratégie de tool selection. Certains clients commencent à filtrer dynamiquement les tools exposés au modèle, ce qui change la donne — l'overhead structurel reste cependant la règle aujourd'hui. Et chaque schéma supplémentaire élargit la surface de décision : le modèle hésite entre plus d'options, donc raisonne moins bien.
         </p>
 
         <div class="pullquote">
@@ -287,6 +287,47 @@ gh issue list --assignee @me --state open \
 
         <p>
           Le fait que Google ait shippé en parallèle <code>gws</code> CLI <em>et</em> des serveurs MCP Workspace est le signal le plus clair : ce n'est pas une bataille, ce sont deux outils complémentaires pour deux périmètres différents.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">À retenir</div>
+        <h2>Si tu dois <em>décider demain</em></h2>
+        <div class="decision">
+          <h3>Trois questions, dans cet ordre</h3>
+          <p class="rule">
+            1 · <span class="key">L'agent agit pour qui ?</span> Pour toi seul → CLI/API. Pour des tiers, avec leurs droits → MCP.<br />
+            2 · <span class="key">Le tool existe-t-il déjà en CLI mature ?</span> Si oui (<code>git</code>, <code>gh</code>, <code>kubectl</code>, <code>aws</code>, <code>jq</code>), prends-la. Tu réutilises ce que le modèle connaît déjà.<br />
+            3 · <span class="key">Ai-je besoin de bi-directionnalité, OAuth délégué, Resources, ou cross-client ?</span> Si oui sur l'un des quatre → MCP. Sinon, la CLI ou un script de quelques lignes coûteront moins en tokens et en debug.
+          </p>
+          <p>
+            Le défaut raisonnable d'un agent moderne : 80% de CLI/scripts, 20% de MCP là où la gouvernance ou le transport l'exigent. Tout MCP partout = fatigue cache + dilution du raisonnement. Tout CLI partout = on bute dès qu'on quitte le shell de l'opérateur.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">Notes &amp; sources</div>
+        <h2>D'où viennent <em>les chiffres</em></h2>
+        <ul class="sources">
+          <li>
+            <strong>4–32× tokens MCP vs CLI</strong> — Scalekit, benchmark publié début 2026 sur 75 runs comparatifs (gestion d'issues GitHub via <code>gh</code> vs serveur MCP équivalent). Méthodologie publique, à consulter pour le détail (état d'auth, taille de schéma, modèle utilisé).
+          </li>
+          <li>
+            <strong>~35× d'overhead sur tâches complexes</strong> — MindStudio, étude 2026 sur des workflows multi-étapes. Cas extrême, pas représentatif des gestes simples.
+          </li>
+          <li>
+            <strong>72% fiabilité MCP vs 100% CLI</strong> — même source Scalekit, mesuré sur les runs qui atteignent une condition de succès définie. Fiabilité ici = taux de complétion, pas qualité du résultat.
+          </li>
+          <li>
+            <strong>Citation « too many MCP tools »</strong> — observation rapportée à plusieurs reprises dans les blogs Firecrawl et Nordic APIs en 2026, recoupée par les retours communautaires sur les implémentations MCP les plus chargées.
+          </li>
+          <li>
+            <strong>OAuth 2.1 + Dynamic Client Registration dans MCP</strong> — ajouté à la spec MCP en 2025. Voir la spec officielle pour la liste des grant types supportés.
+          </li>
+        </ul>
+        <p class="caveat">
+          Chiffres à prendre comme <em>ordres de grandeur</em>, pas comme constantes physiques. Les écarts dépendent fortement du client MCP utilisé, du chargement lazy ou non des schémas, et de la maturité de la CLI comparée. Un benchmark <code>gh</code> vs MCP-GitHub n'a pas la même tête qu'un benchmark sur une API obscure sans CLI dédiée.
         </p>
       </section>
 

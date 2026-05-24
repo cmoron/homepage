@@ -1,25 +1,13 @@
 :root {
-  color-scheme: light dark;
-  --bg: #f6f2e9;
-  --paper: #fbf8f1;
-  --fg: #1c1a14;
-  --muted: #6a6155;
-  --faint: #aea391;
-  --rule: #e3dbc8;
-  --accent: #a83a1c;
-  --tag-bg: #efe7d5;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #14120e;
-    --paper: #181610;
-    --fg: #ece5d6;
-    --muted: #948b7d;
-    --faint: #4b4439;
-    --rule: #2c2820;
-    --accent: #e07b4a;
-    --tag-bg: #221e17;
-  }
+  color-scheme: dark;
+  --bg: #14120e;
+  --paper: #181610;
+  --fg: #ece5d6;
+  --muted: #948b7d;
+  --faint: #4b4439;
+  --rule: #2c2820;
+  --accent: #e07b4a;
+  --tag-bg: #221e17;
 }
 
 * { box-sizing: border-box; }
@@ -460,6 +448,66 @@ code {
   display: block;
   margin-bottom: 0.3rem;
   font-weight: 600;
+}
+
+/* sources / notes list */
+.sources {
+  margin: 1rem 0 1.2rem;
+  padding-left: 1.2rem;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.sources li { margin-bottom: 0.6rem; }
+.sources strong { color: var(--fg); font-weight: 600; }
+.caveat {
+  margin: 1rem 0 0;
+  padding: 0.7rem 1rem;
+  background: var(--tag-bg);
+  border-left: 3px solid var(--faint);
+  border-radius: 0 2px 2px 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.caveat em { color: var(--fg); font-style: italic; }
+
+/* registers methodology preamble */
+.registers {
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+.registers-title {
+  font-family:
+    ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+.registers ul { margin: 0; padding-left: 1.2rem; }
+.registers li { margin-bottom: 0.35rem; color: var(--muted); }
+.registers li strong { color: var(--fg); font-weight: 600; }
+
+/* engineer opinion inline note */
+.opinion {
+  margin: 0.8rem 0 0;
+  padding: 0.6rem 0 0;
+  border-top: 1px dashed var(--rule);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.opinion em {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
 }
 
 /* axes (api-types intro) */

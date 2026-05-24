@@ -86,7 +86,7 @@
         <div class="section-label">01 · REST · depuis 2000</div>
         <h2>REST, le standard <em>de facto</em></h2>
         <p>
-          REST n'est pas un protocole, c'est un style architectural posé par Roy Fielding dans sa thèse. L'idée centrale : tout est une <em>ressource</em> identifiée par une URL, manipulée via les verbes HTTP standards (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>). Chaque requête est <strong>stateless</strong> : le serveur ne garde aucun contexte entre deux appels.
+          REST n'est pas un protocole, c'est un style architectural posé par Roy Fielding dans sa thèse. L'idée centrale : tout est une <em>ressource</em> identifiée par une URL, manipulée via les verbes HTTP standards (<code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>). Chaque requête est <strong>stateless</strong> au sens où le serveur ne garde aucun contexte <em>de session</em> entre deux appels — l'état des ressources reste évidemment côté serveur, c'est la conversation client-serveur qui est sans mémoire.
         </p>
 
         <svg viewBox="0 0 480 90" class="diagram diagram-rest" aria-hidden="true">
@@ -159,6 +159,9 @@
           <strong>À utiliser pour</strong>
           API publiques web, CRUD applicatif, intégrations tierces, mobile classique. Quand on hésite, c'est le défaut raisonnable.
         </div>
+        <p class="opinion">
+          <em>Mon angle d'ingénieur :</em> dans une app SaaS B2B greenfield, je commence presque toujours par REST. Le coût d'entrée est nul, l'outillage suit, et le jour où une portion du trafic exige réellement du streaming ou de l'agrégation côté client, on ajoute la techno qui répond — gRPC sur un sous-chemin interne, GraphQL sur un BFF — sans tout réécrire.
+        </p>
       </section>
 
       <section>
@@ -322,6 +325,9 @@
           <strong>À utiliser pour</strong>
           Microservices internes haute performance, communication inter-datacenters, environnements polyglottes avec contrats stricts. Le défaut chez Google, Netflix, Square.
         </div>
+        <p class="opinion">
+          <em>Mon angle d'ingénieur :</em> gRPC seulement quand l'organisation sait <em>opérer</em> Protobuf — codegen intégré au CI, breaking changes versionnés discipline-de-fer, outillage de debug binaire en place. Sans ça, on récupère la performance et on perd la productivité.
+        </p>
       </section>
 
       <section>
@@ -392,7 +398,7 @@
           <div class="cons">
             <div class="cons-title">Limites</div>
             <ul>
-              <li>Caching HTTP standard inopérant</li>
+              <li>Caching HTTP nettement moins naturel qu'en REST, exige une stratégie dédiée (persisted queries, Apollo Cache, etc.)</li>
               <li>Problème du N+1 côté résolveurs</li>
               <li>Complexité backend, risque de requêtes coûteuses</li>
             </ul>
@@ -403,6 +409,9 @@
           <strong>À utiliser pour</strong>
           Frontends complexes avec besoins de données variables (apps mobile + web partageant un backend), agrégation de plusieurs services, BFF (Backend For Frontend).
         </div>
+        <p class="opinion">
+          <em>Mon angle d'ingénieur :</em> souvent overkill pour une seule appli web. La valeur de GraphQL apparaît quand <em>plusieurs</em> frontends différents tapent le même backend — sinon, on paie la complexité serveur sans en récolter les bénéfices.
+        </p>
       </section>
 
       <section>
@@ -566,7 +575,7 @@ client → {<span class="t">"typing"</span>: <span class="arr">true</span>}</div
         <div class="section-label">07 · WebRTC · depuis 2011</div>
         <h2>WebRTC, le pair-à-pair temps réel</h2>
         <p>
-          WebRTC permet à deux navigateurs (ou applications) d'établir une connexion <strong>directe de pair à pair</strong>, sans relais serveur pour les données utiles. Le serveur n'intervient que pour la phase de <em>signaling</em> : échanger les descriptions de session (SDP) et traverser les NAT (STUN/TURN). Une fois la connexion établie, la voix, la vidéo et les <code>DataChannels</code> binaires circulent directement entre les pairs.
+          WebRTC permet à deux navigateurs (ou applications) d'établir une connexion <strong>directe de pair à pair</strong> dans le cas idéal. Le serveur intervient pour la phase de <em>signaling</em> — échanger les descriptions de session (SDP) — et pour la traversée NAT (STUN, puis TURN si STUN échoue). En conditions réelles, TURN relaie souvent le trafic quand le NAT bloque la connexion directe, et toute visio à plus de deux participants passe en pratique par un <strong>SFU</strong> (Selective Forwarding Unit) côté serveur. Le « pur P2P » est un cas limite, pas la règle.
         </p>
 
         <svg viewBox="0 0 480 140" class="diagram diagram-webrtc" aria-hidden="true">
@@ -629,7 +638,7 @@ pc.ontrack = (event) =&gt; videoEl.srcObject = event.streams[<span class="arr">0
             <div class="pros-title">Forces</div>
             <ul>
               <li>Latence ultra-faible (~100ms perçue)</li>
-              <li>P2P : économise une énorme bande passante serveur</li>
+              <li>P2P quand il s'établit : économise la bande passante serveur</li>
               <li>Chiffrement end-to-end imposé par la spec</li>
             </ul>
           </div>
@@ -647,6 +656,9 @@ pc.ontrack = (event) =&gt; videoEl.srcObject = event.streams[<span class="arr">0
           <strong>À utiliser pour</strong>
           Visioconférence (Meet, Zoom), appels audio in-app, streaming live faible latence, transferts P2P de fichiers, jeux en cloud.
         </div>
+        <p class="opinion">
+          <em>Mon angle d'ingénieur :</em> le « P2P gratuit » est un mirage en production. Sitôt qu'il faut TURN provisionné, un SFU dimensionné pour les calls à plus de deux, et une équipe pour observer la WebRTC stack, le coût opérationnel approche celui d'un serveur de streaming classique. C'est rarement le choix par défaut — c'est celui de la latence ultra-faible imposée.
+        </p>
       </section>
 
       <section>
@@ -703,6 +715,22 @@ pc.ontrack = (event) =&gt; videoEl.srcObject = event.streams[<span class="arr">0
 
         <div class="pullquote">
           GraphQL et REST sont proches voisins. WebRTC vit dans une autre galaxie. C'est pour ça qu'on ne les remplace pas l'un par l'autre.
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">À retenir</div>
+        <h2>Si tu dois <em>décider demain</em></h2>
+        <div class="decision">
+          <h3>Trois questions, dans cet ordre</h3>
+          <p class="rule">
+            1 · <span class="key">Qui appelle qui ?</span> Client → serveur, c'est REST/GraphQL/gRPC. Serveur → client, c'est Webhooks. Les deux à tout moment, c'est WebSockets ou WebRTC.<br />
+            2 · <span class="key">Une réponse, ou un flux ?</span> Une réponse, défaut REST. Un flux media, défaut WebRTC. Un flux de messages, défaut WebSockets.<br />
+            3 · <span class="key">Qui consomme ?</span> Un navigateur ouvert → REST/GraphQL/WebSockets. Du back-to-back interne polyglotte → gRPC. Un système bancaire → SOAP, parce qu'il est déjà là.
+          </p>
+          <p>
+            Pour 80% des cas, on s'arrête à la question 1. Le choix par défaut reste REST + Webhooks. Tout le reste est un cas spécifique qui doit justifier son surcoût d'opération.
+          </p>
         </div>
       </section>
 

@@ -29,6 +29,15 @@
         Même problème — un agent IA personnel persistant — deux philosophies opposées. OpenClaw mise sur le control plane, Hermes sur la boucle d'auto-amélioration. Et la mémoire, le vrai sujet, n'est pas traitée du tout de la même manière.
       </p>
 
+      <div class="registers">
+        <div class="registers-title">trois registres dans cet article</div>
+        <ul>
+          <li><strong>Fait</strong> — ce qui se lit directement dans le code, la doc officielle, les changelogs ou les issues publiques des deux projets.</li>
+          <li><strong>Inférence</strong> — ce que je déduis de la lecture du code ou de la doc, sans qu'un mainteneur l'ait formulé explicitement. Marqué par « à la lecture de », « il semble que », « le pattern suggère ».</li>
+          <li><strong>Opinion</strong> — mon jugement opérationnel, marqué par « à mon avis », « je préfère », ou regroupé dans la section « À retenir » en fin d'article.</li>
+        </ul>
+      </div>
+
       <section>
         <div class="section-label">01 · Le point de départ</div>
         <h2>Deux projets, <em>même niche</em></h2>
@@ -63,7 +72,7 @@
             </tr>
             <tr>
               <td>Étoiles GitHub</td>
-              <td>~310 000</td>
+              <td>~310 000 (ordre de grandeur, mai 2026)</td>
               <td>plusieurs dizaines de milliers, en forte croissance</td>
             </tr>
             <tr>
@@ -92,7 +101,7 @@
         </p>
 
         <p>
-          <strong>OpenClaw est un Gateway qui héberge un agent.</strong> Un daemon Node.js long-running concentre l'ensemble des responsabilités : bridges vers les messageries (Baileys pour WhatsApp, grammY pour Telegram, etc.), command queue, session manager, exécution des outils, authentification, sandboxing, hooks, scheduler cron. Le runtime d'agent embarqué est un module parmi d'autres dans cette machinerie, exposé par WebSocket. Tout transite donc par le Gateway, qui fonctionne en <em>single-writer par session</em>. Cette architecture offre un contrôle fin sur le routage et l'isolation, au prix d'une complexité concentrée dans le control plane.
+          <strong>OpenClaw est un Gateway qui héberge un agent.</strong> Un daemon Node.js long-running concentre l'ensemble des responsabilités : bridges vers les messageries (Baileys pour WhatsApp, grammY pour Telegram, etc.), command queue, session manager, exécution des outils, authentification, sandboxing, hooks, scheduler cron. Le runtime d'agent embarqué est un module parmi d'autres dans cette machinerie, exposé par WebSocket. Tout transite donc par le Gateway, qui fonctionne en <em>single-writer par session</em>. À la lecture du code, cette architecture donne un contrôle fin sur le routage et l'isolation, au prix d'une complexité concentrée dans le control plane.
         </p>
 
         <p>
@@ -338,7 +347,7 @@ skills/           <span class="c">← skills workspace</span></div>
         </table>
 
         <p>
-          L'asymétrie d'optimisation est nette. OpenClaw optimise pour la <strong>lisibilité humaine et l'auditabilité</strong> : workspace en clair, git diff sur la mémoire, possibilité d'édition manuelle. Hermes optimise pour le <strong>coût et la prévisibilité d'inférence</strong> : prompt cache-stable, mémoire active minimale, retrieval on-demand pour le reste.
+          L'asymétrie d'optimisation est nette, en tout cas à la lecture du code et des choix de plafonds. OpenClaw semble optimiser pour la <strong>lisibilité humaine et l'auditabilité</strong> : workspace en clair, git diff sur la mémoire, possibilité d'édition manuelle. Hermes semble optimiser pour le <strong>coût et la prévisibilité d'inférence</strong> : prompt cache-stable, mémoire active minimale, retrieval on-demand pour le reste. Aucun des deux projets ne formule ce trade-off en ces termes dans sa doc — c'est mon interprétation, à challenger.
         </p>
         <p>
           Ni l'un ni l'autre n'est strictement supérieur. C'est un compromis : ce que Hermes gagne en cache hit ratio, OpenClaw le gagne en transparence et en capacité d'intervention manuelle.
@@ -353,7 +362,7 @@ skills/           <span class="c">← skills workspace</span></div>
         </p>
 
         <p>
-          <strong>OpenClaw : les skills sont des runbooks rédigés à la main.</strong> La résolution suit une priorité workspace → managed → bundled. Le chargement est lazy : seule une métadonnée compacte (nom, description, chemin) est injectée dans le prompt — environ 97 caractères additionnés à la longueur des champs par skill. Le modèle est instruit à <code>read</code> la <code>SKILL.md</code> seulement quand la tâche correspond. L'écosystème communautaire est massif : plus de 44 000 skills selon le recensement de Data Science Collective (avril 2026), dont environ 5 400 vérifiées dans <code>awesome-openclaw-skills</code>. Il s'agit d'une documentation paginée à la demande.
+          <strong>OpenClaw : les skills sont des runbooks rédigés à la main.</strong> La résolution suit une priorité workspace → managed → bundled. Le chargement est lazy : seule une métadonnée compacte (nom, description, chemin) est injectée dans le prompt — environ 97 caractères additionnés à la longueur des champs par skill. Le modèle est instruit à <code>read</code> la <code>SKILL.md</code> seulement quand la tâche correspond. L'écosystème communautaire est massif : un recensement publié par Data Science Collective en avril 2026 estimait à environ 44 000 le nombre de skills publiées, dont ~5 400 vérifiées dans <code>awesome-openclaw-skills</code> — chiffres communautaires à prendre comme ordre de grandeur, l'écosystème grandit trop vite pour qu'un compte exact ait du sens. Il s'agit d'une documentation paginée à la demande.
         </p>
 
         <p>
@@ -408,7 +417,7 @@ skills/           <span class="c">← skills workspace</span></div>
         </div>
 
         <p>
-          L'agent tend à l'<strong>auto-congratulation</strong>. Le même système qui auto-génère des skills peut également écraser des customisations manuelles par des versions de moindre qualité, le modèle jugeant presque systématiquement avoir bien performé — y compris quand ce n'est pas le cas. Le retour communautaire est unanime sur ce point.
+          <strong>Fait observé par la communauté :</strong> l'agent tend à l'<strong>auto-congratulation</strong>. Le même système qui auto-génère des skills peut écraser des customisations manuelles par des versions de moindre qualité, le modèle jugeant souvent avoir bien performé y compris quand ce n'est pas le cas. Les retours communautaires sur ce point sont nombreux et convergents (issues GitHub Hermes, threads royosherove, posts Akshay Pachaar), même si je n'ai pas vu de mesure quantitative publiée.
         </p>
         <p>
           La parade officielle est <code>hermes-agent-self-evolution</code>, un repo companion qui implémente une pipeline DSPy + GEPA (Genetic-Pareto Prompt Evolution, dont le papier de référence est ICLR 2026 Oral) en offline. Au lieu de demander à l'agent une auto-évaluation, GEPA lit les <em>execution traces</em> pour identifier les causes d'échec, et propose des améliorations ciblées par recherche évolutionnaire. L'outil est efficace, mais constitue une couche supplémentaire à opérer.
@@ -444,7 +453,7 @@ skills/           <span class="c">← skills workspace</span></div>
           <strong>Hermes — 5 couches, philosophie <em>safer-by-default</em>.</strong> User authorization → dangerous-command approval → container isolation → MCP credential filtering → context-file scanning. Extensions associées : protections SSRF, blocklists de sites, filtrage des variables d'environnement, pairing user/messagerie, pre-execution scanning des commandes risquées. La posture par défaut est plus contrainte.
         </p>
         <p>
-          Le débat est philosophique. OpenClaw fait l'hypothèse d'un opérateur compétent et lui laisse le contrôle. Hermes fait l'hypothèse inverse : brider par défaut, laisser l'utilisateur desserrer ce qui le gêne. Pour un déploiement sur serveur exposé, Hermes part avec une longueur d'avance. Pour un assistant personnel sur localhost, OpenClaw offre plus de souplesse.
+          Le débat est philosophique. OpenClaw fait l'hypothèse d'un opérateur compétent et lui laisse le contrôle. Hermes fait l'hypothèse inverse : brider par défaut, laisser l'utilisateur desserrer ce qui le gêne. <strong>À mon avis</strong>, pour un déploiement sur serveur exposé, Hermes part avec une longueur d'avance. Pour un assistant personnel sur localhost, OpenClaw offre plus de souplesse.
         </p>
 
         <h3>Automation</h3>
@@ -495,6 +504,54 @@ skills/           <span class="c">← skills workspace</span></div>
         </p>
         <p>
           Quelques signaux orientent sans ambiguïté. Exposition serveur multi-utilisateurs, surface d'attaque large, besoin de prévisibilité tour-à-tour → la posture safer-by-default et le cache-stability de Hermes paient. Mémoire auditée, intégration à des devices physiques (caméras, écrans, GPS) via le Node system, présence proactive dans un thread principal via Heartbeat, édition manuelle des procédures → la profondeur de surface d'OpenClaw n'a pas d'équivalent. Quand la décision reste indécise, le critère qui tranche est presque toujours le même : préfère-t-on que ce soit <em>l'opérateur qui durcit</em>, ou <em>l'agent qui s'auto-corrige</em> ?
+        </p>
+      </section>
+
+      <section>
+        <div class="section-label">À retenir</div>
+        <h2>Si tu dois <em>décider demain</em></h2>
+        <div class="decision">
+          <h3>Quatre questions, dans cet ordre</h3>
+          <p class="rule">
+            1 · <span class="key">Qui opère ?</span> Un opérateur compétent qui aime durcir → OpenClaw. Un utilisateur qui préfère une posture safe-by-default → Hermes.<br />
+            2 · <span class="key">Où l'agent tourne-t-il ?</span> Localhost avec workspace par projet → OpenClaw. Serveur exposé, instance unique qui te suit → Hermes.<br />
+            3 · <span class="key">Mémoire auditable ou inférence prévisible ?</span> Git-diff sur la mémoire, édition manuelle → OpenClaw. Prompt cache-stable, coût d'inférence dominé → Hermes.<br />
+            4 · <span class="key">Skills écrites ou auto-générées ?</span> Tu veux écrire et versionner tes runbooks → OpenClaw. Tu veux que l'agent capture ce qu'il apprend (avec le failure mode d'auto-congratulation à gérer) → Hermes + pin sur les workflows critiques + pipeline GEPA si la qualité dérive.
+          </p>
+          <p>
+            Si tu hésites encore : commence par OpenClaw quand tu veux <em>voir</em> ce que l'agent fait, par Hermes quand tu veux qu'il <em>apprenne</em> ce que tu fais. Les deux peuvent coexister sur la même machine sans se gêner — workspace OpenClaw d'un côté, <code>HERMES_HOME</code> de l'autre — ce que je fais d'ailleurs personnellement.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">Notes &amp; sources</div>
+        <h2>Provenance des <em>chiffres et claims</em></h2>
+        <ul class="sources">
+          <li>
+            <strong>Étoiles GitHub, versions, dates de release</strong> — relevées sur les repos publics, mai 2026. Ces chiffres bougent vite ; à recouper avant toute décision argumentée.
+          </li>
+          <li>
+            <strong>~44 000 skills OpenClaw, ~5 400 vérifiées</strong> — recensement Data Science Collective, avril 2026. Métrique d'écosystème, à prendre comme ordre de grandeur (l'inventaire change quotidiennement).
+          </li>
+          <li>
+            <strong>Plafonds mémoire Hermes (~2 200 / 1 375 chars)</strong> — chiffres communiqués par Akshay Pachaar à partir de la lecture du code source. Vérifiables dans le repo public.
+          </li>
+          <li>
+            <strong><code>bootstrapMaxChars</code> 20 000 OpenClaw</strong> — défaut dans la config officielle, modifiable.
+          </li>
+          <li>
+            <strong>Pipeline DSPy + GEPA</strong> — repo companion <code>hermes-agent-self-evolution</code>. Le papier GEPA (Genetic-Pareto Prompt Evolution) a été présenté en oral ICLR 2026.
+          </li>
+          <li>
+            <strong>Failure mode d'auto-congratulation</strong> — observation communautaire récurrente (issues Hermes, deep-dive royosherove, posts Akshay Pachaar), pas de mesure quantitative publiée à ma connaissance.
+          </li>
+          <li>
+            <strong>Issue OpenClaw #60572</strong> — débat actif sur le passage à un slot mémoire multi-provider.
+          </li>
+        </ul>
+        <p class="caveat">
+          <em>Méthodologie :</em> les deux projets évoluent quasi-quotidiennement. Tout ce qui est marqué comme « inférence » dans cet article est ouvert à révision si un mainteneur précise ou contredit une lecture. Les claims marqués « fait » s'appuient sur le code ou la doc à la date de rédaction.
         </p>
       </section>
 
