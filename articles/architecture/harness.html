@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le harness, expliqué simplement</title>
+    <meta
+      name="description"
+      content="Qu'est-ce qu'un harness dans le monde des agents IA. Définition, composants, et exemples concrets via Claude Code, Pi, OpenClaw et Hermes."
+    />
+    <link rel="canonical" href="https://moron.at/articles/architecture/harness.html" />
+    <link rel="icon" href="../../favicon.ico" sizes="32x32" />
+    <link rel="icon" href="../../favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="../../apple-touch-icon.png" />
+    <link rel="stylesheet" href="../../css/article.css" />
+    <link rel="stylesheet" href="../../css/diagrams.css" />
+  </head>
+  <body>
+    <main>
+      <a href="../" class="back"><span class="arrow">←</span>écrits</a>
+
+  <div class="meta">
+    <span class="cat">Architecture</span><span class="sep">·</span>Mai 2026<span class="sep">·</span>Lecture · 6 min
+  </div>
+
+  <h1>Le <em>harness</em>, expliqué simplement</h1>
+
+  <p class="lede">
+    Le terme est partout depuis février 2026, sans qu'il existe vraiment de définition stable. La formule qui s'est
+    imposée tient en quatre mots&nbsp;: <em>Agent = Model + Harness</em>. Tout est dans le « plus ».
+  </p>
+
+  <!-- ============================================================ -->
+  <!-- 01 -->
+  <!-- ============================================================ -->
+  <section>
+    <div class="section-label">01 · La formule</div>
+    <h2>Tout sauf <em>le modèle</em></h2>
+
+    <p>
+      Le terme <em>harness</em> a été popularisé en février 2026 par Mitchell Hashimoto, créateur de Terraform et de
+      Ghostty. La discipline qu'il décrit&nbsp;: chaque fois qu'un agent commet une erreur, on n'ajuste pas le prompt
+      — on modifie l'environnement pour que cette erreur devienne structurellement impossible. Six jours plus tard,
+      OpenAI publiait une étude de cas où une équipe initialement de trois ingénieurs avait livré 1&nbsp;million de
+      lignes de code via des agents Codex, en mergeant 1&nbsp;500 PRs. Conclusion partagée par les deux publications&nbsp;: quand l'IA écrit tout le
+      code, le savoir-faire ne consiste plus à écrire du code, mais à <strong>concevoir le système autour de l'agent</strong>.
+    </p>
+
+    <p>
+      Birgitta Böckeler (Thoughtworks) a ensuite formalisé le vocabulaire dans un article publié sur le site de Martin
+      Fowler en avril 2026, qui sert désormais de référence. La définition canonique qui en est sortie&nbsp;:
+    </p>
+
+    <blockquote class="pullquote">
+      Le harness, c'est tout ce qui se trouve dans un agent IA, à l'exception du modèle lui-même.
+    </blockquote>
+
+    <p>
+      Cela inclut les outils, la mémoire, la boucle d'orchestration, les permissions, les hooks de sécurité, les
+      mécanismes de feedback, l'observabilité. Tout. La formule complète, attribuée à Hashimoto, est devenue le slogan
+      du domaine&nbsp;:
+    </p>
+
+    <div class="code">
+      <div class="code-label">La formule canonique<span class="meta-right">Hashimoto, fév. 2026</span></div>
+      <div class="code-body"><span class="k">Agent</span> <span class="arr">=</span> <span class="t">Model</span> <span class="arr">+</span> <span class="s">Harness</span></div>
+    </div>
+
+    <p>
+      Cette équation cohabite avec une trinité conceptuelle qui s'est imposée en parallèle, et qu'il faut bien
+      distinguer&nbsp;:
+    </p>
+
+    <div class="stack">
+      <div class="stack-row">
+        <div class="stack-num">01</div>
+        <div class="stack-content">
+          <div class="stack-name">Prompt engineering</div>
+          <div class="stack-desc">Façonne ce que l'agent <em>essaie</em> de faire sur une interaction donnée.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">02</div>
+        <div class="stack-content">
+          <div class="stack-name">Context engineering</div>
+          <div class="stack-desc">Façonne ce que l'agent <em>sait</em>&nbsp;: l'environnement informationnel injecté avant et pendant la boucle de raisonnement.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">03</div>
+        <div class="stack-content">
+          <div class="stack-name">Harness engineering</div>
+          <div class="stack-desc">Façonne ce que l'agent <em>peut et ne peut pas faire</em>. Englobe les deux précédentes, plus tout le reste.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Le prompt engineering n'a pas disparu. Il a été reclassifié&nbsp;: un composant parmi d'autres à l'intérieur du
+      harness.
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 02 -->
+  <!-- ============================================================ -->
+  <section>
+    <div class="section-label">02 · Pourquoi maintenant</div>
+    <h2>Le modèle se <em>commoditise</em>, le harness devient le moat</h2>
+
+    <p>
+      L'argument économique tient en une formule devenue virale dans la communauté&nbsp;: <em>« A decent model with a
+      great harness beats a great model with a bad harness »</em>. Les data points qui l'étayent commencent à s'accumuler.
+    </p>
+
+    <p>
+      Sur Terminal Bench 2.0, Claude Opus 4.6 obtient des scores nettement différents selon le harness qui l'emballe&nbsp;:
+      une équipe a fait passer son coding agent du top 30 au top 5 en ne changeant que le harness, à modèle constant.
+      LangChain a publié une mesure plus précise sur DeepAgents&nbsp;: +13.7 points de benchmark en modifiant uniquement
+      le harness (passage de 52.8% à 66.5%). Vercel a documenté qu'en réduisant le nombre d'outils accessibles à
+      l'agent, le taux de succès des tâches augmente — la richesse fonctionnelle n'est pas une variable monotone, le
+      cadrage compte autant que les capacités.
+    </p>
+
+    <p>
+      La conséquence stratégique est devenue un cliché du domaine, mais elle reste exacte&nbsp;: les modèles frontière
+      sont interchangeables (les principaux providers se substituent sans réécriture du reste), le harness encode le
+      savoir-faire métier, les contraintes de sécurité, et la logique de vérification. Le harness ne se déplace pas avec
+      un changement de fournisseur — il constitue donc le moat compétitif des organisations qui déploient des agents en
+      production.
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 03 -->
+  <!-- ============================================================ -->
+  <section>
+    <div class="section-label">03 · Les composants</div>
+    <h2>De quoi un harness <em>est-il fait</em></h2>
+
+    <p>
+      Aucune liste n'est canonique, mais une convergence s'est faite autour de six familles de composants. Tout harness
+      en implémente plusieurs, rarement tous.
+    </p>
+
+    <div class="stack">
+      <div class="stack-row">
+        <div class="stack-num">01</div>
+        <div class="stack-content">
+          <div class="stack-name">Tools <span class="badge">interfaces vers le monde</span></div>
+          <div class="stack-desc">Ce que l'agent peut invoquer&nbsp;: CLIs, MCP servers, APIs, lecture/écriture de fichiers, exécution de code. La sélection compte autant que la disponibilité.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">02</div>
+        <div class="stack-content">
+          <div class="stack-name">Context management <span class="badge mid">mémoire et compaction</span></div>
+          <div class="stack-desc">Comment l'historique, la mémoire long terme et les retrievals sont injectés dans la fenêtre de contexte. Inclut la stratégie de compaction quand la limite approche.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">03</div>
+        <div class="stack-content">
+          <div class="stack-name">Orchestration loop</div>
+          <div class="stack-desc">La boucle qui enchaîne les tours&nbsp;: ReAct, Plan-Execute-Verify, Ralph Loops. C'est le cœur cybernétique du harness.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">04</div>
+        <div class="stack-content">
+          <div class="stack-name">Guides <span class="badge mid">feedforward</span></div>
+          <div class="stack-desc">Ce qui prévient les erreurs avant qu'elles arrivent&nbsp;: AGENTS.md, skills, conventions, types, ref docs. Le harness apprend ici les règles du domaine.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">05</div>
+        <div class="stack-content">
+          <div class="stack-name">Sensors <span class="badge mid">feedback</span></div>
+          <div class="stack-desc">Ce qui détecte et corrige après coup&nbsp;: linters, tests, type checkers, LLM-as-judge, code review agents. Permettent la self-correction sans intervention humaine.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">06</div>
+        <div class="stack-content">
+          <div class="stack-name">Permissions &amp; observability</div>
+          <div class="stack-desc">Les couches de sécurité (sandboxing, hooks d'approbation, allowlists) et de traçabilité (logs, traces, audit trail). Indispensables en production.</div>
+        </div>
+      </div>
+    </div>
+
+    <svg viewBox="0 0 480 165" class="diagram diagram-harness" aria-hidden="true">
+      <path class="loop-back" d="M 405,80 Q 240,5 75,80" />
+      <text class="loop-label" x="240" y="22">feedback</text>
+
+      <line class="link link-strong" x1="130" y1="100" x2="200" y2="100" />
+      <line class="link link-strong" x1="280" y1="100" x2="350" y2="100" />
+
+      <g class="node">
+        <rect x="20" y="80" width="110" height="40" rx="3" />
+        <text x="75" y="100" dominant-baseline="central">guides</text>
+      </g>
+      <text class="sub" x="75" y="142">feedforward</text>
+
+      <g class="node node-hub">
+        <rect x="200" y="80" width="80" height="40" rx="3" />
+        <text x="240" y="100" dominant-baseline="central">model</text>
+      </g>
+
+      <g class="node">
+        <rect x="350" y="80" width="110" height="40" rx="3" />
+        <text x="405" y="100" dominant-baseline="central">sensors</text>
+      </g>
+      <text class="sub" x="405" y="142">feedback</text>
+
+      <circle class="dot d1" r="3" cy="100" />
+      <circle class="dot d2" r="3" cy="100" />
+      <circle class="dot d3" r="3" cy="100" />
+    </svg>
+    <p class="diagram-caption">feedforward → model → feedback · le harness boucle l'apprentissage</p>
+
+    <p>
+      Böckeler propose une distinction transversale utile&nbsp;: <strong>computational vs inferential</strong>. Les
+      contrôles computationnels sont déterministes et rapides (un linter, un type checker, un test) — fiables, peu
+      coûteux, exécutables à chaque commit. Les contrôles inferentiels sont sémantiques et non déterministes (un LLM
+      qui juge la qualité d'un code) — plus riches en jugement, mais plus lents et plus coûteux. Un harness mature
+      combine les deux selon le coût acceptable à chaque étape du cycle de vie.
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 04 -->
+  <!-- ============================================================ -->
+  <section>
+    <div class="section-label">04 · Quatre exemples concrets</div>
+    <h2>Ce que chaque harness <em>illustre</em></h2>
+
+    <p>
+      Le terme étant générique, il vaut mieux le rendre concret par opposition entre plusieurs harnesses connus, dont
+      les philosophies divergent.
+    </p>
+
+    <div class="stack">
+      <div class="stack-row">
+        <div class="stack-num">A</div>
+        <div class="stack-content">
+          <div class="stack-name">Claude Code <span class="badge">l'archétype opinionné</span></div>
+          <div class="stack-desc">Harness intégré, batteries-included. Hooks programmables, fichiers <code>CLAUDE.md</code>/<code>AGENTS.md</code> chargés au démarrage, skills, sub-agents, plan mode, permissions, observability via le SDK. Tout est fourni, le développeur compose. C'est aussi l'exemple le plus cité dans la littérature sur la <em>harnessability</em>&nbsp;: la qualité d'un harness mesurée par sa capacité à laisser l'agent travailler avec moins de supervision.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">B</div>
+        <div class="stack-content">
+          <div class="stack-name">Pi <span class="badge mid">le harness minimal assumé</span></div>
+          <div class="stack-desc">Tagline officielle&nbsp;: <em>« There are many agent harnesses, but this one is yours ».</em> Earendil Inc. positionne Pi comme un coding harness terminal minimal et <em>aggressively extensible</em>&nbsp;: pas de MCP intégré, pas de sub-agents, pas de plan mode, pas de permission popups, tout est extension TypeScript. Mais ses primitives — SDK Node.js, RPC mode (JSONL sur stdin/stdout), JSON event stream, TUI components — en font aussi une base utilisable pour construire des agents qui ne sont pas du coding. OpenClaw en est la preuve&nbsp;: l'agent personnel multi-canal embarque Pi via SDK. La philosophie est inverse de Claude Code&nbsp;: <em>primitives, not features</em>.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">C</div>
+        <div class="stack-content">
+          <div class="stack-name">OpenClaw <span class="badge">le harness gateway-driven</span></div>
+          <div class="stack-desc">Harness pour agent personnel multi-canal. Le control plane (un daemon Node.js) concentre l'auth, le routage des messageries, le sandboxing, le scheduling et l'exécution. L'agent embarqué (basé sur Pi via SDK) n'est qu'un composant. C'est l'exemple type d'un harness où la complexité est externalisée dans une infrastructure dédiée, plutôt que confiée à l'agent lui-même.</div>
+        </div>
+      </div>
+      <div class="stack-row">
+        <div class="stack-num">D</div>
+        <div class="stack-content">
+          <div class="stack-name">Hermes Agent <span class="badge mid">le harness auto-évolutif</span></div>
+          <div class="stack-desc">Harness construit autour d'une boucle d'agent qui se modifie elle-même. Mémoire gelée par session pour préserver le cache prompt, skills auto-générées par self-evaluation tous les 15 tool calls, projet GEPA companion pour l'amélioration offline. Le harness ne se contente pas de cadrer l'agent — il code une stratégie d'apprentissage procédural dans la durée.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Ces quatre exemples couvrent les deux axes structurants du débat actuel. <strong>Axe 1</strong>&nbsp;: minimalisme
+      (Pi) vs richesse intégrée (Claude Code). <strong>Axe 2</strong>&nbsp;: évolution ad-hoc et opérée par l'humain
+      (Claude Code, OpenClaw — l'agent peut modifier son workspace, créer ou patcher ses skills, mais sans boucle
+      formalisée) vs évolution structurée par le harness lui-même (Hermes — self-evaluation explicite tous les 15 tool
+      calls, mécanisme intégré). Tout déploiement réel se positionne quelque part sur ces deux axes, en fonction du
+      compromis acceptable entre contrôle et autonomie.
+    </p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 05 -->
+  <!-- ============================================================ -->
+  <section>
+    <div class="section-label">05 · Conclusion</div>
+    <h2>L'arbitrage <em>se déplace</em></h2>
+
+    <p>
+      Le débat « quel modèle choisir » a occupé 2024 et 2025. Il continue, mais il s'est dévalué&nbsp;: à modèle
+      constant, le harness fait la différence entre un agent qui rend service et un agent qui produit du dommage
+      silencieux. Plus le modèle est puissant, plus un mauvais harness lui permet de faire des bêtises avec efficacité.
+    </p>
+
+    <p>
+      Pour qui déploie aujourd'hui&nbsp;: avant de comparer les derniers modèles frontière entre eux, il est plus
+      rentable de questionner la qualité du harness dans lequel ils vont tourner. Quelles erreurs reviennent et n'ont
+      pas été cadrées par un guide&nbsp;? Quels sensors manquent pour les détecter avant production&nbsp;? Quels outils
+      retirer parce qu'ils élargissent l'espace de décision sans bénéfice mesurable&nbsp;? C'est cette discipline,
+      devenue assez mature pour avoir un nom, que la littérature appelle désormais <em>harness engineering</em>.
+    </p>
+
+    <div class="tldr">
+      <div class="tldr-label">En une phrase</div>
+      <p>
+        Le harness, c'est tout ce qui n'est pas le modèle dans un agent IA. C'est de moins en moins une couche d'intégration
+        et de plus en plus le terrain où se joue la qualité.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>↳ Architecture · Agents IA</p>
+    <p>Sources&nbsp;: Mitchell Hashimoto (blog, fév. 2026), OpenAI Harness Engineering (Ryan Lopopolo), Birgitta Böckeler / Martin Fowler (avril 2026), Addy Osmani, LangChain (Anatomy of an Agent Harness), pi.dev, openclaw docs, hermes-agent docs.</p>
+  </footer>
+
+</main>
+
+</body>
+</html>

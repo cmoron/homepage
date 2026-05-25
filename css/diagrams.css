@@ -582,3 +582,58 @@
   92%        { cy: 166px; opacity: 1; }
   98%, 100%  { cy: 166px; opacity: 0; }
 }
+
+/* ===================================================================
+ * harness · feedforward → model → feedback loop
+ * =================================================================== */
+
+.diagram-harness .sub {
+  fill: var(--muted);
+  font-size: 8px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.diagram-harness .node-hub rect {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+.diagram-harness .node-hub text {
+  fill: var(--bg);
+  font-weight: 600;
+}
+.diagram-harness .loop-back {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 3;
+  opacity: 0.75;
+  animation: harness-loop 2.4s linear infinite;
+}
+.diagram-harness .loop-label {
+  fill: var(--accent);
+  font-size: 9px;
+  text-anchor: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.diagram-harness .dot { fill: var(--accent); opacity: 0; }
+.diagram-harness .d1 { animation: harness-flow 3.6s linear infinite; }
+.diagram-harness .d2 { animation: harness-flow 3.6s linear infinite -1.2s; }
+.diagram-harness .d3 { animation: harness-flow 3.6s linear infinite -2.4s; }
+
+@keyframes harness-flow {
+  0%        { cx: 130px; opacity: 0; }
+  6%        { cx: 130px; opacity: 1; }
+  38%       { cx: 200px; opacity: 1; }
+  46%, 54%  { cx: 240px; opacity: 0; }
+  62%       { cx: 280px; opacity: 1; }
+  94%       { cx: 350px; opacity: 1; }
+  100%      { cx: 350px; opacity: 0; }
+}
+
+@keyframes harness-loop {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -16; }
+}
