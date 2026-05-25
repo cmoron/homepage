@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnet d'écoute — Piano, ambiance douce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #faf5ea;
+    --paper-shadow: #f0e9d8;
+    --ink: #1c1814;
+    --ink-soft: #4a423a;
+    --ink-muted: #8a8278;
+    --accent: #7a2e2e;
+    --accent-soft: #a85c5c;
+    --rule: #d4ccba;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(at 20% 30%, rgba(122, 46, 46, 0.02) 0px, transparent 50%),
+      radial-gradient(at 80% 70%, rgba(74, 66, 58, 0.025) 0px, transparent 50%);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    text-align: center;
+    padding-bottom: 60px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 60px;
+  }
+
+  .header-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 3.6rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  .meta-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 32px;
+    font-weight: 500;
+  }
+
+  .meta-line span { margin: 0 12px; }
+
+  /* ===== PREAMBLE ===== */
+  .preamble {
+    margin-bottom: 80px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .preamble p {
+    margin-bottom: 1em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .preamble p:first-child::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    float: left;
+    padding: 4px 8px 0 0;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ===== ACT HEADER ===== */
+  .act {
+    margin-top: 100px;
+    margin-bottom: 60px;
+  }
+
+  .act-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .act-header::after {
+    content: '❦';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper);
+    padding: 0 16px;
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+
+  .act-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .act-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .act-mood {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    max-width: 480px;
+    margin: 0 auto 12px;
+  }
+
+  .act-stats {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+
+  /* ===== TRACK ===== */
+  .track {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .track:last-child { border-bottom: none; }
+
+  .track-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    color: var(--accent);
+    font-weight: 300;
+    line-height: 1;
+    font-feature-settings: "lnum";
+  }
+
+  .track-content {
+    padding-top: 4px;
+  }
+
+  .track-composer {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .track-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .track-performer {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .track-performer::before {
+    content: '— ';
+  }
+
+  .track-note {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  /* ===== PIVOT (special styling) ===== */
+  .pivot {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    text-align: center;
+    padding: 60px 0;
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    position: relative;
+  }
+
+  .pivot::before {
+    content: 'P I V O T';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper);
+    padding: 0 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.6em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .pivot .track {
+    grid-template-columns: 1fr;
+    border: none;
+    padding: 0;
+    text-align: center;
+  }
+
+  .pivot .track-number {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+  }
+
+  .pivot .track-title {
+    font-size: 1.8rem;
+    max-width: 480px;
+    margin: 0 auto 8px;
+  }
+
+  /* ===== INTERMISSIONS BETWEEN ACTS ===== */
+  .transition {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--accent);
+    font-size: 1.4rem;
+    letter-spacing: 0.6em;
+  }
+
+  /* ===== EPILOGUE ===== */
+  .epilogue {
+    margin-top: 100px;
+    padding-top: 60px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.98rem;
+    line-height: 1.75;
+  }
+
+  .epilogue h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: var(--accent);
+    text-align: center;
+  }
+
+  .epilogue p {
+    margin-bottom: 1em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .epilogue ul {
+    list-style: none;
+    margin: 16px 0;
+    padding-left: 0;
+  }
+
+  .epilogue ul li {
+    padding: 8px 0 8px 24px;
+    position: relative;
+  }
+
+  .epilogue ul li::before {
+    content: '·';
+    position: absolute;
+    left: 8px;
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.3rem;
+    top: 6px;
+  }
+
+  /* ===== COLOPHON ===== */
+  .colophon {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 2;
+  }
+
+  .colophon::before {
+    content: '✦';
+    display: block;
+    color: var(--accent);
+    font-size: 1rem;
+    margin-bottom: 20px;
+    letter-spacing: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .container { padding: 50px 24px 80px; }
+    h1 { font-size: 2.4rem; }
+    .subtitle { font-size: 1.05rem; }
+    .meta-line { font-size: 0.7rem; letter-spacing: 0.15em; }
+    .meta-line span { display: block; margin: 4px 0; }
+    .act-title { font-size: 1.8rem; }
+    .track { grid-template-columns: 44px 1fr; gap: 14px; }
+    .track-number { font-size: 1.8rem; }
+    .track-title { font-size: 1.2rem; }
+    .pivot .track-title { font-size: 1.4rem; }
+    .preamble p:first-child::first-letter { font-size: 3.5rem; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; }
+    .container { padding: 20px; max-width: 100%; }
+    .act { page-break-before: always; }
+    .act:first-of-type { page-break-before: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="header-eyebrow">Carnet d'écoute</div>
+  <h1>Piano, ambiance douce</h1>
+  <div class="subtitle">Trente-six pièces en cinq actes</div>
+  <div class="meta-line">
+    <span>~ 2 h 45 ~</span>
+    <span>Du clavecin à la méditation</span>
+    <span>250 ans de répertoire</span>
+  </div>
+</header>
+
+<section class="preamble">
+  <p>Cette playlist n'est pas une compilation. C'est un parcours pensé en cinq actes, conçu comme on bâtit un récital — une trajectoire émotionnelle qui démarre dans la clarté baroque, traverse l'élégance galante et le grand romantisme intime, s'épanouit dans la peinture impressionniste, puis s'éteint dans la méditation contemplative. Au cœur du dispositif, un pivot : l'Adagio sostenuto de la <em>Sonate Clair de lune</em> de Beethoven, point de bascule qui ouvre la zone romantique avec gravité.</p>
+
+  <p>Chaque pièce a été choisie pour sa douceur — non pas la douceur mièvre d'un fond sonore d'ascenseur, mais celle, plus exigeante, qui suppose une écoute consentante. Les interprètes retenus sont des références : Radu Lupu, Maria João Pires, Igor Levit, András Schiff, Leif Ove Andsnes, Martha Argerich, Arcadi Volodos. Aucun compromis sur la qualité de l'enregistrement.</p>
+
+  <p>Idéale pour une soirée d'écoute attentive, une lecture longue, un travail concentré, ou la transition vers le sommeil. À écouter de préférence dans l'ordre : la dramaturgie compte autant que la sélection.</p>
+</section>
+
+<!-- ============ ACTE I ============ -->
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Acte premier</div>
+    <h2 class="act-title">Clarté baroque</h2>
+    <div class="act-mood">Lumière du matin, géométrie pure, aucun pathos</div>
+    <div class="act-stats">4 pièces · ~15 minutes</div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">1</div>
+    <div class="track-content">
+      <div class="track-composer">Johann Sebastian Bach (1685–1750)</div>
+      <div class="track-title">Prélude en Do majeur, BWV 846</div>
+      <div class="track-performer">András Schiff</div>
+      <div class="track-note">La page d'ouverture du <em>Clavier bien tempéré</em> (1722), pierre angulaire du clavier occidental. Arpèges purs en boucle, sans mélodie distincte — seulement l'enchaînement des harmonies qui respirent. Schiff joue cela avec une limpidité absolue, sans une once de pathos.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">2</div>
+    <div class="track-content">
+      <div class="track-composer">Domenico Scarlatti (1685–1757)</div>
+      <div class="track-title">Sonate en la majeur, K. 208</div>
+      <div class="track-performer">Alexandre Tharaud</div>
+      <div class="track-note">Une des 555 sonates pour clavecin de Scarlatti, composée à la cour de Madrid. Mélodie nostalgique, presque vocale, à mille lieues du Scarlatti virtuose qu'on attend habituellement. Tharaud, spécialiste français du clavier historique, lui donne au piano moderne une intimité presque secrète.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">3</div>
+    <div class="track-content">
+      <div class="track-composer">Bach</div>
+      <div class="track-title">Variations Goldberg, BWV 988 — Aria</div>
+      <div class="track-performer">Igor Levit</div>
+      <div class="track-note">L'aria d'ouverture des Variations Goldberg (1741), une sarabande lente d'une simplicité absolue qui sera déclinée en trente variations puis reprise telle quelle en clôture. Levit en fait une méditation presque immobile, suspendue.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">4</div>
+    <div class="track-content">
+      <div class="track-composer">Bach / Alexander Siloti (1863–1945)</div>
+      <div class="track-title">Air, d'après la Suite orchestrale n°3, BWV 1068</div>
+      <div class="track-performer">Igor Levit</div>
+      <div class="track-note">Le célèbre <em>Air sur la corde de sol</em> dans la transcription pour piano d'Alexander Siloti, élève de Liszt et cousin de Rachmaninov. Versant pianistique d'un des tubes éternels du baroque, où la voix supérieure plane sur des accords graves.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTE II ============ -->
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Acte deuxième</div>
+    <h2 class="act-title">Élégance calme</h2>
+    <div class="act-mood">Galanterie XVIIIe, minimalisme français, naissance du nocturne</div>
+    <div class="act-stats">5 pièces · ~25 minutes</div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">5</div>
+    <div class="track-content">
+      <div class="track-composer">Wolfgang Amadeus Mozart (1756–1791)</div>
+      <div class="track-title">Sonate K. 332 — II. Adagio</div>
+      <div class="track-performer">Maria João Pires</div>
+      <div class="track-note">Mouvement lent de la douzième sonate (1783). Mozart au sommet de son écriture cantabile : une aria sans mots où la voix supérieure chante avec une grâce désarmante. Pires est, sans discussion, la référence absolue Mozart au piano.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">6</div>
+    <div class="track-content">
+      <div class="track-composer">Erik Satie (1866–1925)</div>
+      <div class="track-title">Gymnopédie n°1</div>
+      <div class="track-performer">Pascal Rogé</div>
+      <div class="track-note">La pièce la plus célèbre de Satie (1888), précurseur de toute la musique d'ambiance moderne — un siècle avant Brian Eno. Tempo « lent et douloureux », harmonie modale ambiguë qui flotte sans résoudre. Rogé en fait une lecture pure et tendre, sans surjouer.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">7</div>
+    <div class="track-content">
+      <div class="track-composer">Satie</div>
+      <div class="track-title">Gnossienne n°1</div>
+      <div class="track-performer">Alice Sara Ott</div>
+      <div class="track-note">Les Gnossiennes (1890) sont les sœurs étranges des Gymnopédies — sans barres de mesure, avec des indications poétiques en italien (« avec étonnement », « questionnez »), inspiration grecque imaginaire. Plus mystérieuses, plus lointaines, plus orientales.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">8</div>
+    <div class="track-content">
+      <div class="track-composer">John Field (1782–1837)</div>
+      <div class="track-title">Nocturne n°1</div>
+      <div class="track-performer">Elizabeth Joy Roe</div>
+      <div class="track-note">Field, Irlandais émigré à Saint-Pétersbourg, <strong>a inventé le genre du nocturne pour piano</strong> — Chopin s'en inspirera directement vingt ans plus tard. Sa première œuvre du genre, simple et chantante, est une page d'histoire trop méconnue.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">9</div>
+    <div class="track-content">
+      <div class="track-composer">Field</div>
+      <div class="track-title">Nocturne n°18</div>
+      <div class="track-performer">Elizabeth Joy Roe</div>
+      <div class="track-note">Tardif (vers 1835), plus développé. Field a écrit dix-huit nocturnes au total et inventé la formule « mélodie chantante main droite + accompagnement arpégé main gauche » qui deviendra le modèle universel du genre.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIVOT ============ -->
+<section class="pivot">
+  <div class="track">
+    <div class="track-number">10</div>
+    <div class="track-content">
+      <div class="track-composer">Ludwig van Beethoven (1770–1827)</div>
+      <div class="track-title">Sonate « Clair de lune », Op. 27 n°2<br>I. Adagio sostenuto</div>
+      <div class="track-performer">Igor Levit</div>
+      <div class="track-note">Composée en 1801, surnommée <em>Clair de lune</em> par le poète Rellstab après la mort de Beethoven — qui la titrait quant à lui <em>Sonata quasi una fantasia</em>, inversant l'ordre classique des mouvements pour placer le lent en premier. Triolets en arpèges continus, pédale enfoncée en permanence (indication originale <em>senza sordini</em>), thème pointé minimaliste : la pierre fondatrice du piano romantique. Pivot dramaturgique de l'écoute — la bascule du classique au romantique.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTE III ============ -->
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Acte troisième</div>
+    <h2 class="act-title">Cœur romantique</h2>
+    <div class="act-mood">Confidence, mélancolie, salon parisien sous lampes tamisées</div>
+    <div class="act-stats">12 pièces · ~50 minutes</div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">11</div>
+    <div class="track-content">
+      <div class="track-composer">Robert Schumann (1810–1856)</div>
+      <div class="track-title">Träumerei (Scènes d'enfants, n°7)</div>
+      <div class="track-performer">Martha Argerich</div>
+      <div class="track-note">« Rêverie », septième pièce des <em>Kinderszenen</em> (1838). Une mélodie simple, deux minutes de pure tendresse, devenue un emblème du romantisme intimiste. Argerich, connue pour son tempérament volcanique, y montre toute sa retenue.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">12</div>
+    <div class="track-content">
+      <div class="track-composer">Schumann</div>
+      <div class="track-title">Romanze Op. 28 n°2 en fa dièse majeur</div>
+      <div class="track-performer">Wilhelm Kempff</div>
+      <div class="track-note">Le joyau caché des trois Romances (1839), en fa dièse majeur — tonalité rare et lumineuse. Mélodie en duo (voix supérieure et voix médiane) tissée par les deux mains. Kempff y déploie sa « noblesse calme » légendaire.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">13</div>
+    <div class="track-content">
+      <div class="track-composer">Frédéric Chopin (1810–1849)</div>
+      <div class="track-title">Nocturne Op. 9 n°2 en mi bémol majeur</div>
+      <div class="track-performer">Maria João Pires</div>
+      <div class="track-note">Le nocturne <em>le plus célèbre</em> de Chopin (1832), modèle absolu du genre. Mélodie ornée à la main droite, arpèges souples à la main gauche. Pires en est l'interprète historique — limpide, sans sentimentalisme.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">14</div>
+    <div class="track-content">
+      <div class="track-composer">Chopin</div>
+      <div class="track-title">Nocturne Op. 27 n°2 en ré bémol majeur</div>
+      <div class="track-performer">Maria João Pires</div>
+      <div class="track-note">Le sommet absolu du genre, selon beaucoup de pianistes. La mélodie se dédouble en tierces parallèles dans la partie centrale — texture quasi orchestrale, deux voix qui s'entrelacent en pure magie chopinienne.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">15</div>
+    <div class="track-content">
+      <div class="track-composer">Chopin</div>
+      <div class="track-title">Nocturne Op. 9 n°1 en si bémol mineur</div>
+      <div class="track-performer">Jan Lisiecki</div>
+      <div class="track-note">Premier nocturne publié (1832), plus mélancolique que son frère célèbre. Jan Lisiecki, jeune Canadien d'origine polonaise, y apporte une fraîcheur précise et concentrée — moins de rubato que ses aînés, plus de transparence.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">16</div>
+    <div class="track-content">
+      <div class="track-composer">Chopin</div>
+      <div class="track-title">Nocturne Op. 55 n°1 en fa mineur</div>
+      <div class="track-performer">Daniel Barenboim</div>
+      <div class="track-note">Nocturne tardif (1843), plus dépouillé, presque résigné. La mélodie tombe par paliers descendants, comme un soupir prolongé. Barenboim en donne une lecture d'une gravité posée.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">17</div>
+    <div class="track-content">
+      <div class="track-composer">Johannes Brahms (1833–1897)</div>
+      <div class="track-title">Intermezzo Op. 117 n°1 en mi bémol majeur</div>
+      <div class="track-performer">Radu Lupu</div>
+      <div class="track-note">Premier des trois Intermezzi Op. 117 (1892) — Brahms les appelait <em>Wiegenlieder meiner Schmerzen</em>, « berceuses de mes douleurs ». En tête de partition, un fragment de ballade écossaise sur le sommeil d'un enfant. Lupu (1945–2022) en est le sommet discographique.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">18</div>
+    <div class="track-content">
+      <div class="track-composer">Brahms</div>
+      <div class="track-title">Intermezzo Op. 118 n°2 en la majeur</div>
+      <div class="track-performer">Hélène Grimaud</div>
+      <div class="track-note">Le plus joué des Intermezzi de Brahms (1893). Mélodie d'une tendresse poignante, « musique de la solitude noble » disait Clara Schumann. Après ces dernières pièces pour piano, Brahms n'écrira plus presque rien pour son instrument.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">19</div>
+    <div class="track-content">
+      <div class="track-composer">Franz Schubert (1797–1828)</div>
+      <div class="track-title">Impromptu Op. 142 n°2 en la bémol majeur</div>
+      <div class="track-performer">Radu Lupu</div>
+      <div class="track-note">Composé en 1827, un an avant la mort de Schubert. Forme ABA simple, partie centrale en mineur d'une étrangeté mélancolique. Lupu était l'un des plus grands schubertiens du XX<sup>e</sup> siècle ; son toucher posait Schubert comme personne.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">20</div>
+    <div class="track-content">
+      <div class="track-composer">Schubert</div>
+      <div class="track-title">Impromptu Op. 90 n°3 en sol bémol majeur</div>
+      <div class="track-performer">Khatia Buniatishvili</div>
+      <div class="track-note">Sublime page lente (1827) en sol bémol — tonalité aux six bémols, rare, presque irréelle. Mélodie qui flotte au-dessus d'arpèges continus. Buniatishvili y prend des libertés de tempo — discutées par les uns, défendues par les autres.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">21</div>
+    <div class="track-content">
+      <div class="track-composer">Felix Mendelssohn (1809–1847)</div>
+      <div class="track-title">Romance sans paroles, « Venetian Gondola Song », Op. 19b n°6</div>
+      <div class="track-performer">Daniel Barenboim</div>
+      <div class="track-note">Une des huit Romances sans paroles de Mendelssohn (1830), genre qu'il a lui-même créé. Berceuse vénitienne, balancement de barcarolle, mélodie chantante. Charme parfait, sans surcharge.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">22</div>
+    <div class="track-content">
+      <div class="track-composer">Franz Liszt (1811–1886)</div>
+      <div class="track-title">Consolation n°3 en ré bémol majeur</div>
+      <div class="track-performer">Leif Ove Andsnes</div>
+      <div class="track-note">La plus célèbre des six Consolations (1849–1850). Pièce d'une douceur inattendue chez le pyrotechnicien — Liszt y montre son versant intériorisé. Mélodie cantabile sur un accompagnement en arpèges délicats, dans une tonalité chopinienne assumée.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTE IV ============ -->
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Acte quatrième</div>
+    <h2 class="act-title">Nocturne impressionniste</h2>
+    <div class="act-mood">France, Norvège, Russie tardive — couleurs et reflets d'eau</div>
+    <div class="act-stats">8 pièces · ~35 minutes</div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">23</div>
+    <div class="track-content">
+      <div class="track-composer">Claude Debussy (1862–1918)</div>
+      <div class="track-title">Clair de lune (Suite bergamasque)</div>
+      <div class="track-performer">Alice Sara Ott</div>
+      <div class="track-note">Composée en 1890, publiée en 1905. Titre inspiré d'un poème de Verlaine. Probablement la pièce la plus jouée de Debussy au piano. Alice Sara Ott en propose une lecture aérienne, sans excès de réverbération romantique.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">24</div>
+    <div class="track-content">
+      <div class="track-composer">Debussy</div>
+      <div class="track-title">Rêverie</div>
+      <div class="track-performer">Jean-Yves Thibaudet</div>
+      <div class="track-note">Pièce de jeunesse (1890) que Debussy reniait, écrite « dans la gêne matérielle ». Il interdira longtemps sa publication. Devenue paradoxalement un de ses plus grands tubes. Thibaudet, spécialiste mondial Debussy, lui rend toute sa noblesse.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">25</div>
+    <div class="track-content">
+      <div class="track-composer">Debussy</div>
+      <div class="track-title">La fille aux cheveux de lin (Préludes I, n°8)</div>
+      <div class="track-performer">Jean-Yves Thibaudet</div>
+      <div class="track-note">Pastorale (1910) inspirée d'un poème de Leconte de Lisle. Une jeune fille blonde, un paysage écossais imaginé, harmonies pentatoniques modales. Pure peinture sonore, économie de moyens parfaite.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">26</div>
+    <div class="track-content">
+      <div class="track-composer">Debussy</div>
+      <div class="track-title">Arabesque n°1 en mi majeur</div>
+      <div class="track-performer">Jean-Yves Thibaudet</div>
+      <div class="track-note">Œuvre de jeunesse (1888–1891), pré-impressionniste. Triolets et duolets superposés, mélodie qui se déroule comme une volute Art nouveau. Premier Debussy, déjà reconnaissable, déjà unique.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">27</div>
+    <div class="track-content">
+      <div class="track-composer">Maurice Ravel (1875–1937)</div>
+      <div class="track-title">Pavane pour une infante défunte</div>
+      <div class="track-performer">Alice Sara Ott</div>
+      <div class="track-note">Composée en 1899 pour piano (orchestrée en 1910). Pas un hommage à un enfant mort, mais — selon Ravel lui-même — « une pavane qu'aurait dansée une infante au XVI<sup>e</sup> siècle ». Ravel trouvait l'œuvre « fade et ennuyeuse » : il avait tort.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">28</div>
+    <div class="track-content">
+      <div class="track-composer">Gabriel Fauré (1845–1924)</div>
+      <div class="track-title">Nocturne n°4 en mi bémol majeur, Op. 36</div>
+      <div class="track-performer">Pascal Rogé</div>
+      <div class="track-note">Composé en 1884. Fauré a écrit treize nocturnes répartis sur quarante ans de carrière — chronique intime de toute son évolution stylistique. Le n°4 est de la première manière, encore chopinien, mais déjà avec la signature harmonique fauréenne.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">29</div>
+    <div class="track-content">
+      <div class="track-composer">Edvard Grieg (1843–1907)</div>
+      <div class="track-title">Notturno (Pièces lyriques, Op. 54 n°4)</div>
+      <div class="track-performer">Leif Ove Andsnes</div>
+      <div class="track-note">Composé en 1891 — Grieg a écrit 66 Pièces lyriques au total, réparties en dix cahiers. Atmosphère nocturne nordique, harmonies translucides, mélodie de chants d'oiseaux dans la partie centrale. Andsnes est <em>le</em> spécialiste Grieg de notre époque.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">30</div>
+    <div class="track-content">
+      <div class="track-composer">Piotr Ilitch Tchaïkovski (1840–1893)</div>
+      <div class="track-title">Les Saisons, Op. 37a — Juin « Barcarolle »</div>
+      <div class="track-performer">Bruce Liu</div>
+      <div class="track-note">Cycle des douze mois (1875–1876), composé pour une revue mensuelle de Saint-Pétersbourg. Juin est en sol mineur, rythme de barcarolle vénitienne transposée à la Neva. Bruce Liu, lauréat du Concours Chopin 2021, en a fait un de ses morceaux de prédilection en récital.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTE V ============ -->
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Acte cinquième</div>
+    <h2 class="act-title">Extinction méditative</h2>
+    <div class="act-mood">Retrait du monde, silence habité, seuil du sommeil</div>
+    <div class="act-stats">6 pièces · ~30 minutes</div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">31</div>
+    <div class="track-content">
+      <div class="track-composer">Federico Mompou (1893–1987)</div>
+      <div class="track-title">Música callada, Cahier I : « Angelico »</div>
+      <div class="track-performer">Arcadi Volodos</div>
+      <div class="track-note"><em>Música callada</em> — « musique silencieuse » — est un cycle de 28 pièces (1959–1967) inspiré du mystique espagnol Saint Jean de la Croix. Mompou cherche le dépouillement absolu : chaque note pèse, chaque silence respire. Volodos est l'interprète qui a redécouvert Mompou pour la génération actuelle.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">32</div>
+    <div class="track-content">
+      <div class="track-composer">Mompou</div>
+      <div class="track-title">Música callada, Cahier I : n°5</div>
+      <div class="track-performer">Stephen Hough</div>
+      <div class="track-note">Plus austère, presque immobile. Mompou demande des silences habités, des accords qui meurent lentement. Stephen Hough en saisit la dimension mystique sans surcharge — c'est l'antithèse exacte de la virtuosité spectaculaire.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">33</div>
+    <div class="track-content">
+      <div class="track-composer">Leoš Janáček (1854–1928)</div>
+      <div class="track-title">Sur un sentier recouvert — « Une feuille emportée »</div>
+      <div class="track-performer">Jan Bartoš</div>
+      <div class="track-note">Le cycle <em>Sur un sentier recouvert</em> (1900–1911) est composé en partie après la mort de la fille de Janáček. Méditation tchèque sur la perte, fragments musicaux comme des souvenirs qui surgissent. La feuille emportée par le vent est la deuxième pièce du cycle, fragile et fugace.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">34</div>
+    <div class="track-content">
+      <div class="track-composer">Arvo Pärt (né en 1935)</div>
+      <div class="track-title">Für Alina</div>
+      <div class="track-performer">Alexander Malter</div>
+      <div class="track-note">Composée en 1976, première œuvre du style « tintinnabuli » d'Arvo Pärt — minimalisme sacré fondé sur la coexistence d'une voix mélodique simple et d'une voix d'accord triadique. Cette version étendue (10:48) joue les variations multiples. Malter, dédicataire, est l'interprète historique.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">35</div>
+    <div class="track-content">
+      <div class="track-composer">Grieg</div>
+      <div class="track-title">Arietta (Pièces lyriques, Op. 12 n°1)</div>
+      <div class="track-performer">Leif Ove Andsnes</div>
+      <div class="track-note">La toute première pièce du tout premier cahier des Pièces lyriques (1867). Composée par un Grieg de 24 ans, puis citée par lui-même comme thème principal de la dernière pièce du dixième et dernier cahier (« Souvenirs », 1901). Bouclage de carrière sur 34 ans.</div>
+    </div>
+  </div>
+
+  <div class="track">
+    <div class="track-number">36</div>
+    <div class="track-content">
+      <div class="track-composer">Christoph Willibald Gluck (1714–1787) / Giovanni Sgambati (1841–1914)</div>
+      <div class="track-title">Mélodie — Danse des esprits bienheureux<br><span style="font-size: 0.85em; font-style: normal; color: var(--ink-muted);">d'après Orphée et Eurydice</span></div>
+      <div class="track-performer">Yuja Wang</div>
+      <div class="track-note">Extrait de l'opéra <em>Orphée et Eurydice</em> de Gluck (1762), arrangé pour piano par Giovanni Sgambati (élève de Liszt) à la fin du XIX<sup>e</sup>. La scène montre Orphée arrivant aux Champs-Élysées, le séjour des âmes bienheureuses. Mélodie d'une pureté céleste — choix de clôture absolu : la musique des âmes apaisées au seuil de l'au-delà.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EPILOGUE ============ -->
+<section class="epilogue">
+  <h2>Notes pour l'auditeur</h2>
+
+  <p><strong>Sur l'ordre.</strong> La playlist est conçue pour être écoutée dans l'ordre, en une seule session si possible. Chaque acte prépare le suivant ; chaque transition a été pensée. L'écoute en lecture aléatoire fonctionne mais détruit la dramaturgie.</p>
+
+  <p><strong>Sur le niveau sonore.</strong> Les enregistrements classiques préservent volontairement une grande dynamique (contrairement à la pop, compressée). Si tout semble trop faible, monter le volume — les passages doux sont conçus pour être à peine audibles, les sommets pour vous saisir. Sur un système calibré, viser un niveau où la voix parlée est confortable, et laisser la musique respirer dans cette fenêtre.</p>
+
+  <p><strong>Trois points-clefs à repérer :</strong></p>
+
+  <ul>
+    <li><strong>Le pivot Beethoven (n°10)</strong> — bascule du classique au romantique, le centre dramaturgique.</li>
+    <li><strong>L'entrée de l'Acte IV (n°23)</strong> — passage du romantisme intériorisé à la peinture impressionniste, changement d'esthétique majeur.</li>
+    <li><strong>L'entrée de l'Acte V (n°31)</strong> — sortie du monde sensoriel vers le mystique. C'est là que la playlist commence vraiment à éteindre les lumières.</li>
+  </ul>
+
+  <p><strong>Sur les interprètes.</strong> Tous les choix sont des références reconnues, sans concession sur la qualité de l'enregistrement. Lupu, Pires, Levit, Schiff, Andsnes, Argerich, Volodos forment la colonne vertébrale interprétative — chacun au sommet dans son répertoire de prédilection.</p>
+
+  <p><strong>Si vous voulez creuser.</strong> Quatre figures à approfondir au-delà de cette playlist : <em>John Field</em> (l'inventeur du nocturne, sous-écouté), <em>Federico Mompou</em> (l'intégrale <em>Música callada</em>), <em>les derniers cahiers de Brahms</em> (Op. 116, 117, 118, 119 — tous des sommets), et <em>les Pièces lyriques de Grieg</em> par Andsnes (intégrale en 2 volumes, EMI/Virgin).</p>
+</section>
+
+<!-- ============ COLOPHON ============ -->
+<div class="colophon">
+  <div>Carnet d'écoute</div>
+  <div>Piano · Ambiance douce</div>
+  <div>Trente-six pièces — cinq actes</div>
+  <div>2026</div>
+</div>
+
+</div>
+</body>
+</html>
