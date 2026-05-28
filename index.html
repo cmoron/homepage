@@ -43,7 +43,10 @@
         --muted: #948b7d;
         --faint: #4b4439;
         --rule: #2c2820;
-        --accent: #e07b4a;
+        --accent: #a35a32;
+        --accent-fg: #c97a52;
+        --green: #1d3a2f;
+        --green-fg: #5a957e;
         --tag-bg: #221e17;
       }
 
@@ -67,9 +70,34 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image:
+          repeating-linear-gradient(135deg, rgba(236, 229, 214, 0.04) 0 1px, transparent 1px 6px),
+          repeating-linear-gradient( 45deg, rgba(236, 229, 214, 0.025) 0 1px, transparent 1px 9px);
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent-fg);
+        outline-offset: 2px;
+        border-radius: 2px;
       }
 
       main {
+        position: relative;
+        z-index: 1;
         max-width: 42rem;
         margin: 0 auto;
         padding: 4rem 1.6rem 5rem;
@@ -84,7 +112,7 @@
         color: var(--fg);
       }
       .identity .prompt {
-        color: var(--accent);
+        color: var(--accent-fg);
         user-select: none;
         margin-right: 0.5ch;
       }
@@ -143,8 +171,8 @@
           color 0.15s ease;
       }
       a:hover {
-        color: var(--accent);
-        text-decoration-color: var(--accent);
+        color: var(--accent-fg);
+        text-decoration-color: var(--accent-fg);
       }
 
       section {
@@ -190,7 +218,7 @@
         margin-bottom: 0.35rem;
       }
       .entry-meta .cat {
-        color: var(--accent);
+        color: var(--accent-fg);
       }
       .entry-meta .sep {
         color: var(--faint);
@@ -208,7 +236,7 @@
         text-decoration-color: transparent;
       }
       .entry-title a:hover {
-        text-decoration-color: var(--accent);
+        text-decoration-color: var(--accent-fg);
       }
       .entry-desc {
         margin: 0;
@@ -276,7 +304,7 @@
         letter-spacing: 0.02em;
       }
       .work-kind .dot {
-        color: var(--accent);
+        color: var(--accent-fg);
         margin-right: 0.35ch;
       }
       .work-desc {
@@ -289,7 +317,7 @@
         color: var(--muted);
       }
       .work-desc a:hover {
-        color: var(--accent);
+        color: var(--accent-fg);
       }
 
       .kv {
