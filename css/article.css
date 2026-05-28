@@ -37,17 +37,17 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image:
-    repeating-linear-gradient(135deg, rgba(236, 229, 214, 0.04) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient( 45deg, rgba(236, 229, 214, 0.025) 0 1px, transparent 1px 9px);
+  background-color: #15100b;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%0A        %3Cg fill='none' stroke='%23422917' stroke-width='1.1' opacity='0.5'%3E%0A          %3Cpath d='M0 48 L48 0 L96 48 L48 96 Z'/%3E%0A          %3Cpath d='M48 0 L96 48 M48 96 L0 48' opacity='.4'/%3E%0A        %3C/g%3E%0A        %3Cg fill='%23422917' opacity='0.5'%3E%0A          %3Cg transform='translate(0%2C0)'%3E%0A              %3Ccircle r='2.4'/%3E%0A              %3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A            %3C/g%3E%3Cg transform='translate(96%2C0)'%3E%0A              %3Ccircle r='2.4'/%3E%0A              %3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A            %3C/g%3E%3Cg transform='translate(0%2C96)'%3E%0A              %3Ccircle r='2.4'/%3E%0A              %3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A            %3C/g%3E%3Cg transform='translate(96%2C96)'%3E%0A              %3Ccircle r='2.4'/%3E%0A              %3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A            %3C/g%3E%3Cg transform='translate(48%2C48)'%3E%0A              %3Ccircle r='2.4'/%3E%0A              %3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A            %3C/g%3E%0A        %3C/g%3E%0A      %3C/svg%3E");
+  background-size: 40px 40px;
 }
 
 main {
   position: relative;
   z-index: 1;
-  width: min(42rem, calc(100% - 1.6rem));
+  width: min(48rem, calc(100% - 1.6rem));
   margin: 2.5rem auto;
-  padding: 3.5rem clamp(1.6rem, 5vw, 2.8rem) 4rem;
+  padding: 3.5rem clamp(1.4rem, 3.5vw, 2.2rem) 4rem;
   background: var(--paper);
   border: 1px solid var(--rule);
   border-radius: 6px;
@@ -67,8 +67,8 @@ a:hover {
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--bg);
+  background: #122620;
+  color: var(--fg);
 }
 
 :focus-visible {
@@ -168,7 +168,7 @@ section {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   font-weight: 600;
   margin-bottom: 0.6rem;
 }
@@ -193,8 +193,8 @@ code {
 blockquote {
   margin: 1.2rem 0;
   padding: 0.6rem 1.1rem;
-  border-left: 3px solid var(--green-fg);
-  background: rgba(29, 58, 47, 0.18);
+  border-left: 3px solid var(--rule);
+  background: var(--tag-bg);
   border-radius: 0 3px 3px 0;
   color: var(--fg);
   font-style: italic;
@@ -288,7 +288,7 @@ blockquote p:last-child { margin-bottom: 0; }
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.68rem;
   text-transform: uppercase;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   font-weight: 600;
   padding: 0.5rem 0.9rem;
   border-bottom: 1px solid var(--rule);
@@ -475,8 +475,8 @@ blockquote p:last-child { margin-bottom: 0; }
 .usecase {
   margin-top: 1rem;
   padding: 0.7rem 1rem;
-  background: rgba(29, 58, 47, 0.18);
-  border-left: 3px solid var(--green-fg);
+  background: var(--tag-bg);
+  border-left: 3px solid var(--accent);
   border-radius: 0 2px 2px 0;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -486,7 +486,7 @@ blockquote p:last-child { margin-bottom: 0; }
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.68rem;
   text-transform: uppercase;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   display: block;
   margin-bottom: 0.3rem;
   font-weight: 600;
@@ -527,7 +527,7 @@ blockquote p:last-child { margin-bottom: 0; }
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   font-weight: 600;
   margin-bottom: 0.6rem;
 }
@@ -563,7 +563,7 @@ blockquote p:last-child { margin-bottom: 0; }
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -619,7 +619,7 @@ blockquote p:last-child { margin-bottom: 0; }
 .pullquote {
   margin: 2rem 0;
   padding: 0 0 0 1.2rem;
-  border-left: 3px solid var(--green-fg);
+  border-left: 3px solid var(--accent);
   font-style: italic;
   font-size: 1.1rem;
   line-height: 1.45;
@@ -630,9 +630,9 @@ blockquote p:last-child { margin-bottom: 0; }
 .decision {
   margin: 1.5rem 0;
   padding: 1.2rem 1.3rem;
-  background: rgba(29, 58, 47, 0.18);
+  background: var(--tag-bg);
   border: 1px solid var(--rule);
-  border-left: 3px solid var(--green-fg);
+  border-left: 3px solid var(--accent);
   border-radius: 0 3px 3px 0;
 }
 .decision h3 {
@@ -717,7 +717,7 @@ blockquote p:last-child { margin-bottom: 0; }
     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   font-size: 0.72rem;
   text-transform: uppercase;
-  color: var(--green-fg);
+  color: var(--accent-fg);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
