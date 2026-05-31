@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nocturnes de cinéma — Carnet d'écoute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+    :root {
+      --bg: #0c0d11;
+      --bg-soft: #14161d;
+      --panel: #171a22;
+      --ink: #e9e2d2;
+      --ink-soft: #b3a998;
+      --ink-muted: #6e6757;
+      --gold: #cfa75f;
+      --gold-soft: #8c7038;
+      --gold-glow: rgba(207, 167, 95, 0.14);
+      --moon: #8fa4bd;
+      --rule: #262932;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Spectral', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.7;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Cinema vignette + projector glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -5%, var(--gold-glow) 0%, transparent 55%),
+        radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+    }
+
+    /* Film grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      position: relative;
+      z-index: 3;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 90px 40px 120px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      padding-bottom: 64px;
+      margin-bottom: 64px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+
+    .header-eyebrow {
+      font-family: 'Spectral', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 36px;
+    }
+
+    h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 500;
+      font-size: 4.2rem;
+      line-height: 0.98;
+      letter-spacing: -0.005em;
+      margin-bottom: 28px;
+      font-style: italic;
+      color: var(--ink);
+    }
+
+    .subtitle {
+      font-family: 'Spectral', serif;
+      font-size: 1.2rem;
+      color: var(--ink-soft);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .meta-line {
+      font-family: 'Spectral', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-top: 34px;
+      font-weight: 400;
+    }
+    .meta-line span { margin: 0 10px; }
+
+    /* ===== PREAMBLE ===== */
+    .preamble {
+      margin-bottom: 60px;
+      font-size: 1.04rem;
+      line-height: 1.85;
+      color: var(--ink-soft);
+    }
+    .preamble p { margin-bottom: 1em; text-align: justify; hyphens: auto; }
+    .preamble p:first-child::first-letter {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 4.6rem;
+      line-height: 0.8;
+      float: left;
+      padding: 6px 12px 0 0;
+      color: var(--gold);
+      font-weight: 600;
+      font-style: italic;
+    }
+    .preamble strong { color: var(--ink); font-weight: 400; }
+    .preamble em { color: var(--gold); font-style: italic; }
+
+    .rule-quote {
+      margin: 44px 0 8px;
+      text-align: center;
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.4;
+      color: var(--ink);
+      padding: 0 20px;
+    }
+    .rule-quote::before, .rule-quote::after {
+      content: '—';
+      color: var(--gold);
+      margin: 0 10px;
+      font-style: normal;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .act { margin-top: 96px; }
+
+    .act-header {
+      text-align: center;
+      margin-bottom: 54px;
+      padding-bottom: 30px;
+      position: relative;
+    }
+    .act-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: var(--gold-soft);
+    }
+    .act-header .dot {
+      display: block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin: 0 auto 22px;
+      box-shadow: 0 0 14px 2px var(--gold-glow);
+    }
+
+    .act-number {
+      font-family: 'Spectral', serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+    .act-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 2.5rem;
+      font-style: italic;
+      font-weight: 500;
+      margin-bottom: 16px;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .act-mood {
+      font-family: 'Spectral', serif;
+      font-size: 1.02rem;
+      color: var(--ink-soft);
+      font-style: italic;
+      max-width: 460px;
+      margin: 0 auto 12px;
+      font-weight: 300;
+    }
+    .act-stats {
+      font-family: 'Spectral', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    /* ===== TRACK ===== */
+    .track {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 22px;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .track:last-child { border-bottom: none; }
+
+    .track-number {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 2.6rem;
+      color: var(--gold);
+      font-weight: 400;
+      line-height: 0.9;
+      font-style: italic;
+      text-align: right;
+      padding-top: 2px;
+    }
+
+    .track-composer {
+      font-family: 'Spectral', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 7px;
+    }
+    .track-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.42rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.22;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+    .track-film {
+      font-family: 'Spectral', serif;
+      font-size: 0.92rem;
+      color: var(--moon);
+      font-style: italic;
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+    .track-performer {
+      font-family: 'Spectral', serif;
+      font-size: 0.92rem;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+    .track-performer::before { content: '— '; color: var(--ink-muted); }
+    .track-note {
+      font-family: 'Spectral', serif;
+      font-size: 0.99rem;
+      color: var(--ink-soft);
+      line-height: 1.72;
+      font-weight: 300;
+    }
+    .track-note em { color: var(--ink); font-style: italic; }
+    .track-note strong { color: var(--gold); font-weight: 400; }
+
+    /* ===== PIVOT ===== */
+    .pivot {
+      margin: 90px 0;
+      text-align: center;
+      padding: 58px 32px;
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 100% at 50% 50%, var(--gold-glow) 0%, transparent 70%);
+      border-top: 1px solid var(--gold-soft);
+      border-bottom: 1px solid var(--gold-soft);
+    }
+    .pivot::before {
+      content: 'L E   S A S';
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      padding: 0 22px;
+      font-family: 'Spectral', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+    }
+    .pivot .track-number {
+      text-align: center;
+      font-size: 3.4rem;
+      margin-bottom: 14px;
+    }
+    .pivot .track-composer { letter-spacing: 0.3em; }
+    .pivot .track-title { font-size: 1.85rem; max-width: 460px; margin: 0 auto 8px; }
+    .pivot .track-performer { display: inline-block; }
+    .pivot .track-note { max-width: 540px; margin: 16px auto 0; text-align: center; }
+
+    /* ===== EPILOGUE ===== */
+    .epilogue {
+      margin-top: 96px;
+      padding-top: 56px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+    .epilogue h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: var(--gold);
+      text-align: center;
+    }
+    .epilogue p { margin-bottom: 1em; text-align: justify; hyphens: auto; }
+    .epilogue strong { color: var(--ink); font-weight: 400; }
+    .epilogue em { color: var(--ink); font-style: italic; }
+    .epilogue ul { list-style: none; margin: 16px 0; padding-left: 0; }
+    .epilogue ul li { padding: 9px 0 9px 26px; position: relative; }
+    .epilogue ul li::before {
+      content: '';
+      position: absolute;
+      left: 6px; top: 14px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ===== SIGNATURE ===== */
+    .signature {
+      margin-top: 64px;
+      padding: 34px 36px;
+      background: var(--panel);
+      border-left: 2px solid var(--gold);
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 1.18rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .signature .sig-name {
+      display: block;
+      margin-top: 16px;
+      font-family: 'Spectral', serif;
+      font-style: normal;
+      font-size: 0.74rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ===== COLOPHON ===== */
+    .colophon {
+      margin-top: 72px;
+      padding-top: 34px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+      font-family: 'Spectral', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      line-height: 2.1;
+      font-weight: 400;
+    }
+    .colophon .moon {
+      display: block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin: 0 auto 22px;
+      box-shadow: 0 0 16px 3px var(--gold-glow);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      body { font-size: 17px; }
+      .container { padding: 56px 22px 80px; }
+      h1 { font-size: 2.7rem; }
+      .subtitle { font-size: 1.02rem; }
+      .meta-line { font-size: 0.66rem; letter-spacing: 0.14em; }
+      .meta-line span { display: block; margin: 5px 0; }
+      .act-title { font-size: 1.9rem; }
+      .track { grid-template-columns: 46px 1fr; gap: 15px; }
+      .track-number { font-size: 1.95rem; }
+      .track-title { font-size: 1.22rem; }
+      .pivot { padding: 48px 20px; }
+      .pivot .track-title { font-size: 1.5rem; }
+      .preamble p:first-child::first-letter { font-size: 3.6rem; }
+      .rule-quote { font-size: 1.15rem; }
+      .signature { padding: 26px 24px; font-size: 1.06rem; }
+    }
+
+    @media print {
+      body { background: white; color: #111; }
+      body::before, body::after { display: none; }
+      .container { padding: 20px; max-width: 100%; }
+      .act { page-break-before: always; }
+      .act:first-of-type { page-break-before: avoid; }
+      h1, .act-title, .track-title, .track-number, .track-composer, .track-film { color: #111 !important; }
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <header>
+        <div class="header-eyebrow">Carnet d'écoute</div>
+        <h1>Nocturnes<br>de cinéma</h1>
+        <div class="subtitle">Le piano comme lieu de mémoire</div>
+        <div class="meta-line">
+          <span>22 pièces · 6 séquences</span>
+          <span>~ 1 h 30</span>
+          <span>Trois siècles, une seule nuit</span>
+        </div>
+      </header>
+
+      <section class="preamble">
+        <p>Ceci n'est pas une anthologie de thèmes célèbres réduits au piano — c'était le piège évident du sujet, on l'a écarté. L'ambition est plus étroite et plus exigeante : capter <strong>le piano comme lieu de mémoire</strong>. Une présence au premier plan, tantôt seule, tantôt entourée de cordes ou d'un souffle électronique, mais jamais noyée. Ce que le cinéma fait au clavier quand il ne cherche pas l'effet immédiat, mais la retenue, le souvenir, la nuit.</p>
+
+        <p>Le parcours s'ouvre sur le répertoire classique — parce que le cinéma y a constamment puisé — puis bascule franchement vers la musique de film après un sas central, l'<em>Für Alina</em> de Pärt, qui retire le décor et laisse de l'air entre les notes. À partir de là, le piano cesse d'être seulement de concert : il devient espace, scène intérieure, lumière qui reste.</p>
+
+        <div class="rule-quote">Si le piano cesse d'être le personnage principal, le morceau sort</div>
+        <p style="text-align:center; font-size:0.92rem; color:var(--ink-muted); font-style:italic; margin-top:6px;">C'est une playlist piano-forward, pas piano solo stricte. Les cordes, l'électronique légère ou l'orchestre discret sont admis tant que le piano mène la scène.</p>
+      </section>
+
+      <!-- ============ SÉQUENCE I ============ -->
+      <section class="act">
+        <div class="act-header">
+          <span class="dot"></span>
+          <div class="act-number">Séquence première</div>
+          <h2 class="act-title">Le seuil</h2>
+          <div class="act-mood">Le répertoire classique où le cinéma a appris à se taire</div>
+          <div class="act-stats">5 pièces</div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">1</div>
+          <div>
+            <div class="track-composer">Johann Sebastian Bach (1685–1750)</div>
+            <div class="track-title">Variations Goldberg, BWV 988 — Aria</div>
+            <div class="track-performer">Víkingur Ólafsson</div>
+            <div class="track-note">L'aria d'ouverture (1741), une sarabande d'une simplicité absolue. Débarrassée des vocalises légendaires de Gould, la lecture de l'Islandais Ólafsson — issue de son intégrale acclamée de 2023 — pose un seuil propre, une ligne claire, sans bruit parasite. Le bon point de départ : Bach comme silence habité.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">2</div>
+          <div>
+            <div class="track-composer">Erik Satie (1866–1925)</div>
+            <div class="track-title">Gymnopédie n°1</div>
+            <div class="track-performer">Olga Scheps</div>
+            <div class="track-note">Composée en 1888, un siècle avant la musique d'ambiance moderne. Tempo « lent et douloureux », harmonie modale qui flotte sans résoudre. Satie installe la lenteur <em>sans</em> tomber dans la carte postale — la pièce respire sans sourire trop fort.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">3</div>
+          <div>
+            <div class="track-composer">Jan A. P. Kaczmarek (1953–2024)</div>
+            <div class="track-title">The Park On Piano</div>
+            <div class="track-film">Neverland (Finding Neverland, 2004)</div>
+            <div class="track-note">Le premier vrai pont vers le film. Kaczmarek a remporté l'Oscar de la meilleure musique pour ce récit autour de J. M. Barrie et de la naissance de <em>Peter Pan</em>. Encore presque salon, déjà image : la mélodie a la candeur de l'enfance sans jamais la mièvrerie.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">4</div>
+          <div>
+            <div class="track-composer">Ludwig van Beethoven (1770–1827)</div>
+            <div class="track-title">Sonate « Clair de lune », Op. 27 n°2 — I. Adagio sostenuto</div>
+            <div class="track-performer">Paul Lewis</div>
+            <div class="track-note">Une évidence assumée (1801). Triolets en arpèges continus, pédale enfoncée en permanence, thème pointé minimaliste. Paul Lewis, beethovénien rigoureux, la joue lente et sombre, jamais sirupeuse — elle tient encore son rang malgré l'usure de tous ses usages au cinéma.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">5</div>
+          <div>
+            <div class="track-composer">Frédéric Chopin (1810–1849)</div>
+            <div class="track-title">Nocturne en ut dièse mineur, op. posth. (Lento con gran espressione)</div>
+            <div class="track-film">Le Pianiste (The Pianist, 2002)</div>
+            <div class="track-performer">Janusz Olejniczak</div>
+            <div class="track-note">Le lien direct avec le film de Polanski : Olejniczak a enregistré les parties de piano et doublé les mains d'Adrien Brody à l'écran. Ce nocturne posthume, fragile et suspendu, garde <em>Le Pianiste</em> dans le cadre sans forcer le pathos. La nuit commence vraiment ici.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PIVOT ============ -->
+      <section class="pivot">
+        <div class="track-number">6</div>
+        <div class="track-composer">Arvo Pärt (né en 1935)</div>
+        <div class="track-title">Für Alina</div>
+        <div class="track-performer">Alexander Malter</div>
+        <div class="track-note">Composée en 1976, première œuvre du style <em>tintinnabuli</em> — une voix mélodique nue et une voix d'accord triadique qui coexistent dans un dépouillement radical. Pärt retire le décor et laisse l'air circuler entre les notes. C'est le sas : avant lui, du piano de concert ; après lui, le cinéma. Le silence devient un personnage.</div>
+      </section>
+
+      <!-- ============ SÉQUENCE II ============ -->
+      <section class="act">
+        <div class="act-header">
+          <span class="dot"></span>
+          <div class="act-number">Séquence deuxième</div>
+          <h2 class="act-title">Plein cinéma</h2>
+          <div class="act-mood">Lumière froide du matin, premier nerf narratif, mélodie sans nostalgie facile</div>
+          <div class="act-stats">5 pièces</div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">7</div>
+          <div>
+            <div class="track-composer">Dario Marianelli (né en 1963)</div>
+            <div class="track-title">Dawn</div>
+            <div class="track-film">Orgueil et Préjugés (Pride &amp; Prejudice, 2005)</div>
+            <div class="track-performer">Jean-Yves Thibaudet</div>
+            <div class="track-note">L'ouverture du film de Joe Wright, jouée au disque par Thibaudet lui-même. Une lumière froide de petit matin, mélodie qui s'éveille goutte à goutte. Marianelli décrochera l'Oscar deux ans plus tard pour <em>Reviens-moi</em> — ici, il est déjà à pleine maturité.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">8</div>
+          <div>
+            <div class="track-composer">Michael Nyman (né en 1944)</div>
+            <div class="track-title">The Heart Asks Pleasure First / The Promise</div>
+            <div class="track-film">La Leçon de piano (The Piano, 1993)</div>
+            <div class="track-note">Le premier vrai nerf narratif de la playlist. Dans le film de Jane Campion, l'héroïne est muette et ne parle qu'à travers son instrument — le piano <em>est</em> la voix. Minimalisme physique, presque obsessionnel, teinté de folklore écossais. Un geste, pas une rêverie.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">9</div>
+          <div>
+            <div class="track-composer">Michael Nyman</div>
+            <div class="track-title">Big My Secret</div>
+            <div class="track-film">La Leçon de piano (The Piano, 1993)</div>
+            <div class="track-note">Le pendant plus insistant, plus charnel. Nyman empile les motifs jusqu'à l'entêtement — la mécanique répétitive devient émotion par accumulation. C'est là que la playlist trouve son pouls.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">10</div>
+          <div>
+            <div class="track-composer">Ryuichi Sakamoto (1952–2023)</div>
+            <div class="track-title">Merry Christmas Mr. Lawrence</div>
+            <div class="track-film">Furyo (1983)</div>
+            <div class="track-note">Sakamoto a composé <em>et</em> joué dans le film d'Ōshima, aux côtés de David Bowie. Thème pentatonique d'une dignité mélodique rare — il ne joue jamais la nostalgie facile, et c'est ce qui lui a permis de survivre à ses innombrables reprises. Un nocturne moderne, signé d'un maître disparu en 2023.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">11</div>
+          <div>
+            <div class="track-composer">Joe Hisaishi (né en 1950)</div>
+            <div class="track-title">One Summer Day</div>
+            <div class="track-film">Le Voyage de Chihiro (2001)</div>
+            <div class="track-note">Le point le plus tendre de la sélection. Pour Miyazaki, Hisaishi garde l'enfance sans infantiliser l'écoute — la différence exacte entre le joli et le nécessaire. Une mélodie qui semble se souvenir d'un été qu'on n'a peut-être pas vécu.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SÉQUENCE III ============ -->
+      <section class="act">
+        <div class="act-header">
+          <span class="dot"></span>
+          <div class="act-number">Séquence troisième</div>
+          <h2 class="act-title">La demi-lumière</h2>
+          <div class="act-mood">Le cœur minimaliste, resserré — peu de notes, beaucoup de place autour</div>
+          <div class="act-stats">4 pièces</div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">12</div>
+          <div>
+            <div class="track-composer">Philip Glass (né en 1937)</div>
+            <div class="track-title">The Poet Acts</div>
+            <div class="track-film">The Hours (2002)</div>
+            <div class="track-note">Un seul Glass suffit à installer la pulsation minimale. Pour le film de Stephen Daldry — trois femmes, trois époques, autour de <em>Mrs Dalloway</em> de Virginia Woolf — Glass tisse une mécanique douce, jamais froide. Arpèges en boucle qui avancent comme une pensée qui tourne.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">13</div>
+          <div>
+            <div class="track-composer">Nils Frahm (né en 1982)</div>
+            <div class="track-title">Them</div>
+            <div class="track-film">Victoria (2015)</div>
+            <div class="track-note">Le relais textural moderne. Pour le thriller berlinois tourné en un seul plan-séquence, Frahm injecte juste assez d'électricité discrète pour éviter l'aplatissement — un mouvement souterrain sous le clavier. C'est lui qui empêche la demi-lumière de devenir un tunnel.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">14</div>
+          <div>
+            <div class="track-composer">Thomas Newman (né en 1955)</div>
+            <div class="track-title">Any Other Name</div>
+            <div class="track-film">American Beauty (1999)</div>
+            <div class="track-note">Le versant apaisé du grand Newman — non pas le marimba percussif du film, mais la page réflexive de la fin, celle de la beauté entrevue trop tard. Peu de notes, une résonance qui s'attarde, la signature feutrée d'un des plus grands coloristes d'Hollywood.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">15</div>
+          <div>
+            <div class="track-composer">Dustin O'Halloran (né en 1971)</div>
+            <div class="track-title">Opus 23</div>
+            <div class="track-note">Pièce de piano autonome d'un compositeur de cinéma (<em>Lion</em>, <em>Marie-Antoinette</em>). Romantique, dépouillée, beaucoup d'espace autour de chaque note. Elle prolonge la demi-lumière sans jamais l'alourdir — une porte entrouverte sur une scène qu'on n'a pas encore vue.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SÉQUENCE IV ============ -->
+      <section class="act">
+        <div class="act-header">
+          <span class="dot"></span>
+          <div class="act-number">Séquence quatrième</div>
+          <h2 class="act-title">Le récit revient</h2>
+          <div class="act-mood">Desplat ramène la narration ; deux élégies préparent l'iconique</div>
+          <div class="act-stats">4 pièces</div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">16</div>
+          <div>
+            <div class="track-composer">Alexandre Desplat (né en 1961)</div>
+            <div class="track-title">Alan</div>
+            <div class="track-film">Imitation Game (The Imitation Game, 2014)</div>
+            <div class="track-note">Desplat remet du récit. Pour le portrait d'Alan Turing, il écrit une mélodie au piano d'une fragilité méthodique — la solitude d'un esprit qui calcule sa propre mise au ban. Le Français, l'un des compositeurs les plus prolifiques et raffinés de sa génération, sait suggérer un destin en quelques notes répétées.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">17</div>
+          <div>
+            <div class="track-composer">Alexandre Desplat</div>
+            <div class="track-title">River Waltz</div>
+            <div class="track-film">Le Voile des illusions (The Painted Veil, 2006)</div>
+            <div class="track-performer">Lang Lang</div>
+            <div class="track-note">Une valse mélancolique sur fond de Chine des années 1920. Ici Lang Lang commence à colorer la sortie : sa lecture porte le morceau plus qu'elle ne le surjoue. On accepte un peu plus de narration — sans jamais basculer dans la bande-annonce.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">18</div>
+          <div>
+            <div class="track-composer">Max Richter (né en 1966)</div>
+            <div class="track-title">Written on the Sky</div>
+            <div class="track-note">Issue de l'album <em>The Blue Notebooks</em> (2004), maintes fois reprise à l'image. Une élégie de moins de deux minutes, quelques accords suspendus, rien de plus. Le piano solo de Richter — pas ses cordes — exactement à sa place : une respiration avant les portes connues.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">19</div>
+          <div>
+            <div class="track-composer">Jóhann Jóhannsson (1969–2018)</div>
+            <div class="track-title">Cambridge, 1963</div>
+            <div class="track-film">Une merveilleuse histoire du temps (The Theory of Everything, 2014)</div>
+            <div class="track-note">La bonne dernière ombre. Pour le récit du jeune Stephen Hawking, l'Islandais — élégiste majeur du piano de film, disparu trop tôt en 2018 — signe une page courte, retenue, presque suspendue. Elle entre dans le sang sans demander la parole, et prépare l'ouverture émotionnelle finale.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SÉQUENCE V ============ -->
+      <section class="act">
+        <div class="act-header">
+          <span class="dot"></span>
+          <div class="act-number">Séquence cinquième</div>
+          <h2 class="act-title">Les portes connues</h2>
+          <div class="act-mood">L'iconique assumé — non pour l'ovation, mais pour la lumière qui reste</div>
+          <div class="act-stats">3 pièces</div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">20</div>
+          <div>
+            <div class="track-composer">Ennio Morricone (1928–2020) · Andrea Morricone</div>
+            <div class="track-title">Cinema Paradiso (Love Theme)</div>
+            <div class="track-film">Cinema Paradiso (1988)</div>
+            <div class="track-performer">Alexandre Tharaud</div>
+            <div class="track-note">Un seuil attendu, mais placé après un vrai parcours. Le célèbre thème d'amour fut en réalité écrit par Andrea Morricone, le fils d'Ennio, pour le film de Tornatore — une histoire d'enfance, de cinéma et de salle obscure. La version piano de Tharaud casse l'uniformité des arrangements habituels : c'est tout ce qui manquait.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">21</div>
+          <div>
+            <div class="track-composer">Justin Hurwitz (né en 1985)</div>
+            <div class="track-title">Mia &amp; Sebastian's Theme</div>
+            <div class="track-film">La La Land (2016)</div>
+            <div class="track-performer">Lang Lang</div>
+            <div class="track-note">La La Land ne ferme plus la playlist : il éclaire l'avant-dernière marche. Second ancrage de Lang Lang, qui porte ce thème doux-amer du film de Chazelle — l'amour, l'ambition, et le « et si » d'une vie. Une lumière chaude avant la dernière, plus froide.</div>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-number">22</div>
+          <div>
+            <div class="track-composer">Ennio Morricone (1928–2020)</div>
+            <div class="track-title">Playing Love</div>
+            <div class="track-film">La Légende du pianiste sur l'océan (1998)</div>
+            <div class="track-performer">John Sawoski</div>
+            <div class="track-note">La fermeture juste. Le film de Tornatore raconte un virtuose né et mort sur un paquebot, qui ne posera jamais le pied à terre — la musique d'un homme qui <em>est</em> le piano. Plus nocturne, plus fidèle au titre du carnet : moins un applaudissement final qu'une lumière laissée allumée au bout du couloir.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EPILOGUE ============ -->
+      <section class="epilogue">
+        <h2>Notes pour l'auditeur</h2>
+
+        <p><strong>Sur l'ordre.</strong> Le carnet est un long nocturne, pas une compilation. Chaque séquence prépare la suivante, et le sas central (Pärt, n°6) est le point de bascule du concert vers le cinéma. L'écoute aléatoire fonctionne, mais détruit la dramaturgie patiemment construite.</p>
+
+        <p><strong>La règle du piano-forward.</strong> Ce n'est pas du piano solo strict : cordes, électronique légère et orchestre discret sont admis. La seule condition, intransigeante : <em>le piano doit rester le personnage principal de la scène.</em> Si une autre voix prend le premier plan, le morceau sort.</p>
+
+        <p><strong>Trois bascules à guetter :</strong></p>
+        <ul>
+          <li><strong>Le sas Pärt (n°6)</strong> — le décor tombe ; on quitte le piano de concert pour entrer dans le cinéma.</li>
+          <li><strong>Le relais Frahm (n°13)</strong> — au cœur de la demi-lumière minimaliste, l'électricité discrète de <em>Them</em> empêche le tunnel. C'est le point de vigilance du séquençage : si la zone Glass → Frahm → Newman → O'Halloran tient, tout tient.</li>
+          <li><strong>Jóhannsson → Cinema Paradiso (n°19 → 20)</strong> — l'élégie retenue s'ouvre sur l'iconique. La marche la plus délicate de tout le parcours.</li>
+        </ul>
+
+        <p><strong>Sur la fin.</strong> Les trois dernières pièces assument leur célébrité — refuser de les jouer aurait été une posture, pas un goût. Elles sont placées en sortie, là où l'émotion peut enfin s'ouvrir sans fragiliser la construction. Et le carnet se referme, à dessein, sur un film dont le héros <em>est</em> un pianiste : la boucle se boucle.</p>
+
+        <p><strong>Sur le niveau sonore.</strong> Comme tout enregistrement soigné, ces pièces préservent une large dynamique. Régler le volume sur les passages doux — quitte à ce que les sommets vous saisissent — plutôt que l'inverse. La nuit se écoute basse, mais pas étouffée.</p>
+      </section>
+
+      <!-- ============ SIGNATURE ============ -->
+      <div class="signature">
+        « Trois siècles de piano, mais une seule couleur : la nuit. Ce carnet ne vise pas l'ovation — il vise la lumière qu'on laisse allumée au bout du couloir, quand la salle s'est vidée et que la musique, elle, reste. »
+        <span class="sig-name">Claude — pour ce carnet d'écoute</span>
+      </div>
+
+      <!-- ============ COLOPHON ============ -->
+      <div class="colophon">
+        <span class="moon"></span>
+        <div>Nocturnes de cinéma</div>
+        <div>Le piano comme lieu de mémoire</div>
+        <div>Vingt-deux pièces — six séquences</div>
+        <div>2026</div>
+      </div>
+
+    </div>
+  </body>
+</html>
