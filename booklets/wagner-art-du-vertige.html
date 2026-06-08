@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wagner — l'art du vertige · Carnet d'écoute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg: #111016;
+        --bg-deep: #08080c;
+        --panel: #18151a;
+        --ink: #eee5d6;
+        --ink-soft: #c4b6a4;
+        --ink-muted: #82756a;
+        --brass: #c89b52;
+        --brass-soft: #7c5d31;
+        --red: #8d2f35;
+        --blue: #27394b;
+        --rule: #312934;
+        --glow: rgba(200, 155, 82, 0.16);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Spectral', Georgia, serif;
+        background: var(--bg-deep);
+        color: var(--ink);
+        width: 100%;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.72;
+        font-weight: 300;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(120deg, rgba(141, 47, 53, 0.13), transparent 28%),
+          radial-gradient(ellipse 90% 48% at 50% -10%, var(--glow), transparent 62%),
+          radial-gradient(ellipse 90% 80% at 80% 55%, rgba(39, 57, 75, 0.26), transparent 58%),
+          repeating-linear-gradient(90deg, rgba(238, 229, 214, 0.018) 0 1px, transparent 1px 9px);
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 86px 40px 118px;
+      }
+
+      header {
+        text-align: center;
+        padding-bottom: 62px;
+        margin-bottom: 62px;
+        border-bottom: 1px solid var(--rule);
+        position: relative;
+      }
+      header::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -1px;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 1px;
+        background: var(--brass);
+        box-shadow: 0 0 18px var(--glow);
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--brass);
+        margin-bottom: 34px;
+      }
+
+      h1 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 4.4rem;
+        font-weight: 500;
+        font-style: italic;
+        line-height: 0.98;
+        letter-spacing: 0;
+        margin-bottom: 24px;
+      }
+
+      .subtitle {
+        max-width: 540px;
+        margin: 0 auto;
+        color: var(--ink-soft);
+        font-style: italic;
+        font-size: 1.17rem;
+        line-height: 1.55;
+      }
+
+      .meta-line {
+        margin-top: 34px;
+        color: var(--ink-muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      .meta-line span { margin: 0 10px; }
+
+      .preamble {
+        color: var(--ink-soft);
+        font-size: 1.04rem;
+        line-height: 1.85;
+        margin-bottom: 72px;
+      }
+      .preamble p { margin-bottom: 1em; text-align: justify; hyphens: auto; }
+      .preamble p:first-child::first-letter {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        float: left;
+        color: var(--brass);
+        font-size: 4.9rem;
+        line-height: 0.82;
+        padding: 6px 12px 0 0;
+        font-style: italic;
+      }
+      .preamble strong { color: var(--ink); font-weight: 400; }
+      .preamble em { color: var(--brass); font-style: italic; }
+
+      .listen-link {
+        display: block;
+        width: fit-content;
+        margin: 34px auto 0;
+        padding: 10px 18px 9px;
+        border: 1px solid var(--brass-soft);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.76rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        background: rgba(24, 21, 26, 0.72);
+      }
+      .listen-link:hover,
+      .listen-link:focus-visible {
+        border-color: var(--brass);
+        color: var(--brass);
+        outline: none;
+      }
+
+      .act { margin-top: 92px; }
+
+      .act-header {
+        text-align: center;
+        margin-bottom: 50px;
+        padding-bottom: 28px;
+        position: relative;
+      }
+      .act-header::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 56px;
+        height: 1px;
+        background: var(--brass-soft);
+      }
+
+      .act-number {
+        color: var(--brass);
+        font-size: 0.72rem;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .act-title {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 500;
+        font-style: italic;
+        line-height: 1.05;
+        margin-bottom: 14px;
+      }
+      .act-mood {
+        max-width: 520px;
+        margin: 0 auto 12px;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+      .act-stats {
+        color: var(--ink-muted);
+        font-size: 0.71rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .track {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 20px;
+        padding: 26px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .track:last-child { border-bottom: none; }
+
+      .track-number {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        color: var(--brass);
+        font-size: 2.3rem;
+        line-height: 1;
+        font-weight: 400;
+      }
+      .track-content { padding-top: 2px; }
+      .track-work {
+        color: var(--ink-muted);
+        font-size: 0.74rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .track-title {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 1.42rem;
+        line-height: 1.22;
+        font-style: italic;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .track-performer {
+        color: var(--ink-soft);
+        font-size: 0.93rem;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+      .track-performer::before { content: '— '; color: var(--brass-soft); }
+      .track-note {
+        color: var(--ink-soft);
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+
+      .interlude {
+        margin: 86px 0 12px;
+        padding: 38px 32px;
+        border-top: 1px solid var(--brass-soft);
+        border-bottom: 1px solid var(--brass-soft);
+        text-align: center;
+        color: var(--ink);
+        background: rgba(24, 21, 26, 0.42);
+      }
+      .interlude h2 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 2.25rem;
+        font-style: italic;
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+      .interlude p {
+        max-width: 520px;
+        margin: 0 auto;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+
+      footer {
+        margin-top: 92px;
+        padding-top: 28px;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-muted);
+        text-align: center;
+        font-size: 0.72rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        line-height: 2;
+      }
+      footer a { color: var(--ink-soft); text-decoration-color: var(--rule); }
+      footer a:hover { color: var(--brass); text-decoration-color: var(--brass); }
+
+      @media (max-width: 640px) {
+        body { font-size: 16px; }
+        .container {
+          width: 100%;
+          max-width: 100vw;
+          padding: 58px 22px 84px;
+          overflow: hidden;
+        }
+        h1 {
+          max-width: 18rem;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: 2.55rem;
+          overflow-wrap: anywhere;
+        }
+        .subtitle { font-size: 1.04rem; }
+        .meta-line span { display: block; margin: 4px 0; }
+        .track {
+          grid-template-columns: 42px 1fr;
+          gap: 14px;
+          padding: 22px 0;
+        }
+        .track-number { font-size: 1.8rem; }
+        .track-title { font-size: 1.24rem; }
+        .act-title { font-size: 2.05rem; }
+        .interlude { padding: 30px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="eyebrow">Carnet d'écoute</div>
+        <h1>Wagner — l'art du vertige</h1>
+        <p class="subtitle">Vingt fragments pour comprendre pourquoi ce compositeur est à la fois une architecture, une drogue lente et un problème de voisinage.</p>
+        <div class="meta-line">
+          <span>20 pièces</span>
+          <span>5 actes</span>
+          <span>~ 2 h 50</span>
+        </div>
+        <a class="listen-link" href="https://listen.tidal.com/playlist/55fb8e10-1627-47c9-a0c9-1ab780dcce4d">Écouter sur TIDAL</a>
+      </header>
+
+      <section class="preamble">
+        <p>Ce parcours ne cherche pas à rendre Wagner aimable. Ce serait malhonnête, et légèrement optimiste. Il cherche plutôt à montrer son <strong>talent exact</strong> : l'art d'installer un monde en trois accords, de charger un motif jusqu'à l'obsession, puis de faire croire que l'orchestre respire plus grand que la pièce dans laquelle on l'écoute.</p>
+        <p>La sélection évite le musée à tubes. Les évidences sont là, parce qu'elles sont efficaces, mais elles sont encadrées par ce qui les rend intelligibles : les préludes, les transitions, les adieux, les extases et les grands effondrements. On commence par la lumière, on descend vers le théâtre, on traverse <em>Tristan</em>, puis le <em>Ring</em>, et l'on sort par <em>Parsifal</em>, là où Wagner cesse presque de conquérir et commence à suspendre le temps.</p>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Acte I</div>
+          <h2 class="act-title">L'orchestre ouvre le rideau</h2>
+          <p class="act-mood">Avant les dieux et les cris, Wagner sait déjà faire naître un lieu.</p>
+          <div class="act-stats">6 pièces · architecture, lumière, théâtre</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">01</div>
+          <div class="track-content">
+            <div class="track-work">Lohengrin</div>
+            <h3 class="track-title">Act I: Prelude</h3>
+            <p class="track-performer">Wiener Philharmoniker, Claudio Abbado</p>
+            <p class="track-note">L'ouverture parfaite : pas de muscles, pas de tonnerre, seulement une lumière tenue trop longtemps. Wagner commence par prouver qu'il peut hypnotiser sans frapper.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">02</div>
+          <div class="track-content">
+            <div class="track-work">Der fliegende Holländer</div>
+            <h3 class="track-title">Overture</h3>
+            <p class="track-performer">The Vienna Philharmonic Orchestra</p>
+            <p class="track-note">La mer comme moteur dramatique. Les cuivres racontent déjà l'errance, la dette, la malédiction : tout le romantisme allemand avec le vent de face.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">03</div>
+          <div class="track-content">
+            <div class="track-work">Tannhäuser</div>
+            <h3 class="track-title">Overture</h3>
+            <p class="track-performer">Sir Georg Solti, Wiener Philharmoniker</p>
+            <p class="track-note">La grandeur liturgique contre la fièvre sensuelle. Wagner pose deux mondes, les oppose, les contamine. C'est déjà du cinéma, sans caméra et sans montage.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">04</div>
+          <div class="track-content">
+            <div class="track-work">Tannhäuser</div>
+            <h3 class="track-title">Dich, teure Halle</h3>
+            <p class="track-performer">Lise Davidsen, Philharmonia Orchestra, Esa-Pekka Salonen</p>
+            <p class="track-note">Respiration humaine après la masse orchestrale. Davidsen donne à l'air son évidence : Wagner n'est pas seulement un système, il sait aussi écrire l'élan pur.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">05</div>
+          <div class="track-content">
+            <div class="track-work">Die Meistersinger von Nürnberg</div>
+            <h3 class="track-title">Prelude</h3>
+            <p class="track-performer">Sir Georg Solti, Wiener Philharmoniker</p>
+            <p class="track-note">Le Wagner solaire, contrapuntique, presque civique. On entend l'artisanat, la fête, la ville entière : un compositeur capable de bâtir une façade et ses fondations dans le même geste.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">06</div>
+          <div class="track-content">
+            <div class="track-work">Lohengrin</div>
+            <h3 class="track-title">In fernem Land</h3>
+            <p class="track-performer">Plácido Domingo, Wiener Philharmoniker, Sir Georg Solti</p>
+            <p class="track-note">Le récit du Graal : noble, suspendu, dangereusement sincère. Ici le héros n'explique pas, il révèle. Nuance bienvenue chez un homme rarement accusé de modestie.</p>
+          </div>
+        </article>
+      </section>
+
+      <div class="interlude">
+        <h2>Le vertige harmonique</h2>
+        <p>Avec Tristan, Wagner ne change pas seulement de sujet. Il change la gravité.</p>
+      </div>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Acte II</div>
+          <h2 class="act-title">Désir sans résolution</h2>
+          <p class="act-mood">Deux pièces pour entendre le retard, la tension, puis l'extase.</p>
+          <div class="act-stats">2 pièces · chromatisme, attente, dissolution</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">07</div>
+          <div class="track-content">
+            <div class="track-work">Tristan und Isolde</div>
+            <h3 class="track-title">Act I: Prelude</h3>
+            <p class="track-performer">Staatskapelle Dresden, Carlos Kleiber</p>
+            <p class="track-note">Le fameux accord n'est pas une carte postale musicologique : c'est une porte qui refuse de se fermer. Kleiber laisse la phrase chercher sa propre issue.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">08</div>
+          <div class="track-content">
+            <div class="track-work">Tristan und Isolde</div>
+            <h3 class="track-title">Mild und leise « Isoldes Liebestod »</h3>
+            <p class="track-performer">Jessye Norman, Wiener Philharmoniker, Herbert von Karajan</p>
+            <p class="track-note">La mort comme résolution harmonique. Dit comme cela, c'est sinistre ; chanté par Norman, c'est surtout la preuve que Wagner savait rendre l'excès inévitable.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Acte III</div>
+          <h2 class="act-title">Le Ring, ou la mythologie câblée</h2>
+          <p class="act-mood">Motifs, filiation, pouvoir, renoncement : tout s'assemble comme une machine dramatique.</p>
+          <div class="act-stats">5 pièces · eau, amour, feu, forêt</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">09</div>
+          <div class="track-content">
+            <div class="track-work">Das Rheingold</div>
+            <h3 class="track-title">Prelude</h3>
+            <p class="track-performer">Sir Georg Solti, Wiener Philharmoniker</p>
+            <p class="track-note">Un seul mi bémol qui devient fleuve, monde, cosmogonie. C'est l'une des grandes démonstrations de patience orchestrale du XIXe siècle.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">10</div>
+          <div class="track-content">
+            <div class="track-work">Die Walküre</div>
+            <h3 class="track-title">Winterstürme wichen dem Wonnemond</h3>
+            <p class="track-performer">Jonas Kaufmann, Mahler Chamber Orchestra, Claudio Abbado</p>
+            <p class="track-note">Siegmund chante le printemps, mais Wagner écrit surtout l'instant où le destin prend un visage humain. Une chaleur brève avant la catastrophe familiale, naturellement.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">11</div>
+          <div class="track-content">
+            <div class="track-work">Die Walküre</div>
+            <h3 class="track-title">The Ride of the Valkyries</h3>
+            <p class="track-performer">Sir Georg Solti, Wiener Philharmoniker</p>
+            <p class="track-note">Impossible de l'éviter. Le mérite du morceau, au-delà du cliché, c'est son efficacité rythmique primitive : une cavalerie qui n'a pas besoin d'être subtile pour être géniale.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">12</div>
+          <div class="track-content">
+            <div class="track-work">Die Walküre</div>
+            <h3 class="track-title">Leb wohl, du kühnes, herrliches Kind!</h3>
+            <p class="track-performer">Thomas Stewart, Berliner Philharmoniker, Herbert von Karajan</p>
+            <p class="track-note">L'adieu de Wotan : la paternité, l'autorité et l'impuissance dans la même phrase. Wagner sait faire grand ; ici il sait surtout faire irrévocable.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">13</div>
+          <div class="track-content">
+            <div class="track-work">Die Walküre</div>
+            <h3 class="track-title">Magic Fire Music</h3>
+            <p class="track-performer">Orchestre de l'Opéra National de Paris, Philippe Jordan</p>
+            <p class="track-note">Le feu protège, encercle, transforme le plateau en rituel. Wagner excelle quand le décor devient musique et que la musique devient décor.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Acte IV</div>
+          <h2 class="act-title">Héros, forêt, crépuscule</h2>
+          <p class="act-mood">Le Ring quitte l'aventure pour l'ombre portée : l'idylle, la marche, l'incendie final.</p>
+          <div class="act-stats">5 pièces · nature, mémoire, effondrement</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">14</div>
+          <div class="track-content">
+            <div class="track-work">Siegfried</div>
+            <h3 class="track-title">Forest Murmurs</h3>
+            <p class="track-performer">Otto Klemperer</p>
+            <p class="track-note">La forêt wagnérienne n'est pas un décor vert : c'est une écoute. Les bois, les cordes, les appels lointains donnent au héros un monde à déchiffrer.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">15</div>
+          <div class="track-content">
+            <div class="track-work">Siegfried Idyll</div>
+            <h3 class="track-title">WWV 103</h3>
+            <p class="track-performer">Wiener Philharmoniker, Herbert von Karajan</p>
+            <p class="track-note">Parenthèse domestique, mais pas petite musique. Wagner réduit l'échelle sans réduire l'ambition : la tendresse reste monumentale, ce qui est très lui.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">16</div>
+          <div class="track-content">
+            <div class="track-work">Götterdämmerung</div>
+            <h3 class="track-title">Siegfried's Rhine Journey</h3>
+            <p class="track-performer">Otto Klemperer</p>
+            <p class="track-note">Le voyage comme propulsion. Après les profondeurs du Rhin, voici le fleuve en mouvement : héroïque, lumineux, déjà promis à la perte.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">17</div>
+          <div class="track-content">
+            <div class="track-work">Götterdämmerung</div>
+            <h3 class="track-title">Siegfried's Funeral March</h3>
+            <p class="track-performer">Andris Nelsons, Gewandhausorchester</p>
+            <p class="track-note">La marche funèbre récapitule une vie par motifs. Wagner invente ici une forme de mémoire orchestrale : le personnage mort continue de se raconter.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">18</div>
+          <div class="track-content">
+            <div class="track-work">Götterdämmerung</div>
+            <h3 class="track-title">Fliegt heim, ihr Raben! « Immolation Scene »</h3>
+            <p class="track-performer">Birgit Nilsson, Sir Georg Solti, Wiener Philharmoniker</p>
+            <p class="track-note">Le monde brûle, mais avec méthode. Nilsson donne à Brünnhilde l'acier nécessaire ; Solti tient la catastrophe comme une architecture.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Acte V</div>
+          <h2 class="act-title">Parsifal, le temps suspendu</h2>
+          <p class="act-mood">Après la conquête, Wagner découvre presque l'immobilité.</p>
+          <div class="act-stats">2 pièces · silence, rite, consolation</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">19</div>
+          <div class="track-content">
+            <div class="track-work">Parsifal</div>
+            <h3 class="track-title">Prelude</h3>
+            <p class="track-performer">Berliner Philharmoniker, Herbert von Karajan</p>
+            <p class="track-note">Plus de tempête : une gravité lente, presque immobile. La grandeur devient verticale. Wagner n'a rien perdu de son ego ; il a juste baissé la voix.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">20</div>
+          <div class="track-content">
+            <div class="track-work">Parsifal</div>
+            <h3 class="track-title">Good Friday Music</h3>
+            <p class="track-performer">Daniel Barenboim, Chicago Symphony Orchestra</p>
+            <p class="track-note">Sortie par la clarté. Après trois heures de mythe, de désir et de feu, cette musique donne l'impression rare que Wagner accepte enfin de laisser respirer l'auditeur. Presque charitable.</p>
+          </div>
+        </article>
+      </section>
+
+      <footer>
+        <div>Playlist TIDAL · Wagner — l'art du vertige</div>
+        <div><a href="index.html">Retour aux carnets d'écoute</a></div>
+      </footer>
+    </div>
+  </body>
+</html>
