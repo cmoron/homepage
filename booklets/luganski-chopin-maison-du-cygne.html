@@ -215,6 +215,49 @@
         text-align: center;
       }
 
+      .lore-panel {
+        margin: 0 0 78px;
+        padding: 34px 36px 32px;
+        border-top: 1px solid var(--rose-soft);
+        border-bottom: 1px solid var(--rose-soft);
+        background:
+          linear-gradient(135deg, rgba(109, 57, 56, 0.18), rgba(73, 100, 84, 0.18)),
+          rgba(22, 23, 32, 0.48);
+      }
+      .lore-panel .label {
+        color: var(--gold);
+        font-size: 0.7rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .lore-panel h2 {
+        font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1.08;
+        margin-bottom: 22px;
+      }
+      .lore-item {
+        padding: 18px 0;
+        border-top: 1px solid rgba(200, 166, 95, 0.18);
+      }
+      .lore-item:first-of-type { border-top: none; padding-top: 0; }
+      .lore-item:last-child { padding-bottom: 0; }
+      .lore-item h3 {
+        color: var(--silver);
+        font-size: 0.74rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin-bottom: 6px;
+      }
+      .lore-item p {
+        color: var(--ink-soft);
+        font-size: 0.98rem;
+        line-height: 1.64;
+      }
+
       .act { margin-top: 94px; }
 
       .act-header {
@@ -384,6 +427,22 @@
         .field-note { padding: 24px 20px; }
         .artist-bio { padding: 28px 24px 26px; }
         .artist-bio h2 { font-size: 1.6rem; }
+        .lore-panel { padding: 28px 24px 26px; }
+        .lore-panel h2 { font-size: 1.6rem; }
+        .artist-bio,
+        .lore-panel,
+        .interlude,
+        .field-note,
+        .track-content {
+          min-width: 0;
+          overflow-wrap: break-word;
+        }
+        .artist-bio h2,
+        .lore-panel h2,
+        .interlude h2,
+        .track-work {
+          overflow-wrap: anywhere;
+        }
         .preamble p { text-align: left; }
       }
     </style>
@@ -422,6 +481,31 @@
         </div>
       </section>
 
+      <section class="lore-panel">
+        <div class="label">Repères</div>
+        <h2>Le petit roman des formes</h2>
+
+        <div class="lore-item">
+          <h3>Barcarolle</h3>
+          <p>Le nom vient de la chanson de gondolier vénitienne, mais Chopin en fait une page tardive et ambitieuse : même balancement d'eau, autre horizon. Ce n'est pas une scène de carte postale ; c'est presque un nocturne symphonique comprimé dans le piano.</p>
+        </div>
+
+        <div class="lore-item">
+          <h3>Impromptus</h3>
+          <p>Le mot promet l'improvisation, mais chez Chopin tout est serti. Les trois Impromptus publiés de son vivant jouent avec cette illusion de spontanéité ; la Fantaisie-Impromptu, écrite plus tôt et publiée après sa mort, arrive comme une pièce devenue célèbre malgré son auteur. L'histoire de la musique a parfois mauvais caractère, mais une excellente mémoire.</p>
+        </div>
+
+        <div class="lore-item">
+          <h3>Scherzo</h3>
+          <p>Un scherzo devrait être une plaisanterie. Chopin, naturellement, en fait une architecture nerveuse, parfois tragique. Le quatrième est le plus clair, le plus aérien : moins coup de théâtre que féerie contrôlée.</p>
+        </div>
+
+        <div class="lore-item">
+          <h3>Préludes op. 28</h3>
+          <p>Le cycle est composé à la fin des années 1830, autour de Majorque et de Nohant, dans l'ombre assumée de Bach : vingt-quatre tonalités, mais sans dissertation. Chaque prélude ouvre une porte, puis la referme presque aussitôt. Le génie, ici, tient dans la vitesse de condensation.</p>
+        </div>
+      </section>
+
       <section class="act">
         <div class="act-header">
           <div class="act-number">Volet I</div>
@@ -436,7 +520,7 @@
             <div class="track-work">Chopin · Barcarolle, op. 60</div>
             <h3 class="track-title">Allegretto</h3>
             <p class="track-performer">Nikolaï Luganski, piano</p>
-            <p class="track-note">La main gauche installe le balancement de gondole, mais la pièce vise beaucoup plus haut que le pittoresque. C'est un chant qui devient presque orchestral, avec des irisations harmoniques très tardives. En ouverture, Luganski devrait y poser son territoire : élégance, pédale claire, montée en densité sans emphase.</p>
+            <p class="track-note">La main gauche installe le balancement de gondole, mais la pièce vise beaucoup plus haut que le pittoresque. Écrite dans le dernier Chopin, elle garde la grâce de la barque et ajoute une ampleur presque orchestrale, avec des irisations harmoniques très tardives. En ouverture, Luganski devrait y poser son territoire : élégance, pédale claire, montée en densité sans emphase.</p>
           </div>
         </article>
       </section>
@@ -455,7 +539,7 @@
             <div class="track-work">Impromptu n°1 en la bémol majeur, op. 29</div>
             <h3 class="track-title">Allegro assai, quasi presto</h3>
             <p class="track-performer">Nikolaï Luganski, piano</p>
-            <p class="track-note">Un sourire rapide, mais pas décoratif. Les traits doivent filer sans durcir ; la partie centrale apporte juste assez de gravité pour que le brillant ne devienne pas porcelaine de vitrine.</p>
+            <p class="track-note">Le premier Impromptu publié par Chopin fixe déjà le paradoxe du genre : donner l'impression que la main invente en direct, alors que tout est réglé au millimètre. Un sourire rapide, mais pas décoratif. Les traits doivent filer sans durcir ; la partie centrale apporte juste assez de gravité pour que le brillant ne devienne pas porcelaine de vitrine.</p>
           </div>
         </article>
 
@@ -465,7 +549,7 @@
             <div class="track-work">Impromptu n°2 en fa dièse majeur, op. 36</div>
             <h3 class="track-title">Andantino</h3>
             <p class="track-performer">Nikolaï Luganski, piano</p>
-            <p class="track-note">Le plus noble des quatre : une grande ligne calme, presque une marche intérieure, puis des poussées plus sombres. Il faut garder le centre de gravité bas. C'est typiquement le genre de pièce où Luganski peut être souverain sans hausser la voix.</p>
+            <p class="track-note">Le plus noble des quatre, et le moins pressé de séduire. Le récit avance comme une marche intérieure : grande ligne calme, poussées plus sombres, lumière qui revient sans vraiment innocenter la pièce. Il faut garder le centre de gravité bas. C'est typiquement le genre de page où Luganski peut être souverain sans hausser la voix.</p>
           </div>
         </article>
 
@@ -475,7 +559,7 @@
             <div class="track-work">Impromptu n°3 en sol bémol majeur, op. 51</div>
             <h3 class="track-title">Tempo giusto</h3>
             <p class="track-performer">Nikolaï Luganski, piano</p>
-            <p class="track-note">Plus ambigu, plus secret. La surface reste chantante, mais l'harmonie glisse sans prévenir. Ce n'est pas le Chopin des salons : c'est un art de la transition, de la phrase qui se retourne et change la couleur de la pièce.</p>
+            <p class="track-note">Plus tardif, plus ambigu, plus secret. La surface reste chantante, mais l'harmonie glisse sans prévenir ; derrière la politesse du salon, Chopin fait déjà bouger les murs. C'est un art de la transition, de la phrase qui se retourne et change la couleur de la pièce.</p>
           </div>
         </article>
 
@@ -509,7 +593,7 @@
             <div class="track-work">Scherzo n°4 en mi majeur, op. 54</div>
             <h3 class="track-title">Presto</h3>
             <p class="track-performer">Nikolaï Luganski, piano</p>
-            <p class="track-note">Le plus lumineux des Scherzos. Les traits doivent pétiller sans claquer, et le grand épisode chanté doit respirer large sans ralentir tout le paysage. En extérieur, c'est probablement l'un des moments les plus lisibles de la soirée : la virtuosité y porte la forme au lieu de la couvrir.</p>
+            <p class="track-note">Le plus lumineux des Scherzos, donc aussi le plus dangereux : on peut le prendre pour une pièce aimable, alors qu'il exige une mécanique de précision sous le sourire. Les traits doivent pétiller sans claquer, et le grand épisode chanté doit respirer large sans ralentir tout le paysage. En extérieur, c'est probablement l'un des moments les plus lisibles de la soirée.</p>
           </div>
         </article>
       </section>
@@ -520,6 +604,11 @@
           <h2 class="act-title">Vingt-quatre chambres</h2>
           <p class="act-mood">Les Préludes op. 28 : pas un recueil de bis, mais un cycle complet, abrupt, instable, génialement concentré.</p>
           <div class="act-stats">24 préludes · tous les tons majeurs et mineurs · ~ 40 minutes</div>
+        </div>
+
+        <div class="interlude">
+          <h2>Majorque, Bach, et la miniature armée</h2>
+          <p>Les Préludes suivent les vingt-quatre tonalités, comme un salut à Bach, mais Chopin refuse le traité. Certains durent moins d'une minute, d'autres ouvrent un paysage entier. Le cycle tient parce que chaque fragment connaît exactement son poids.</p>
         </div>
 
         <div class="prelude-grid">
