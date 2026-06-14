@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luganski au Cygne – Chopin en plein air · Carnet d'écoute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --night: #161720;
+        --night-deep: #0b0d13;
+        --paper: #f4ead8;
+        --paper-soft: #e5d5bb;
+        --ink: #f3eadb;
+        --ink-soft: #cdbfa9;
+        --ink-muted: #84776b;
+        --cypress: #496454;
+        --cypress-soft: #2d4039;
+        --rose: #b56f68;
+        --rose-soft: #6d3938;
+        --silver: #aeb7bd;
+        --gold: #c8a65f;
+        --rule: #342f31;
+        --glow: rgba(200, 166, 95, 0.15);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Spectral', Georgia, serif;
+        background: var(--night-deep);
+        color: var(--ink);
+        width: 100%;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.72;
+        font-weight: 300;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 54% at 50% -8%, rgba(200, 166, 95, 0.2), transparent 64%),
+          radial-gradient(ellipse 90% 82% at 14% 42%, rgba(73, 100, 84, 0.28), transparent 58%),
+          radial-gradient(ellipse 74% 72% at 86% 64%, rgba(181, 111, 104, 0.16), transparent 58%),
+          linear-gradient(180deg, #171823 0%, #10131a 48%, #0b0d13 100%);
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        background-image:
+          repeating-linear-gradient(90deg, rgba(244, 234, 216, 0.08) 0 1px, transparent 1px 14px),
+          repeating-linear-gradient(0deg, rgba(244, 234, 216, 0.04) 0 1px, transparent 1px 18px);
+        mask-image: radial-gradient(ellipse at center, black 0%, transparent 76%);
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 84px 40px 118px;
+      }
+
+      header {
+        text-align: center;
+        padding-bottom: 62px;
+        margin-bottom: 64px;
+        border-bottom: 1px solid var(--rule);
+        position: relative;
+      }
+      header::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -1px;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        box-shadow: 0 0 20px var(--glow);
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 34px;
+      }
+
+      h1 {
+        font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+        font-size: 4.05rem;
+        font-weight: 500;
+        line-height: 0.98;
+        letter-spacing: 0;
+        margin-bottom: 24px;
+      }
+
+      .subtitle {
+        max-width: 560px;
+        margin: 0 auto;
+        color: var(--ink-soft);
+        font-style: italic;
+        font-size: 1.17rem;
+        line-height: 1.55;
+      }
+
+      .meta-line {
+        margin-top: 34px;
+        color: var(--ink-muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      .meta-line span { margin: 0 10px; }
+
+      .listen-link {
+        display: block;
+        width: fit-content;
+        margin: 34px auto 0;
+        padding: 10px 18px 9px;
+        border: 1px solid var(--cypress);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.76rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        background: rgba(16, 19, 26, 0.72);
+      }
+      .listen-link:hover,
+      .listen-link:focus-visible {
+        border-color: var(--gold);
+        color: var(--gold);
+        outline: none;
+      }
+
+      .preamble {
+        color: var(--ink-soft);
+        font-size: 1.04rem;
+        line-height: 1.85;
+        margin-bottom: 74px;
+      }
+      .preamble p { margin-bottom: 1em; text-align: justify; hyphens: auto; }
+      .preamble p:first-child::first-letter {
+        font-family: 'Fraunces', Georgia, serif;
+        float: left;
+        color: var(--gold);
+        font-size: 4.7rem;
+        line-height: 0.82;
+        padding: 6px 12px 0 0;
+      }
+      .preamble strong { color: var(--ink); font-weight: 400; }
+      .preamble em { color: var(--gold); font-style: italic; }
+
+      .field-note {
+        margin: 42px 0 6px;
+        padding: 28px 30px;
+        border-top: 1px solid var(--cypress);
+        border-bottom: 1px solid var(--cypress);
+        text-align: center;
+        color: var(--ink);
+        background: rgba(22, 23, 32, 0.48);
+      }
+      .field-note p {
+        max-width: 540px;
+        margin: 0 auto;
+        font-style: italic;
+        text-align: center;
+      }
+
+      .act { margin-top: 94px; }
+
+      .act-header {
+        text-align: center;
+        margin-bottom: 50px;
+        padding-bottom: 28px;
+        position: relative;
+      }
+      .act-header::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 56px;
+        height: 1px;
+        background: var(--gold);
+      }
+
+      .act-number {
+        color: var(--gold);
+        font-size: 0.72rem;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+      .act-title {
+        font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+        font-size: 2.35rem;
+        font-weight: 500;
+        line-height: 1.08;
+        margin-bottom: 14px;
+      }
+      .act-mood {
+        max-width: 530px;
+        margin: 0 auto 12px;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+      .act-stats {
+        color: var(--ink-muted);
+        font-size: 0.71rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .track {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 20px;
+        padding: 25px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .track:last-child { border-bottom: none; }
+
+      .track-number {
+        font-family: 'Fraunces', Georgia, serif;
+        color: var(--gold);
+        font-size: 2.15rem;
+        line-height: 1;
+        font-weight: 400;
+      }
+      .track-content { padding-top: 2px; }
+      .track-work {
+        color: var(--silver);
+        font-size: 0.74rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .track-title {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 1.45rem;
+        line-height: 1.22;
+        font-style: italic;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .track-performer {
+        color: var(--ink-soft);
+        font-size: 0.93rem;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+      .track-performer::before { content: '– '; color: var(--cypress); }
+      .track-note {
+        color: var(--ink-soft);
+        font-size: 0.98rem;
+        line-height: 1.65;
+      }
+
+      .interlude {
+        margin: 88px 0 10px;
+        padding: 38px 32px;
+        border-top: 1px solid var(--rose-soft);
+        border-bottom: 1px solid var(--rose-soft);
+        text-align: center;
+        color: var(--ink);
+        background:
+          linear-gradient(90deg, rgba(109, 57, 56, 0.2), rgba(45, 64, 57, 0.22)),
+          rgba(22, 23, 32, 0.56);
+      }
+      .interlude h2 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 2.05rem;
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+      .interlude p {
+        max-width: 540px;
+        margin: 0 auto;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+
+      .prelude-grid {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 28px;
+      }
+
+      footer {
+        margin-top: 92px;
+        padding-top: 28px;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-muted);
+        text-align: center;
+        font-size: 0.72rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        line-height: 2;
+      }
+      footer a { color: var(--ink-soft); text-decoration-color: var(--rule); }
+      footer a:hover { color: var(--gold); text-decoration-color: var(--gold); }
+
+      @media (max-width: 700px) {
+        .prelude-grid { grid-template-columns: 1fr; gap: 0; }
+      }
+
+      @media (max-width: 640px) {
+        body { font-size: 16px; }
+        .container {
+          width: 100%;
+          max-width: 100vw;
+          padding: 58px 22px 84px;
+          overflow: hidden;
+        }
+        h1 {
+          max-width: 18rem;
+          margin-left: auto;
+          margin-right: auto;
+          font-size: 2.55rem;
+          overflow-wrap: anywhere;
+        }
+        .subtitle { font-size: 1.04rem; }
+        .meta-line span { display: block; margin: 4px 0; }
+        .track {
+          grid-template-columns: 42px 1fr;
+          gap: 14px;
+          padding: 22px 0;
+        }
+        .track-number { font-size: 1.72rem; }
+        .track-title { font-size: 1.24rem; }
+        .act-title { font-size: 1.95rem; }
+        .interlude { padding: 30px 20px; }
+        .field-note { padding: 24px 20px; }
+        .preamble p { text-align: left; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="eyebrow">Carnet de concert</div>
+        <h1>Luganski au Cygne</h1>
+        <p class="subtitle">Chopin en plein air, de la Barcarolle aux vingt-quatre Préludes.</p>
+        <div class="meta-line">
+          <span>30 pièces</span>
+          <span>4 volets</span>
+          <span>~ 1 h 30</span>
+        </div>
+        <a class="listen-link" href="https://www.sixfoursvagueclassique.fr/evenement/nikolai-luganski/">Programme officiel</a>
+      </header>
+
+      <section class="preamble">
+        <p>Ce programme est plus fin qu'il n'en a l'air sur l'affiche : une grande page nocturne, quatre impromptus qui testent le toucher sous plusieurs angles, un scherzo presque aérien, puis le bloc des <strong>vingt-quatre Préludes</strong>, petit théâtre complet de Chopin en moins d'une heure.</p>
+        <p>Luganski n'est pas un pianiste qui vend le rubato comme parfum. Son intérêt, surtout ici, est ailleurs : une main droite lumineuse mais tenue, des basses jamais épaissies inutilement, et cette manière très russe de laisser l'architecture parler avant le sentiment. Pour Chopin, c'est précieux. Cela évite le sucre, denrée hélas disponible en gros conditionnement.</p>
+        <p>En plein air, l'écoute change : les détails les plus fragiles peuvent se perdre, mais les grandes respirations gagnent une évidence physique. La Barcarolle, le quatrième Scherzo et certains Préludes devraient très bien prendre la lumière du soir. Les miniatures les plus murmurées demanderont davantage d'attention : ce sont souvent elles qui paient le mieux.</p>
+
+        <div class="field-note">
+          <p>À écouter comme un arc unique : eau, improvisation, féerie, puis vingt-quatre chambres brèves où Chopin fait tenir tout un monde.</p>
+        </div>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Volet I</div>
+          <h2 class="act-title">La nuit sur l'eau</h2>
+          <p class="act-mood">Une Barcarolle qui n'est pas une carte postale vénitienne, mais un grand nocturne en mouvement.</p>
+          <div class="act-stats">1 pièce · balancement, chant, lumière tardive</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">01</div>
+          <div class="track-content">
+            <div class="track-work">Chopin · Barcarolle, op. 60</div>
+            <h3 class="track-title">Andante cantabile</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">La main gauche installe le balancement de gondole, mais la pièce vise beaucoup plus haut que le pittoresque. C'est un chant qui devient presque orchestral, avec des irisations harmoniques très tardives. En ouverture, Luganski devrait y poser son territoire : élégance, pédale claire, montée en densité sans emphase.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Volet II</div>
+          <h2 class="act-title">Quatre façons d'improviser</h2>
+          <p class="act-mood">Les Impromptus ont l'air libres ; ils sont surtout d'une précision diabolique.</p>
+          <div class="act-stats">4 pièces · arabesques, ombre, virtuosité légère</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">02</div>
+          <div class="track-content">
+            <div class="track-work">Impromptu n°1 en la bémol majeur, op. 29</div>
+            <h3 class="track-title">Allegro assai, quasi presto</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">Un sourire rapide, mais pas décoratif. Les traits doivent filer sans durcir ; la partie centrale apporte juste assez de gravité pour que le brillant ne devienne pas porcelaine de vitrine.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">03</div>
+          <div class="track-content">
+            <div class="track-work">Impromptu n°2 en fa dièse majeur, op. 36</div>
+            <h3 class="track-title">Andantino</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">Le plus noble des quatre : une grande ligne calme, presque une marche intérieure, puis des poussées plus sombres. Il faut garder le centre de gravité bas. C'est typiquement le genre de pièce où Luganski peut être souverain sans hausser la voix.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">04</div>
+          <div class="track-content">
+            <div class="track-work">Impromptu n°3 en sol bémol majeur, op. 51</div>
+            <h3 class="track-title">Tempo giusto</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">Plus ambigu, plus secret. La surface reste chantante, mais l'harmonie glisse sans prévenir. Ce n'est pas le Chopin des salons : c'est un art de la transition, de la phrase qui se retourne et change la couleur de la pièce.</p>
+          </div>
+        </article>
+
+        <article class="track">
+          <div class="track-number">05</div>
+          <div class="track-content">
+            <div class="track-work">Fantaisie-Impromptu en ut dièse mineur, op. 66</div>
+            <h3 class="track-title">Allegro agitato</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">Le tube, donc le danger. La bonne lecture ne fait pas mousser le presto et ne transforme pas le thème central en confiserie. Il faut de l'élan, une pulsation nette, puis un chant simple. Si Luganski le garde droit, la pièce retrouve ses nerfs.</p>
+          </div>
+        </article>
+      </section>
+
+      <div class="interlude">
+        <h2>Le sourire oblique</h2>
+        <p>Le quatrième Scherzo est moins démoniaque que les trois autres. Il regarde vers Mendelssohn, mais avec le raffinement harmonique de Chopin dans la poche intérieure.</p>
+      </div>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Volet III</div>
+          <h2 class="act-title">Féerie contrôlée</h2>
+          <p class="act-mood">Une virtuosité claire, presque suspendue, qui gagne à rester mobile.</p>
+          <div class="act-stats">1 pièce · scherzo, chant central, éclats</div>
+        </div>
+
+        <article class="track">
+          <div class="track-number">06</div>
+          <div class="track-content">
+            <div class="track-work">Scherzo n°4 en mi majeur, op. 54</div>
+            <h3 class="track-title">Presto</h3>
+            <p class="track-performer">Nikolaï Luganski, piano</p>
+            <p class="track-note">Le plus lumineux des Scherzos. Les traits doivent pétiller sans claquer, et le grand épisode chanté doit respirer large sans ralentir tout le paysage. En extérieur, c'est probablement l'un des moments les plus lisibles de la soirée : la virtuosité y porte la forme au lieu de la couvrir.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="act">
+        <div class="act-header">
+          <div class="act-number">Volet IV</div>
+          <h2 class="act-title">Vingt-quatre chambres</h2>
+          <p class="act-mood">Les Préludes op. 28 : pas un recueil de bis, mais un cycle complet, abrupt, instable, génialement concentré.</p>
+          <div class="act-stats">24 préludes · tous les tons majeurs et mineurs · ~ 40 minutes</div>
+        </div>
+
+        <div class="prelude-grid">
+          <article class="track">
+            <div class="track-number">07</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°1 en ut majeur</div>
+              <h3 class="track-title">Agitato</h3>
+              <p class="track-note">Une porte ouverte brutalement : quelques vagues d'arpèges, et le cycle est déjà lancé.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">08</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°2 en la mineur</div>
+              <h3 class="track-title">Lento</h3>
+              <p class="track-note">Une marche malade, presque sans mélodie. Chopin peut être plus inquiétant en deux minutes que d'autres en un opéra.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">09</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°3 en sol majeur</div>
+              <h3 class="track-title">Vivace</h3>
+              <p class="track-note">Main gauche vive, main droite chantante : l'élégance comme exercice d'équilibre.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">10</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°4 en mi mineur</div>
+              <h3 class="track-title">Largo</h3>
+              <p class="track-note">La célèbre descente harmonique. À écouter sans pathos : plus c'est simple, plus c'est fatal.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">11</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°5 en ré majeur</div>
+              <h3 class="track-title">Molto allegro</h3>
+              <p class="track-note">Un éclair. Le risque est de le rater parce qu'il passe presque avant d'avoir commencé.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">12</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°6 en si mineur</div>
+              <h3 class="track-title">Lento assai</h3>
+              <p class="track-note">Le violoncelle imaginaire de la main gauche. Funèbre, mais pudique, ce qui est une distinction assez essentielle.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">13</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°7 en la majeur</div>
+              <h3 class="track-title">Andantino</h3>
+              <p class="track-note">La miniature parfaite : moins d'une minute, une silhouette, aucune graisse.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">14</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°8 en fa dièse mineur</div>
+              <h3 class="track-title">Molto agitato</h3>
+              <p class="track-note">Nerveux, serré, presque orchestral. Ici le plein air devra laisser passer les ombres rapides.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">15</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°9 en mi majeur</div>
+              <h3 class="track-title">Largo</h3>
+              <p class="track-note">Accords pleins, procession très courte. Un porche de cathédrale, mais pliable en quatre pages.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">16</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°10 en ut dièse mineur</div>
+              <h3 class="track-title">Molto allegro</h3>
+              <p class="track-note">Une fusée capricieuse. Le pianiste n'a pas le temps de poser une intention : il doit l'avoir déjà dans les doigts.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">17</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°11 en si majeur</div>
+              <h3 class="track-title">Vivace</h3>
+              <p class="track-note">Une respiration claire avant les zones lourdes. Rien d'anecdotique : c'est le placement qui compte.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">18</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°12 en sol dièse mineur</div>
+              <h3 class="track-title">Presto</h3>
+              <p class="track-note">Course sombre, presque martelée. Chopin resserre l'étau et repart aussitôt.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">19</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°13 en fa dièse majeur</div>
+              <h3 class="track-title">Lento</h3>
+              <p class="track-note">Grand nocturne caché au centre du cycle. À ce stade, il faut accepter le temps long.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">20</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°14 en mi bémol mineur</div>
+              <h3 class="track-title">Allegro</h3>
+              <p class="track-note">Un grondement de basse, sans consolation. Parenthèse brève, très noire.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">21</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°15 en ré bémol majeur</div>
+              <h3 class="track-title">Sostenuto</h3>
+              <p class="track-note">La goutte d'eau, bien sûr. La partie centrale est le vrai sujet : quand l'idylle révèle son sous-sol.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">22</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°16 en si bémol mineur</div>
+              <h3 class="track-title">Presto con fuoco</h3>
+              <p class="track-note">Virtuosité sans filet. Il faut du feu, mais surtout une trajectoire. Sinon c'est une très belle chute d'escalier.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">23</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°17 en la bémol majeur</div>
+              <h3 class="track-title">Allegretto</h3>
+              <p class="track-note">Un chant ample, avec ces basses répétées qui sonnent comme une cloche lointaine.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">24</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°18 en fa mineur</div>
+              <h3 class="track-title">Molto allegro</h3>
+              <p class="track-note">Explosion courte, presque théâtrale. Chopin claque une porte et change de pièce.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">25</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°19 en mi bémol majeur</div>
+              <h3 class="track-title">Vivace</h3>
+              <p class="track-note">Arpèges lumineux, écriture d'air. C'est l'un des moments où le jardin devrait aider la musique.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">26</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°20 en ut mineur</div>
+              <h3 class="track-title">Largo</h3>
+              <p class="track-note">Accords de tombeau. Vingt mesures, pas une de trop. Toute surcharge serait une faute de goût.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">27</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°21 en si bémol majeur</div>
+              <h3 class="track-title">Cantabile</h3>
+              <p class="track-note">Retour du chant, mais voilé. Il faut écouter les contrechants, pas seulement la mélodie principale.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">28</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°22 en sol mineur</div>
+              <h3 class="track-title">Molto agitato</h3>
+              <p class="track-note">Basses martelées, gestes secs. La violence est tenue courte, donc elle mord mieux.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">29</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°23 en fa majeur</div>
+              <h3 class="track-title">Moderato</h3>
+              <p class="track-note">Dernière clairière. Une élégance fragile avant la conclusion en pleine tempête.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-number">30</div>
+            <div class="track-content">
+              <div class="track-work">Prélude n°24 en ré mineur</div>
+              <h3 class="track-title">Allegro appassionato</h3>
+              <p class="track-note">Final implacable : main gauche torrentielle, main droite prophétique, trois ré graves comme des coups de marteau. Le cycle ne se ferme pas, il s'abat.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer>
+        <div>Maison du Cygne · 14 juin 2026 · 20h30</div>
+        <div><a href="index.html">Retour aux carnets</a></div>
+      </footer>
+    </div>
+  </body>
+</html>
