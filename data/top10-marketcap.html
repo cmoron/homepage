@@ -30,6 +30,7 @@ html, body { margin: 0; padding: 0; }
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at 8% 0%, rgba(211, 166, 79, 0.13), transparent 26rem),
     radial-gradient(circle at 100% 20%, rgba(88, 184, 131, 0.10), transparent 28rem),
@@ -50,7 +51,7 @@ a {
 a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
 main {
-  width: min(1180px, calc(100% - 32px));
+  width: min(calc(100% - 32px), 1180px);
   margin: 0 auto;
   padding: 36px 0 44px;
 }
@@ -95,6 +96,7 @@ h1 {
   max-width: 680px;
   margin: 18px 0 0;
   font-size: 1.03rem;
+  overflow-wrap: anywhere;
 }
 
 .summary {
@@ -123,6 +125,7 @@ h1 {
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
+  overflow-wrap: anywhere;
 }
 
 .grid {
@@ -355,7 +358,7 @@ footer p { margin: 0.35rem 0; }
 }
 
 @media (max-width: 560px) {
-  main { width: min(100% - 22px, 1180px); padding-top: 24px; }
+  main { width: min(calc(100% - 22px), 1180px); padding-top: 24px; }
   .card-inner { padding: 18px; }
   .topline { grid-template-columns: auto 1fr; }
   .rank { grid-column: 1 / -1; grid-row: 1; justify-self: end; opacity: 0.45; }
