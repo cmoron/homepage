@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Top 11 Market Cap 2026 — Infographie investisseur</title>
-<meta name="description" content="Les 11 entreprises les plus valorisées au monde. Infographie investisseur avec logos officiels, PER, CA, employés, année de création." />
+<title>Top 10 Market Cap — Infographie</title>
+<meta name="description" content="Les 10 entreprises publiques les plus valorisees au monde, avec evolution, PER, chiffre d'affaires, effectifs et logos." />
 <link rel="canonical" href="https://moron.at/data/top10-marketcap.html" />
 <link rel="icon" href="../img/favicon.ico" sizes="32x32" />
 <link rel="icon" href="../img/favicon.png" type="image/png" sizes="64x64" />
@@ -13,532 +13,710 @@
 <style>
 :root {
   color-scheme: dark;
-  --bg: #14120e;
-  --paper: #181610;
-  --fg: #ece5d6;
-  --muted: #948b7d;
-  --faint: #4b4439;
-  --rule: #2c2820;
-  --accent: #a35a32;
-  --accent-fg: #c97a52;
-  --green-fg: #5a957e;
-  --tag-bg: #221e17;
+  --bg: #101114;
+  --panel: #17191f;
+  --panel-2: #1f222a;
+  --fg: #f2f4f7;
+  --muted: #a6adbb;
+  --faint: #6e7787;
+  --rule: #303541;
+  --accent: #d3a64f;
+  --good: #58b883;
+  --warn: #e1b457;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: ui-serif, Charter, "Iowan Old Style", "Apple Garamond", Cambria, "Times New Roman", Georgia, serif;
-  font-size: 17px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(211, 166, 79, 0.13), transparent 26rem),
+    radial-gradient(circle at 100% 20%, rgba(88, 184, 131, 0.10), transparent 28rem),
+    var(--bg);
+  color: var(--fg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-color: #15100b;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%0A%3Cg fill='none' stroke='%23422917' stroke-width='1.1' opacity='0.5'%3E%0A%3Cpath d='M0 48 L48 0 L96 48 L48 96 Z'/%3E%0A%3Cpath d='M48 0 L96 48 M48 96 L0 48' opacity='.4'/%3E%0A%3C/g%3E%0A%3Cg fill='%23422917' opacity='0.5'%3E%0A%3Cg transform='translate(0%2C0)'%3E%0A%3Ccircle r='2.4'/%3E%0A%3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A%3C/g%3E%3Cg transform='translate(96%2C0)'%3E%0A%3Ccircle r='2.4'/%3E%0A%3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A%3C/g%3E%3Cg transform='translate(0%2C96)'%3E%0A%3Ccircle r='2.4'/%3E%0A%3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A%3C/g%3E%3Cg transform='translate(96%2C96)'%3E%0A%3Ccircle r='2.4'/%3E%0A%3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A%3C/g%3E%3Cg transform='translate(48%2C48)'%3E%0A%3Ccircle r='2.4'/%3E%0A%3Cpath d='M0 -7 C2 -3 2 -3 0 0 C-2 -3 -2 -3 0 -7Z M0 7 C2 3 2 3 0 0 C-2 3 -2 3 0 7Z M-7 0 C-3 2 -3 2 0 0 C-3 -2 -3 -2 -7 0Z M7 0 C3 2 3 2 0 0 C3 -2 3 -2 7 0Z'/%3E%0A%3C/g%3E%0A%3C/g%3E%0A%3C/svg%3E");
-  background-size: 40px 40px;
-}
-
-::selection { background: #122620; color: var(--fg); }
 
 a {
   color: var(--fg);
   text-decoration: underline;
   text-decoration-color: var(--rule);
   text-underline-offset: 3px;
-  transition: text-decoration-color 0.15s ease, color 0.15s ease;
 }
-a:hover { color: var(--accent-fg); text-decoration-color: var(--accent-fg); }
+a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
 main {
-  position: relative;
-  z-index: 1;
-  max-width: 58rem;
+  width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 3rem 1.6rem 4rem;
+  padding: 36px 0 44px;
 }
 
 .back {
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
   text-decoration: none;
 }
-.back:hover { color: var(--accent-fg); }
-.back .arrow { margin-right: 0.3ch; }
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+  gap: 28px;
+  align-items: end;
+  margin: 34px 0 26px;
+}
 
 .meta {
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.74rem;
+  color: var(--accent);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--muted);
-  margin: 1.5rem 0 0.5rem;
+  margin-bottom: 12px;
 }
-.meta .sep { color: var(--faint); padding: 0 0.5em; }
-.meta .cat { color: var(--accent-fg); }
 
 h1 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  line-height: 1.15;
-  margin: 0 0 0.3rem;
+  font-size: clamp(2.1rem, 5vw, 4.9rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+  margin: 0;
+  max-width: 760px;
 }
-h1 em { color: var(--accent-fg); font-style: italic; }
 
 .lede {
   color: var(--muted);
-  font-size: 1.02rem;
-  font-style: italic;
-  line-height: 1.5;
-  margin: 0 0 0.5rem;
-  max-width: 40rem;
+  max-width: 680px;
+  margin: 18px 0 0;
+  font-size: 1.03rem;
 }
 
-.total-cap {
-  margin: 2rem 0 1rem;
-  padding: 1.2rem 1.5rem;
-  background: var(--paper);
+.summary {
+  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
   border: 1px solid var(--rule);
-  border-radius: 6px;
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  flex-wrap: wrap;
+  border-radius: 8px;
+  padding: 18px;
 }
-.total-cap .label {
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.74rem;
-  text-transform: uppercase;
+
+.summary .label {
   color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.76rem;
+  text-transform: uppercase;
 }
-.total-cap .value {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent-fg);
+
+.summary .value {
+  font-size: 2.1rem;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 6px 0 10px;
 }
-.total-cap .note {
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.72rem;
-  color: var(--faint);
+
+.summary p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .card {
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 1.4rem;
+  --brand: #d3a64f;
   position: relative;
+  min-height: 430px;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
   overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
 }
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
 
 .card::before {
   content: "";
   position: absolute;
-  top: 0; left: 0;
-  width: 3px; height: 100%;
+  inset: 0 auto 0 0;
+  width: 4px;
   background: var(--brand);
 }
 
-.rank {
-  position: absolute;
-  top: 0.6rem; right: 1rem;
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--faint);
-  line-height: 1;
-  opacity: 0.5;
+.card-inner {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 16px;
+  min-height: 100%;
+  padding: 22px;
 }
 
-.logo-row {
-  display: flex;
+.topline {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
   align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 0.8rem;
 }
 
-.logo {
-  width: 48px; height: 48px;
-  border-radius: 8px;
+.logo-box {
+  width: 70px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
   background: #fff;
-  padding: 6px;
+  border-radius: 8px;
+  padding: 10px;
 }
-.logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-.co-name { font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
-.co-ticker {
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.72rem;
+.logo-box.dark { background: #0c0d10; }
+.logo-box.soft { background: #f4f6f8; }
+.logo-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.co-name {
+  font-size: 1.08rem;
+  font-weight: 780;
+  line-height: 1.15;
+}
+
+.ticker {
+  margin-top: 3px;
   color: var(--muted);
-  margin-top: 2px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.76rem;
 }
 
-.mcap {
-  font-size: 1.6rem;
-  font-weight: 700;
+.rank {
+  color: var(--faint);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.market {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.market .cap {
   color: var(--brand);
-  margin-bottom: 0.3rem;
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: clamp(1.65rem, 4vw, 2.45rem);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.market .move {
+  color: var(--good);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.86rem;
+  text-align: right;
 }
 
 .bar-bg {
-  height: 4px;
-  background: var(--rule);
-  border-radius: 2px;
+  grid-column: 1 / -1;
+  height: 6px;
+  background: var(--panel-2);
+  border-radius: 999px;
   overflow: hidden;
-  margin: 0.4rem 0 0.8rem;
 }
-.bar { height: 100%; background: var(--brand); border-radius: 2px; }
 
-.biz {
-  font-size: 0.88rem;
-  color: var(--muted);
-  line-height: 1.5;
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--rule);
-  margin-bottom: 0.6rem;
-}
-.biz strong { color: var(--fg); font-weight: 600; }
+.bar { height: 100%; background: var(--brand); border-radius: inherit; }
 
-.stats {
+.metrics {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem 0.8rem;
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.72rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
 }
-.stat {
+
+.metric {
+  background: var(--panel-2);
+  border: 1px solid rgba(255,255,255,0.045);
+  border-radius: 6px;
+  padding: 9px;
+  min-width: 0;
+}
+
+.metric span {
+  display: block;
+  color: var(--faint);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--fg);
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+.business {
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.business strong { color: var(--fg); font-weight: 650; }
+
+.evolution {
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+
+.evolution-title {
+  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.spark {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  align-items: end;
+  height: 68px;
+}
+
+.spark-step {
   display: flex;
   flex-direction: column;
-  padding: 0.3rem 0;
+  justify-content: flex-end;
+  gap: 5px;
+  min-width: 0;
+  height: 100%;
 }
-.stat .k { color: var(--faint); text-transform: uppercase; letter-spacing: 0.02em; }
-.stat .v { color: var(--fg); font-weight: 600; margin-top: 1px; }
 
-.new-badge {
-  display: inline-block;
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--accent);
-  color: #fff;
-  padding: 1px 6px;
-  border-radius: 3px;
-  margin-left: 0.4rem;
-  vertical-align: middle;
+.spark-bar {
+  min-height: 5px;
+  background: linear-gradient(180deg, var(--brand), color-mix(in srgb, var(--brand) 48%, #111));
+  border-radius: 4px 4px 0 0;
 }
+
+.spark-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0 0;
+}
+
+.note {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.note strong { color: var(--fg); }
 
 footer {
-  margin-top: 3rem;
-  padding-top: 1.25rem;
+  margin-top: 28px;
+  padding-top: 18px;
   border-top: 1px solid var(--rule);
-  color: var(--muted);
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-  font-size: 0.74rem;
-  text-align: center;
-  line-height: 1.6;
+  color: var(--faint);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.73rem;
 }
-footer a { color: var(--muted); }
-footer a:hover { color: var(--accent-fg); }
 
-@media (max-width: 32rem) {
-  body { font-size: 16px; }
-  main { padding: 2rem 1.2rem 3rem; }
-  h1 { font-size: 1.7rem; }
+footer p { margin: 0.35rem 0; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
   .grid { grid-template-columns: 1fr; }
-  .mcap { font-size: 1.4rem; }
-  .stats { grid-template-columns: 1fr; }
+  .notes { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  main { width: min(100% - 22px, 1180px); padding-top: 24px; }
+  .card-inner { padding: 18px; }
+  .topline { grid-template-columns: auto 1fr; }
+  .rank { grid-column: 1 / -1; grid-row: 1; justify-self: end; opacity: 0.45; }
+  .logo-box { width: 62px; height: 48px; }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .market { grid-template-columns: 1fr; }
+  .market .move { text-align: left; }
 }
 </style>
 </head>
 <body>
 <main>
-  <a href="../" class="back"><span class="arrow">←</span>retour</a>
+  <a href="../" class="back"><span>←</span><span>retour</span></a>
 
-  <div class="meta">
-    <span class="cat">Data</span><span class="sep">·</span>
-    <span>Juin 2026</span><span class="sep">·</span>
-    <span>Infographie investisseur</span>
-  </div>
+  <section class="hero">
+    <div>
+      <div class="meta">Data · 18 juin 2026 · marches publics</div>
+      <h1>Top 10 Market Cap</h1>
+      <p class="lede">
+        Les dix entreprises publiques les plus valorisees au monde, avec logos officiels, evolution de capitalisation, PER, chiffre d'affaires, effectifs et date de creation.
+      </p>
+    </div>
+    <aside class="summary">
+      <div class="label">Capitalisation cumulee</div>
+      <div class="value">$26.85T</div>
+      <p>Le top 6 pese a lui seul environ $21.7T. SpaceX entre directement dans le classement apres son IPO du 12 juin 2026.</p>
+    </aside>
+  </section>
 
-  <h1>Top 11 <em>Market Cap</em></h1>
-  <p class="lede">
-    Les onze entreprises les plus valorisées au monde. Données approximatives, juin 2026.
-    SpaceX rejoint le classement suite à son IPO historique du 12 juin 2026.
-  </p>
-
-  <div class="total-cap">
-    <span class="label">Capitalisation cumulée</span>
-    <span class="value">$30.8T</span>
-    <span class="note">≈ 30 800 milliards USD</span>
-  </div>
-
-  <div class="grid">
-
-    <!-- 1. Nvidia -->
-    <div class="card" style="--brand: #76b900;">
-      <div class="rank">01</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/nvidia.png" alt="NVIDIA" /></div>
+  <section class="grid" aria-label="Classement des entreprises par capitalisation">
+    <article class="card" style="--brand:#76b900;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box soft"><img src="assets/company-logos/nvidia.svg" alt="NVIDIA" /></div>
+          <div><div class="co-name">NVIDIA</div><div class="ticker">NASDAQ: NVDA</div></div>
+          <div class="rank">01</div>
+        </div>
+        <div class="market">
+          <div class="cap">$5.09T</div>
+          <div class="move">x1.34 vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:100%"></div></div>
+        </div>
         <div>
-          <div class="co-name">NVIDIA</div>
-          <div class="co-ticker">NASDAQ: NVDA</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~49x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$165B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~36k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1993</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> GPU, reseau et systemes IA pour data centers. CUDA reste le moat industriel ; Blackwell et Rubin prolongent le cycle d'investissement hyperscaler.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:51%"></div><div class="spark-label"><span>06/25</span><span>$3.8T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:91%"></div><div class="spark-label"><span>12/25</span><span>$4.64T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:100%"></div><div class="spark-label"><span>06/26</span><span>$5.09T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$4.8T</div>
-      <div class="bar-bg"><div class="bar" style="width: 100%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> GPU et puces IA pour data centers. Dominateur absolu sur l'entraînement et l'inférence des modèles d'IA. Plateformes CUDA, DGX, Omniverse.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~48x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$130B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~32 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1993</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 2. Apple -->
-    <div class="card" style="--brand: #a2aaad;">
-      <div class="rank">02</div>
-      <div class="logo-row">
-        <div class="logo" style="background: #fff;"><img src="logos/apple.png" alt="Apple" /></div>
+    <article class="card" style="--brand:#8b949e;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/apple.svg" alt="Apple" /></div>
+          <div><div class="co-name">Apple</div><div class="ticker">NASDAQ: AAPL</div></div>
+          <div class="rank">02</div>
+        </div>
+        <div class="market">
+          <div class="cap">$4.40T</div>
+          <div class="move">x1.44 vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:86%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Apple</div>
-          <div class="co-ticker">NASDAQ: AAPL</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~39x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$416B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~164k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1976</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> iPhone, Mac, wearables et services. La valorisation repose sur la rentabilite de l'ecosysteme et la capacite a monetiser l'IA embarquee.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:60%"></div><div class="spark-label"><span>06/25</span><span>$3.06T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:80%"></div><div class="spark-label"><span>12/25</span><span>$4.06T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:86%"></div><div class="spark-label"><span>06/26</span><span>$4.40T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$4.5T</div>
-      <div class="bar-bg"><div class="bar" style="width: 94%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> iPhone, Mac, iPad, Apple Watch, services (App Store, iCloud, Apple Music). Écosystème hardware-software intégré le plus rentable du monde.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~30x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$451B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~161 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1976</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 3. Microsoft -->
-    <div class="card" style="--brand: #4a9eff;">
-      <div class="rank">03</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/microsoft.png" alt="Microsoft" /></div>
+    <article class="card" style="--brand:#4285f4;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/google.svg" alt="Google" /></div>
+          <div><div class="co-name">Alphabet</div><div class="ticker">NASDAQ: GOOGL / GOOG</div></div>
+          <div class="rank">03</div>
+        </div>
+        <div class="market">
+          <div class="cap">$4.39T</div>
+          <div class="move">x2.04 vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:86%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Microsoft</div>
-          <div class="co-ticker">NASDAQ: MSFT</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~31x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$384B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~187k</strong></div>
+            <div class="metric"><span>Creation</span><strong>2015</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> recherche, publicite, YouTube, Android, Cloud et Waymo. La rerating vient de Gemini, TPU, Cloud et de la resilience du search.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:42%"></div><div class="spark-label"><span>06/25</span><span>$2.15T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:75%"></div><div class="spark-label"><span>12/25</span><span>$3.80T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:86%"></div><div class="spark-label"><span>06/26</span><span>$4.39T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$3.3T</div>
-      <div class="bar-bg"><div class="bar" style="width: 69%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Cloud (Azure), OS (Windows), productivité (M365), Gaming (Xbox). Partenaire stratégique d'OpenAI. Transition massive vers l'IA avec Copilot.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~35x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$318B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~220 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1975</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 4. Alphabet -->
-    <div class="card" style="--brand: #ea4335;">
-      <div class="rank">04</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/alphabet.png" alt="Alphabet" /></div>
+    <article class="card" style="--brand:#00a4ef;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/microsoft.svg" alt="Microsoft" /></div>
+          <div><div class="co-name">Microsoft</div><div class="ticker">NASDAQ: MSFT</div></div>
+          <div class="rank">04</div>
+        </div>
+        <div class="market">
+          <div class="cap">$2.88T</div>
+          <div class="move">-22% vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:57%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Alphabet</div>
-          <div class="co-ticker">NASDAQ: GOOGL</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~29x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$282B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~228k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1975</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> Azure, Microsoft 365, Windows, GitHub, security et gaming. Le dossier reste qualite, mais le multiple s'est normalise apres la surchauffe Copilot.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:73%"></div><div class="spark-label"><span>06/25</span><span>$3.70T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:71%"></div><div class="spark-label"><span>12/25</span><span>$3.63T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:57%"></div><div class="spark-label"><span>06/26</span><span>$2.88T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$3.8T</div>
-      <div class="bar-bg"><div class="bar" style="width: 79%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Recherche web (Google), publicité digitale, YouTube, Android, Cloud (GCP), Waymo (autonomie). Leader mondial de la pub en ligne.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~25x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$375B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~185 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1998</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 5. SpaceX -->
-    <div class="card" style="--brand: #c8a45e;">
-      <div class="rank">05</div>
-      <div class="logo-row">
-        <div class="logo" style="background: #fff;"><img src="logos/spacex.png" alt="SpaceX" /></div>
+    <article class="card" style="--brand:#ff9900;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/amazon.svg" alt="Amazon" /></div>
+          <div><div class="co-name">Amazon</div><div class="ticker">NASDAQ: AMZN</div></div>
+          <div class="rank">05</div>
+        </div>
+        <div class="market">
+          <div class="cap">$2.60T</div>
+          <div class="move">+12% vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:51%"></div></div>
+        </div>
         <div>
-          <div class="co-name">SpaceX<span class="new-badge">IPO 12/06</span></div>
-          <div class="co-ticker">NASDAQ: SPCX</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~38x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$680B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~1.56M</strong></div>
+            <div class="metric"><span>Creation</span><strong>1994</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> AWS, e-commerce, marketplace, publicite, Prime et logistique. AWS reste le moteur de marge ; retail et ads apportent l'echelle.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:46%"></div><div class="spark-label"><span>06/25</span><span>$2.33T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:49%"></div><div class="spark-label"><span>12/25</span><span>$2.49T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:51%"></div><div class="spark-label"><span>06/26</span><span>$2.60T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$2.7T</div>
-      <div class="bar-bg"><div class="bar" style="width: 56%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Lanceurs spatiaux (Falcon 9, Starship), Starlink (satellites), vaisseaux Dragon. Plus grand opérateur de lancements orbitaux au monde. Diversification vers l'IA (Grok, xAI).</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">N/A</span></div>
-        <div class="stat"><span class="k">CA (2025)</span><span class="v">$18.7B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~22 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">2002</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 6. Amazon -->
-    <div class="card" style="--brand: #ff9900;">
-      <div class="rank">06</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/amazon.png" alt="Amazon" /></div>
+    <article class="card" style="--brand:#ffffff;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box dark"><img src="assets/company-logos/spacex.svg" alt="SpaceX" /></div>
+          <div><div class="co-name">SpaceX</div><div class="ticker">NASDAQ: SPCX</div></div>
+          <div class="rank">06</div>
+        </div>
+        <div class="market">
+          <div class="cap">$2.43T</div>
+          <div class="move">IPO 12 juin 2026</div>
+          <div class="bar-bg"><div class="bar" style="width:48%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Amazon</div>
-          <div class="co-ticker">NASDAQ: AMZN</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>n.m.</strong></div>
+            <div class="metric"><span>CA</span><strong>~$18.7B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~18k</strong></div>
+            <div class="metric"><span>Creation</span><strong>2002</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> lancements spatiaux, Starlink, infrastructure orbitale et desormais couplage IA via SpaceXAI. Le PER n'a pas de sens : la societe sort d'une perte nette 2025.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution valorisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:8%"></div><div class="spark-label"><span>06/25</span><span>~$0.4T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:25%"></div><div class="spark-label"><span>02/26</span><span>$1.25T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:48%"></div><div class="spark-label"><span>06/26</span><span>$2.43T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$2.6T</div>
-      <div class="bar-bg"><div class="bar" style="width: 54%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> E-commerce global, AWS (Cloud #1), Prime Video, Alexa, logistique. AWS génère la majorité de l'EBIT. Expansion IA via Bedrock/Anthropic.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~50x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$580B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~1 550 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1994</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 7. Broadcom -->
-    <div class="card" style="--brand: #cc0000;">
-      <div class="rank">07</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/broadcom.png" alt="Broadcom" /></div>
+    <article class="card" style="--brand:#00a67e;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/aramco.svg" alt="Saudi Aramco" /></div>
+          <div><div class="co-name">Saudi Aramco</div><div class="ticker">TADAWUL: 2222</div></div>
+          <div class="rank">07</div>
+        </div>
+        <div class="market">
+          <div class="cap">$1.65T</div>
+          <div class="move">stable vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:32%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Broadcom</div>
-          <div class="co-ticker">NASDAQ: AVGO</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~15x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$436B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~75k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1933</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> petrole, gaz, raffinage et chimie. Profil cash-flow/dividende, sensible au prix du baril et aux decisions de production saoudiennes.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:33%"></div><div class="spark-label"><span>06/25</span><span>$1.70T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:32%"></div><div class="spark-label"><span>12/25</span><span>$1.62T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:32%"></div><div class="spark-label"><span>06/26</span><span>$1.65T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$2.0T</div>
-      <div class="bar-bg"><div class="bar" style="width: 42%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Semi-conducteurs (réseau, broadband, wireless) et software d'infrastructure (VMware). Bénéficiaire direct de la vague IA : switches réseau pour data centers Nvidia.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~38x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$68B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~22 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1961</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 8. Meta -->
-    <div class="card" style="--brand: #0866ff;">
-      <div class="rank">08</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/meta.png" alt="Meta" /></div>
+    <article class="card" style="--brand:#0866ff;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/meta.png" alt="Meta" /></div>
+          <div><div class="co-name">Meta Platforms</div><div class="ticker">NASDAQ: META</div></div>
+          <div class="rank">08</div>
+        </div>
+        <div class="market">
+          <div class="cap">$1.46T</div>
+          <div class="move">-22% vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:29%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Meta Platforms</div>
-          <div class="co-ticker">NASDAQ: META</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~23x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$178B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~77k</strong></div>
+            <div class="metric"><span>Creation</span><strong>2004</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> Facebook, Instagram, WhatsApp, Threads, publicite sociale et IA open-weight. Reality Labs reste le pari couteux, Llama le levier strategique.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:37%"></div><div class="spark-label"><span>06/25</span><span>$1.86T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:33%"></div><div class="spark-label"><span>12/25</span><span>$1.67T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:29%"></div><div class="spark-label"><span>06/26</span><span>$1.46T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$1.9T</div>
-      <div class="bar-bg"><div class="bar" style="width: 40%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Facebook, Instagram, WhatsApp, Threads. Publicité sociale. Invest massif dans l'IA (LLaMA) et la réalité augmentée/VR (Quest, Ray-Ban Meta).</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~28x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$145B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~72 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">2004</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 9. TSMC -->
-    <div class="card" style="--brand: #c8202f;">
-      <div class="rank">09</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/tsmc.png" alt="TSMC" /></div>
+    <article class="card" style="--brand:#cc092f;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/broadcom.svg" alt="Broadcom" /></div>
+          <div><div class="co-name">Broadcom</div><div class="ticker">NASDAQ: AVGO</div></div>
+          <div class="rank">09</div>
+        </div>
+        <div class="market">
+          <div class="cap">$1.43T</div>
+          <div class="move">+10% vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:28%"></div></div>
+        </div>
         <div>
-          <div class="co-name">TSMC</div>
-          <div class="co-ticker">TPEX: 2330 · NYSE: TSM</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~38x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$60B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~37k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1961</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> ASIC IA, reseau, wireless, broadband et software d'infrastructure via VMware. Moins glamour que NVIDIA, mais tres pres de la plomberie des data centers.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:26%"></div><div class="spark-label"><span>06/25</span><span>$1.30T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:33%"></div><div class="spark-label"><span>12/25</span><span>$1.67T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:28%"></div><div class="spark-label"><span>06/26</span><span>$1.43T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$1.9T</div>
-      <div class="bar-bg"><div class="bar" style="width: 40%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Fonderie de semi-conducteurs — fabrique les puces d'Apple, Nvidia, AMD, Qualcomm. Monopole quasi-total sur les noeuds &lt; 5nm. Maillon critique de toute la tech mondiale.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~28x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$129B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~76 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1987</span></div>
-      </div>
-    </div>
+    </article>
 
-    <!-- 10. Saudi Aramco -->
-    <div class="card" style="--brand: #00874c;">
-      <div class="rank">10</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/aramco.png" alt="Saudi Aramco" /></div>
+    <article class="card" style="--brand:#d71920;">
+      <div class="card-inner">
+        <div class="topline">
+          <div class="logo-box"><img src="assets/company-logos/tsmc.svg" alt="TSMC" /></div>
+          <div><div class="co-name">TSMC</div><div class="ticker">TWSE: 2330 · NYSE: TSM</div></div>
+          <div class="rank">10</div>
+        </div>
+        <div class="market">
+          <div class="cap">$1.22T</div>
+          <div class="move">+4% vs juin 2025</div>
+          <div class="bar-bg"><div class="bar" style="width:24%"></div></div>
+        </div>
         <div>
-          <div class="co-name">Saudi Aramco</div>
-          <div class="co-ticker">TADAWUL: 2222</div>
+          <div class="metrics">
+            <div class="metric"><span>PER</span><strong>~22x</strong></div>
+            <div class="metric"><span>CA</span><strong>~$104B</strong></div>
+            <div class="metric"><span>Employes</span><strong>~84k</strong></div>
+            <div class="metric"><span>Creation</span><strong>1987</strong></div>
+          </div>
+          <p class="business"><strong>Cœur de metier :</strong> fonderie de semi-conducteurs avancee. TSMC fabrique les puces critiques d'Apple, NVIDIA, AMD et Qualcomm : geopolitique incluse dans le multiple.</p>
+        </div>
+        <div class="evolution">
+          <div class="evolution-title">Evolution capitalisation</div>
+          <div class="spark">
+            <div class="spark-step"><div class="spark-bar" style="height:23%"></div><div class="spark-label"><span>06/25</span><span>$1.17T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:31%"></div><div class="spark-label"><span>12/25</span><span>$1.57T</span></div></div>
+            <div class="spark-step"><div class="spark-bar" style="height:24%"></div><div class="spark-label"><span>06/26</span><span>$1.22T</span></div></div>
+          </div>
         </div>
       </div>
-      <div class="mcap">$1.7T</div>
-      <div class="bar-bg"><div class="bar" style="width: 35%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Pétrole et gaz — plus grande compagnie pétrolière mondiale. Production, raffinage, chimie. Diversification vers l'IA (joint venture Humain) et l'hydrogène.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~14x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$455B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~75 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">1933</span></div>
-      </div>
-    </div>
+    </article>
+  </section>
 
-    <!-- 11. Tesla -->
-    <div class="card" style="--brand: #e82127;">
-      <div class="rank">11</div>
-      <div class="logo-row">
-        <div class="logo"><img src="logos/tesla.png" alt="Tesla" /></div>
-        <div>
-          <div class="co-name">Tesla</div>
-          <div class="co-ticker">NASDAQ: TSLA</div>
-        </div>
-      </div>
-      <div class="mcap">$1.6T</div>
-      <div class="bar-bg"><div class="bar" style="width: 33%"></div></div>
-      <div class="biz"><strong>Cœur de métier :</strong> Véhicules électriques, stockage (Megapack), énergie solaire. Robotaxi (Cybercab), Optimus (humanoid), Dojo (supercompute IA). Valorisation très liée aux promesses IA/robotique.</div>
-      <div class="stats">
-        <div class="stat"><span class="k">PER</span><span class="v">~120x</span></div>
-        <div class="stat"><span class="k">CA (TTM)</span><span class="v">$98B</span></div>
-        <div class="stat"><span class="k">Employés</span><span class="v">~140 000</span></div>
-        <div class="stat"><span class="k">Création</span><span class="v">2003</span></div>
-      </div>
-    </div>
-
-  </div>
+  <section class="notes" aria-label="Notes de lecture">
+    <div class="note"><strong>PER :</strong> ordre de grandeur courant ou forward selon disponibilite. Pour SpaceX, non meaningful car resultat net negatif.</div>
+    <div class="note"><strong>CA :</strong> dernier exercice publie ou 12 mois glissants arrondis. Les groupes n'ont pas tous le meme calendrier fiscal.</div>
+    <div class="note"><strong>Evolution :</strong> capitalisations arrondies ; les donnees de juin 2026 sont sensibles aux cours intraday, surtout SpaceX post-IPO.</div>
+  </section>
 
   <footer>
-    Sources : companiesmarketcap.com, Wikipedia, stockanalysis.com, Visual Capitalist, Forbes — Données approximatives Juin 2026<br>
-    SpaceX IPO le 12 juin 2026 (NASDAQ: SPCX) — plus grande IPO de l'histoire<br>
-    Capitalisation cumulée : 4.8 + 4.5 + 3.3 + 3.8 + 2.7 + 2.6 + 2.0 + 1.9 + 1.9 + 1.7 + 1.6 ≈ $30.8T<br>
-    <a href="../">moron.at</a>
+    <p>Sources marche : <a href="https://companiesmarketcap.com/">CompaniesMarketCap</a>, donnees de cours du 18/06/2026, <a href="https://www.marketwatch.com/livecoverage/stock-market-today-s-p-500-nasdaq-dow-federal-reserve-meeting-interest-rate-decision-14-point-plan/card/spacex-slips-back-below-amazon-by-market-value-Ufh8N0KiawQhfPRBfAWd">MarketWatch</a> pour SpaceX/Amazon/Microsoft, <a href="https://finance.yahoo.com/markets/stocks/articles/spacex-shares-set-surge-30-123454117.html">Yahoo Finance</a> pour l'IPO SpaceX.</p>
+    <p>Sources fondamentaux : rapports annuels / 10-K / 20-F et fiches societes. Logos : Wikimedia Commons / Wikipedia, usage d'identification.</p>
+    <p><a href="../">moron.at</a></p>
   </footer>
 </main>
 </body>
