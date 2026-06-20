@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bureau à voix basse — Carnet d'écoute</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:opsz,wght@8..60,350;8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f0e8;
+    --paper-soft: #fbf8f1;
+    --ink: #25231f;
+    --ink-soft: #565048;
+    --ink-muted: #8a8174;
+    --line: #d8d0c3;
+    --green: #536b5a;
+    --green-deep: #31483a;
+    --blue: #65788a;
+    --blue-soft: #dce5ea;
+    --amber: #a87f43;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1.68;
+    font-weight: 350;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    background-image:
+      linear-gradient(90deg, rgba(49, 72, 58, 0.035) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(49, 72, 58, 0.028) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 86px 40px 118px;
+  }
+
+  h1,
+  .subtitle,
+  .act-title,
+  .track-title,
+  .preamble,
+  .epilogue {
+    overflow-wrap: break-word;
+  }
+
+  header {
+    text-align: center;
+    padding-bottom: 58px;
+    margin-bottom: 58px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 86px;
+    height: 7px;
+    transform: translateX(-50%);
+    background:
+      linear-gradient(90deg, var(--green) 0 34%, transparent 34% 42%, var(--blue) 42% 68%, transparent 68% 76%, var(--amber) 76% 100%);
+  }
+
+  .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 1.02;
+    margin-bottom: 22px;
+    font-style: italic;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink-soft);
+    font-size: 1.22rem;
+    font-style: italic;
+  }
+
+  .meta {
+    margin-top: 30px;
+    color: var(--ink-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .meta span { margin: 0 9px; }
+
+  .listen-link {
+    display: block;
+    width: fit-content;
+    margin: 34px auto 0;
+    padding: 10px 18px;
+    border: 1px solid var(--green);
+    color: var(--green-deep);
+    background: rgba(251, 248, 241, 0.72);
+    text-decoration: none;
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .listen-link:hover,
+  .listen-link:focus-visible {
+    color: var(--ink);
+    border-color: var(--ink);
+    outline: none;
+  }
+
+  .preamble {
+    margin-bottom: 78px;
+    font-size: 1.04rem;
+    line-height: 1.82;
+    color: var(--ink-soft);
+  }
+
+  .preamble p {
+    margin-bottom: 1em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .preamble p:first-child::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    float: left;
+    font-size: 4.6rem;
+    line-height: 0.84;
+    padding: 6px 10px 0 0;
+    color: var(--green-deep);
+    font-weight: 600;
+  }
+
+  .act {
+    margin-top: 92px;
+  }
+
+  .act-header {
+    margin-bottom: 44px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .act-number {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--green-deep);
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .act-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.25rem;
+    line-height: 1.12;
+    font-style: italic;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .act-mood {
+    color: var(--ink-soft);
+    font-style: italic;
+    max-width: 520px;
+    margin: 0 auto 8px;
+  }
+
+  .act-stats {
+    color: var(--ink-muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .track {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 20px;
+    padding: 24px 0 26px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .track:last-child { border-bottom: none; }
+
+  .track-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .track-composer {
+    color: var(--green-deep);
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  .track-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.38rem;
+    line-height: 1.24;
+    font-style: italic;
+    margin-bottom: 5px;
+  }
+
+  .track-performer {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+
+  .track-performer::before { content: '— '; }
+
+  .track-note {
+    color: var(--ink);
+    font-size: 0.99rem;
+    line-height: 1.66;
+  }
+
+  .interlude {
+    margin: 74px auto 0;
+    max-width: 560px;
+    padding: 24px 28px;
+    border-left: 3px solid var(--blue);
+    background: rgba(251, 248, 241, 0.7);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .epilogue {
+    margin-top: 96px;
+    padding-top: 46px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.78;
+  }
+
+  .epilogue h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--green-deep);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .epilogue p {
+    margin-bottom: 1em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .colophon {
+    margin-top: 78px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 17px; }
+    .page { padding: 58px 22px 82px; }
+    h1 { font-size: 2.3rem; line-height: 1.08; }
+    .subtitle { font-size: 1.02rem; max-width: 300px; margin: 0 auto; }
+    .meta span { display: block; margin: 5px 0; }
+    .act-title { font-size: 1.85rem; }
+    .track { grid-template-columns: 42px 1fr; gap: 14px; }
+    .track-number { font-size: 1.75rem; }
+    .track-title { font-size: 1.2rem; }
+    .listen-link { max-width: 100%; text-align: center; }
+    .preamble p,
+    .epilogue p { text-align: left; }
+    .preamble p:first-child::first-letter { font-size: 3.5rem; }
+    .interlude { padding: 20px 22px; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+<header>
+  <div class="eyebrow">Carnet d'écoute</div>
+  <h1>Bureau à voix basse</h1>
+  <div class="subtitle">Classique acoustique pour travailler sans perdre le fil</div>
+  <div class="meta">
+    <span>30 titres</span>
+    <span>~ 2 h 25</span>
+    <span>5 séquences</span>
+  </div>
+  <a class="listen-link" href="https://listen.tidal.com/playlist/cdc56d4b-eee9-44ab-8d59-2ad765aa35b5">Écouter sur TIDAL</a>
+</header>
+
+<section class="preamble">
+  <p>Cette playlist occupe une place précise : elle doit tenir compagnie sans prendre le bureau. Elle rassemble des pièces immédiatement lisibles, souvent déjà croisées quelque part, mais choisies dans des versions qui gardent le son net, les tempi respirés et l'émotion à hauteur de main.</p>
+
+  <p>Le piano ouvre la pièce, parce qu'il pose l'échelle. La musique de chambre arrive ensuite, puis quelques respirations orchestrales très tenues. Rien ne cherche le grand frisson héroïque : même quand la mélodie est célèbre, elle reste dans le plan moyen, assez belle pour colorer l'air, assez discrète pour laisser la pensée continuer.</p>
+
+  <p>L'extension finale ajoute onze titres pour donner de la durée sans changer la fonction. Beethoven, Debussy, Mendelssohn, Mozart, Fauré, Gluck, Elgar, Rachmaninoff et Borodine élargissent le cadre, mais gardent le même principe : une culture générale classique qui ne réclame pas audience.</p>
+</section>
+
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Séquence I</div>
+    <h2 class="act-title">Mise au calme</h2>
+    <div class="act-mood">Un début clair, domestique, presque immobile.</div>
+    <div class="act-stats">5 titres · piano seul</div>
+  </div>
+
+  <article class="track">
+    <div class="track-number">01</div>
+    <div>
+      <div class="track-composer">Bach</div>
+      <h3 class="track-title">Goldberg Variations: Aria</h3>
+      <div class="track-performer">Víkingur Ólafsson</div>
+      <p class="track-note">Ólafsson joue l'Aria comme une surface parfaitement nettoyée : peu de pédale, une lumière froide, aucune sentimentalité. C'est une bonne entrée parce qu'elle règle immédiatement le volume intérieur de la playlist.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">02</div>
+    <div>
+      <div class="track-composer">Bach</div>
+      <h3 class="track-title">Prélude en ut majeur, BWV 846</h3>
+      <div class="track-performer">András Schiff</div>
+      <p class="track-note">Schiff garde le prélude droit, sans rubato décoratif. La pièce est connue au point d'être presque un meuble, mais cette lecture lui rend sa fonction première : une architecture simple, exacte, respirable.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">03</div>
+    <div>
+      <div class="track-composer">Satie</div>
+      <h3 class="track-title">Première Gymnopédie</h3>
+      <div class="track-performer">Alexandre Tharaud</div>
+      <p class="track-note">Tharaud évite le Satie de carte postale. Il laisse les silences faire leur travail, avec un toucher sec juste ce qu'il faut : mélancolique, mais pas flou.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">04</div>
+    <div>
+      <div class="track-composer">Debussy</div>
+      <h3 class="track-title">Clair de lune</h3>
+      <div class="track-performer">Seong-Jin Cho</div>
+      <p class="track-note">Cho donne une version très propre, presque chambriste, sans halo excessif. Le morceau est une évidence ; l'interprétation l'empêche de devenir du papier peint luxueux.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">05</div>
+    <div>
+      <div class="track-composer">Ravel</div>
+      <h3 class="track-title">Pavane pour une infante défunte</h3>
+      <div class="track-performer">Alice Sara Ott</div>
+      <p class="track-note">Ott garde la Pavane dans une noblesse basse, sans faire gonfler la phrase. Le choix du piano seul évite l'apparat orchestral et referme la première séquence dans un demi-jour élégant.</p>
+    </div>
+  </article>
+</section>
+
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Séquence II</div>
+    <h2 class="act-title">Piano noble</h2>
+    <div class="act-mood">Romantisme retenu, chant intérieur, très peu de théâtre.</div>
+    <div class="act-stats">6 titres · piano seul</div>
+  </div>
+
+  <article class="track">
+    <div class="track-number">06</div>
+    <div>
+      <div class="track-composer">Chopin</div>
+      <h3 class="track-title">Nocturne op. 9 n°2</h3>
+      <div class="track-performer">Maria João Pires</div>
+      <p class="track-note">Pires a l'art rare de ne pas forcer la beauté. Elle chante le nocturne avec une ligne souple, jamais sucrée ; le rubato reste humain, pas démonstratif.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">07</div>
+    <div>
+      <div class="track-composer">Schumann</div>
+      <h3 class="track-title">Träumerei</h3>
+      <div class="track-performer">Martha Argerich</div>
+      <p class="track-note">Argerich joue petit sans jouer faible. La pièce garde sa candeur, mais la main gauche lui donne une densité discrète : un souvenir, pas une vignette.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">08</div>
+    <div>
+      <div class="track-composer">Schubert</div>
+      <h3 class="track-title">Impromptu D. 899 n°3</h3>
+      <div class="track-performer">Radu Lupu</div>
+      <p class="track-note">Lupu est ici le bon luxe : son rond, respiration large, pudeur constante. La longueur installe une vraie zone de travail, comme une lampe qu'on baisse sans l'éteindre.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">09</div>
+    <div>
+      <div class="track-composer">Brahms</div>
+      <h3 class="track-title">Intermezzo op. 118 n°2</h3>
+      <div class="track-performer">Hélène Grimaud</div>
+      <p class="track-note">Grimaud laisse entendre le poids de Brahms sans épaissir le trait. L'intermezzo reste grave, mais il ne tombe pas dans le solennel ; c'est exactement le point d'équilibre recherché.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">10</div>
+    <div>
+      <div class="track-composer">Mompou</div>
+      <h3 class="track-title">Música callada I n°5</h3>
+      <div class="track-performer">Stephen Hough</div>
+      <p class="track-note">Mompou enlève presque tout : il reste une phrase, un accord, une poussière de résonance. Hough donne à cette miniature une précision qui la rend utile au milieu du parcours.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">11</div>
+    <div>
+      <div class="track-composer">Grieg</div>
+      <h3 class="track-title">Arietta</h3>
+      <div class="track-performer">Leif Ove Andsnes</div>
+      <p class="track-note">Andsnes joue Grieg de l'intérieur, sans folklore. L'Arietta sert de petit balcon : une respiration nordique, courte, propre, parfaitement placée avant la chambre.</p>
+    </div>
+  </article>
+</section>
+
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Séquence III</div>
+    <h2 class="act-title">Chambre douce</h2>
+    <div class="act-mood">Le chant passe aux cordes, avec le piano comme sol.</div>
+    <div class="act-stats">4 titres · violoncelle, violon, piano</div>
+  </div>
+
+  <article class="track">
+    <div class="track-number">12</div>
+    <div>
+      <div class="track-composer">Bach</div>
+      <h3 class="track-title">Suite pour violoncelle n°1: Prélude</h3>
+      <div class="track-performer">Yo-Yo Ma</div>
+      <p class="track-note">Yo-Yo Ma apporte une humanité immédiate au prélude. Ce n'est pas la version la plus austère ; c'est précisément pourquoi elle fonctionne ici, comme un retour au bois après le piano.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">13</div>
+    <div>
+      <div class="track-composer">Saint-Saëns</div>
+      <h3 class="track-title">Le Cygne</h3>
+      <div class="track-performer">Yo-Yo Ma, Kathryn Stott</div>
+      <p class="track-note">Encore une évidence, mais Stott garde l'accompagnement léger et Yo-Yo Ma ne tire pas la mélodie vers le mélodrame. La ligne flotte sans demander qu'on s'arrête de travailler.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">14</div>
+    <div>
+      <div class="track-composer">Fauré</div>
+      <h3 class="track-title">Après un rêve</h3>
+      <div class="track-performer">Sheku Kanneh-Mason, Isata Kanneh-Mason</div>
+      <p class="track-note">Les Kanneh-Mason donnent à Fauré une chaleur très directe. Le violoncelle chante avec un grain jeune, sans pathos appuyé ; c'est une confidence, pas une scène d'opéra.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">15</div>
+    <div>
+      <div class="track-composer">Dvořák</div>
+      <h3 class="track-title">Silent Woods</h3>
+      <div class="track-performer">Alisa Weilerstein, Anna Polonsky</div>
+      <p class="track-note">Weilerstein élargit l'espace sans l'alourdir. La pièce apporte une profondeur de champ : un pas vers dehors, mais encore à travers une fenêtre fermée.</p>
+    </div>
+  </article>
+</section>
+
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Séquence IV</div>
+    <h2 class="act-title">Air plus large</h2>
+    <div class="act-mood">Quelques ouvertures, mais tenues à distance.</div>
+    <div class="act-stats">4 titres · vents, cordes, orchestre</div>
+  </div>
+
+  <article class="track">
+    <div class="track-number">16</div>
+    <div>
+      <div class="track-composer">Mozart</div>
+      <h3 class="track-title">Concerto pour clarinette: Adagio</h3>
+      <div class="track-performer">Sabine Meyer, Claudio Abbado</div>
+      <p class="track-note">Meyer a le timbre rond et la diction simple ; Abbado laisse l'orchestre respirer autour d'elle. C'est Mozart dans sa forme la plus hospitalière, sans décor inutile.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">17</div>
+    <div>
+      <div class="track-composer">Tchaïkovski</div>
+      <h3 class="track-title">Les Saisons: Juin, Barcarolle</h3>
+      <div class="track-performer">Bruce Liu</div>
+      <p class="track-note">Bruce Liu garde la Barcarolle mobile, presque parlée. La mélodie pourrait devenir trop parfumée ; il la maintient dans une élégance nette.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">18</div>
+    <div>
+      <div class="track-composer">Pärt</div>
+      <h3 class="track-title">Spiegel im Spiegel</h3>
+      <div class="track-performer">Renaud Capuçon, Guillaume Bellom</div>
+      <p class="track-note">Capuçon et Bellom donnent une version lumineuse, sans froideur clinique. Le morceau suspend le temps, mais reste assez pur pour ne pas transformer la pièce en chapelle.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">19</div>
+    <div>
+      <div class="track-composer">Bach</div>
+      <h3 class="track-title">Suite orchestrale n°3: Air</h3>
+      <div class="track-performer">Neville Marriner, Academy of St Martin in the Fields</div>
+      <p class="track-note">Marriner offre une lecture classique au meilleur sens du terme : cordes propres, tempo stable, respiration naturelle. L'Air ferme le premier arc sans emphase.</p>
+    </div>
+  </article>
+</section>
+
+<div class="interlude">
+  L'extension ne relance pas la playlist ; elle l'étire. Les onze derniers titres reprennent les mêmes matières, mais avec davantage de durée et quelques repères très connus, choisis dans des versions qui gardent la ligne au calme.
+</div>
+
+<section class="act">
+  <div class="act-header">
+    <div class="act-number">Séquence V</div>
+    <h2 class="act-title">Coda de bureau</h2>
+    <div class="act-mood">Une seconde heure qui approfondit sans hausser la voix.</div>
+    <div class="act-stats">11 titres · piano, chambre, orchestre léger</div>
+  </div>
+
+  <article class="track">
+    <div class="track-number">20</div>
+    <div>
+      <div class="track-composer">Beethoven</div>
+      <h3 class="track-title">Sonate « Clair de lune »: I. Adagio sostenuto</h3>
+      <div class="track-performer">Igor Levit</div>
+      <p class="track-note">Levit refuse le brouillard romantique. Son Beethoven avance avec une pulsation très tenue, presque impitoyable, ce qui rend l'Adagio plus moderne et moins nocturne de salon.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">21</div>
+    <div>
+      <div class="track-composer">Debussy</div>
+      <h3 class="track-title">Préludes, Livre I: La fille aux cheveux de lin</h3>
+      <div class="track-performer">Jean-Yves Thibaudet</div>
+      <p class="track-note">Thibaudet apporte une clarté française très lisible : le son est dessiné, la couleur reste pastel, jamais vaporeuse. Parfait après Beethoven, comme une fenêtre entrouverte.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">22</div>
+    <div>
+      <div class="track-composer">Mendelssohn</div>
+      <h3 class="track-title">Songs Without Words, op. 30 n°6: Venetian Gondola Song</h3>
+      <div class="track-performer">András Schiff</div>
+      <p class="track-note">Schiff donne à la barcarolle un balancement très contrôlé. Le chant est évident, mais la main ne charge jamais la gondole. Ce qui est assez charitable, pour une gondole.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">23</div>
+    <div>
+      <div class="track-composer">Beethoven</div>
+      <h3 class="track-title">Sonate « Pathétique »: II. Adagio cantabile</h3>
+      <div class="track-performer">Igor Levit</div>
+      <p class="track-note">Même disque, même discipline. Levit fait chanter l'Adagio sans lui mettre un costume de cérémonie ; la mélodie reste noble, mais le tempo la garde au travail.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">24</div>
+    <div>
+      <div class="track-composer">Mozart</div>
+      <h3 class="track-title">Concerto pour piano n°21: II. Andante</h3>
+      <div class="track-performer">Vladimir Ashkenazy, Philharmonia Orchestra</div>
+      <p class="track-note">Ashkenazy et le Philharmonia donnent une version ample, mais d'une grande tenue. L'Andante est célèbre pour de bonnes raisons : il avance comme une barque parfaitement équilibrée.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">25</div>
+    <div>
+      <div class="track-composer">Mozart</div>
+      <h3 class="track-title">Concerto pour flûte et harpe: II. Andantino</h3>
+      <div class="track-performer">Emmanuel Pahud, Marie-Pierre Langlamet, Claudio Abbado</div>
+      <p class="track-note">Pahud, Langlamet et Abbado évitent le sucre. La flûte et la harpe gardent une lumière fine, presque matinale, avec l'orchestre en retrait.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">26</div>
+    <div>
+      <div class="track-composer">Fauré</div>
+      <h3 class="track-title">Pavane, op. 50</h3>
+      <div class="track-performer">Orchestre de Chambre de Lausanne, Renaud Capuçon</div>
+      <p class="track-note">Cette version récente garde la Pavane claire, souple, sans velours excessif. Capuçon et Lausanne privilégient le trait et la respiration plutôt qu'un parfum de fin de siècle trop appuyé.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">27</div>
+    <div>
+      <div class="track-composer">Gluck</div>
+      <h3 class="track-title">Orfeo ed Euridice: Dance of the Blessed Spirits</h3>
+      <div class="track-performer">Daniel Hope, Zurich Chamber Orchestra</div>
+      <p class="track-note">L'arrangement pour violon et orchestre de chambre donne à Gluck un contour plus intime que la version symphonique. Hope reste droit, presque classique dans la retenue.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">28</div>
+    <div>
+      <div class="track-composer">Elgar</div>
+      <h3 class="track-title">Salut d'Amour, op. 12</h3>
+      <div class="track-performer">Yo-Yo Ma, Kathryn Stott</div>
+      <p class="track-note">Yo-Yo Ma et Stott jouent Elgar comme une page de salon intelligente : tendre, courte, bien articulée. Le morceau apporte une politesse mélodique bienvenue, sans tirer la manche.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">29</div>
+    <div>
+      <div class="track-composer">Rachmaninoff</div>
+      <h3 class="track-title">Vocalise, op. 34 n°14</h3>
+      <div class="track-performer">Mischa Maisky, Pavel Gililov</div>
+      <p class="track-note">La Vocalise pourrait facilement trop appuyer. En version violoncelle et piano, Maisky lui donne une chair sombre, mais Gililov maintient le sol assez ferme pour éviter l'épanchement.</p>
+    </div>
+  </article>
+
+  <article class="track">
+    <div class="track-number">30</div>
+    <div>
+      <div class="track-composer">Borodine</div>
+      <h3 class="track-title">Quatuor à cordes n°2: III. Notturno</h3>
+      <div class="track-performer">Takács Quartet</div>
+      <p class="track-note">Le Takács Quartet ferme la playlist avec une ligne de cordes large, très chantante, mais jamais massive. C'est une vraie sortie : la musique continue de marcher, simplement plus loin de la lampe.</p>
+    </div>
+  </article>
+</section>
+
+<section class="epilogue">
+  <h2>Pourquoi ces versions</h2>
+  <p>Le choix des interprétations tient à une idée simple : la beauté ne doit pas devenir une interruption. Schiff, Pires, Lupu, Levit ou Andsnes ont été retenus parce qu'ils savent donner du poids sans ralentir la pensée. Côté chambre, Yo-Yo Ma, les Kanneh-Mason, Weilerstein, Capuçon ou le Takács Quartet apportent une présence incarnée, mais toujours à taille humaine.</p>
+
+  <p>Les ajouts orchestralement plus larges restent volontairement modestes : Mozart chez Ashkenazy et Abbado, Fauré avec Lausanne, Gluck par Daniel Hope. Cela donne plus de durée, plus d'air, un peu plus de culture commune, mais pas une playlist qui se met soudain à faire de grands gestes dans le couloir.</p>
+</section>
+
+<footer class="colophon">
+  <div>Bureau à voix basse · carnet d'écoute</div>
+  <div>Kapellmeister · 2026</div>
+</footer>
+
+</main>
+</body>
+</html>
